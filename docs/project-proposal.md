@@ -4,21 +4,26 @@ Team members: Jacob Morrison
 
 # Introduction
 
-(In 2-4 paragraphs, describe your project concept)
+DNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a
+sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the
+full length DNA strands into smaller chunks. These chunks are then placed on a "sequencer," where the individual bases
+are read from the DNA fragments. The output from the sequencer is called a "read" and is then aligned back to a
+reference genome (the human reference genome is about three billion bases longer) in order to find where the small
+fragment (usually around 100-150 bases in length) came from.
 
-Outline
-- Background
-  - Genomics background
-  - Current tools used
-  - Other possibilities
-  - Why I'm writing my own
-- Project Description
-  - Written in C to plug into BISCUIT
-  - Multithreaded to speed up coverage calculations
-  - Calculate output metrics on the fly
-- Future Use
-  - Plug into BISCUIT after class
-  - Probably not enough for it's own tool, but could theoretically be published as a standalone tool
+One possible analysis that can be done is to find the "coverage" across the entire genome. To do this, you count the
+total number of reads that covers each individual loci, or base, in the genome. One example of performing this analysis
+is as a part of a quality control pipeline within [BISCUIT](https://github.com/huishenlab/biscuit) (a project I maintain
+for work) to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses
+[bedtools](https://github.com/arq5x/bedtools2) to do this, but it is a slow process. One option for improving the speed
+of this process would be to use [mosdepth](https://github.com/brentp/mosdepth), a tool specifically designed for finding
+coverages. However, it does not calculate the exact metrics that I need.
+
+I propose writing a small tool that improves upon the existing bedtools implementation and calculates the metrics I need
+on the fly. The tool will be written in C for plugging in to BISCUIT following the completion of class. It will also be
+multithreaded to improve the efficiency of the single-threaded bedtools option. Depending on the final state of the
+project, it may be sufficient to warrant an academic publication (either as a pre-print or a peer-reviewed application
+note).
 
 # Anticipated Technologies
 
@@ -34,19 +39,27 @@ Outline
 
 (What is your estimated "plan of attack" for developing this project)
 
+As a rough outline, my plan to complete this project will follow a roughly waterfall method.
+
 # Estimated Timeline
 
-(Figure out what your major milestones for this project will be, including how long you anticipate it *may* take to reach that point)
+| Task | Estimated Completion Date |
+|:-----|:--------:|
+| Analysis       | 30 September 2024 |
+| Design         | 14 October 2024   |
+| Implementation | 14 November 2024  |
+| Testing        | 31 November 2024  |
+| Wrapping Up    | 6 December 2024   |
 
 # Anticipated Problems
 
 Potential problems include, but are not limited to:
 
-- Analysis
 - Design
   - Creating class diagrams
 - Implementation
   - Handling reads that span adjacent regions handled by different threads
   - Merging regions of similar coverage that span adjacent regions
+  - Handling regions of interest to calculate metrics for
 - Testing
   - Unit testing
