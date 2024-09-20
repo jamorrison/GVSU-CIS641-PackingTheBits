@@ -47,6 +47,7 @@ As a rough outline, my plan to complete this project will follow a roughly water
 |:-----|:--------:|
 | Analysis       | 30 September 2024 |
 | Design         | 14 October 2024   |
+| Requirements   | 14 October 2024   |
 | Implementation | 14 November 2024  |
 | Testing        | 31 November 2024  |
 | Wrapping Up    | 6 December 2024   |
