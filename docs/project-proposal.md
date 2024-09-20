@@ -37,9 +37,13 @@ note).
 
 # Method/Approach
 
-(What is your estimated "plan of attack" for developing this project)
-
-As a rough outline, my plan to complete this project will follow a roughly waterfall method.
+Broadly, I plan to start off with doing as much analysis and design ahead of time as I can. This will include defining
+as many requirements at the outset of the project (although I anticipate having to revise these during the
+implementation stage). I plan to give myself the most time on the implementation stage, with an approximately equal
+amount of time for analysis, design, and implementation. Testing will have a shorter amount of dedicated time; however,
+I plan to write some of the tests during the implementation stage. For the sake of this project, most of my tests will
+focus on the output of the tool to ensure it returns the same values as before. I will include some unit tests on some
+of the smaller functionality, but these won't be the focus of my tests.
 
 # Estimated Timeline
 
