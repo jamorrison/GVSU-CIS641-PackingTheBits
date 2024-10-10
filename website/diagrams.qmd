@@ -4,12 +4,12 @@ title: Diagrams
 
 # Use Case Diagrams
 
-![Use Case Diagram 1: Command Line Interface](../artifacts/use_case_diagram_1_cli.pdf)
+![Use Case Diagram 1: Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg)
 
-![Use Case Diagram 2: Processing](../artifacts/use_case_diagram_2_processing.pdf)
+![Use Case Diagram 2: Processing](../artifacts/use_case_diagram_2_processing.jpg)
 
 # Activity Diagrams
 
-![Activity Diagram 1: Command Line Interface](../artifacts/activity_diagram_1_cli.pdf)
+![Activity Diagram 1: Command Line Interface](../artifacts/activity_diagram_1_cli.jpg)
 
-![Activity Diagram 2: Command Line Interface](../artifacts/activity_diagram_2_processing.pdf)
+![Activity Diagram 2: Command Line Interface](../artifacts/activity_diagram_2_processing.jpg)
