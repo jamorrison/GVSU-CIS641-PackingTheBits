@@ -17,11 +17,11 @@ website:
     background: "#E3E3E3"
     search: true
     contents:
-      - href: index.qmd
+      - href: website/index.qmd
         text: Home
-      - href: system_request.qmd
+      - href: artifacts/system_request.md
         text: System Request
-      - href: diagrams.qmd
+      - href: website/diagrams.qmd
         text: Diagrams (Use Case, Activity)
 
 format:

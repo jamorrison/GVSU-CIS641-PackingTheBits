@@ -1,2 +1,2 @@
-website/_site
-website/.quarto
+/_site/
+/.quarto/
