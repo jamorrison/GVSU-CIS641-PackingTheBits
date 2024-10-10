@@ -17,26 +17,30 @@ website:
         href: index.qmd
       - text: "Artifacts"
         href: website/artifacts.qmd
+      - text: "Documents"
+        href: website/docs.qmd
     right:
       - icon: github
         href: https://github.com/jamorrison/GVSU-CIS641-PackingTheBits
   sidebar:
-    - title: "Home"
-      style: "docked"
-      background: "#E3E3E3"
-      contents:
-        - index.qmd
-        - text: "Artifacts"
-          href: website/artifacts.qmd
     - title: "Artifacts"
       style: "docked"
       background: "#E3E3E3"
       contents:
         - website/artifacts.qmd
+        - text: "---"
         - text: "System Request"
           href: artifacts/system_request.md
         - text: "Diagrams (Use Case, Activity)"
           href: website/diagrams.qmd
+    - title: "Documents"
+      style: "docked"
+      background: "#E3E3E3"
+      contents:
+        - website/docs.qmd
+        - text: "---"
+        - text: "Project Proposal"
+          href: docs/project-proposal.md
 
 format:
   html:

@@ -1,0 +1,7 @@
+---
+title: Documents
+---
+
+# Collected Project Documents
+
+- [Project proposal](../docs/project-proposal.md)
