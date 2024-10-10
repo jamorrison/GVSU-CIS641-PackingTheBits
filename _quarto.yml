@@ -7,6 +7,7 @@ project:
 website:
   title: "WGBS Genome Coverage"
   description: "Coverage from WGBS experiments"
+  site-path: "website/index.qmd"
   page-footer:
     left: "Copyright 2024, Jacob Morrison"
     right:
