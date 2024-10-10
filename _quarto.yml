@@ -9,20 +9,32 @@ website:
   description: "Coverage from WGBS experiments"
   page-footer:
     left: "Copyright 2024, Jacob Morrison"
+  navbar:
+    left:
+      - href: index.qmd
+        text: "Home"
+      - href: website/artifacts.qmd
+        text: "Artifacts"
     right:
       - icon: github
         href: https://github.com/jamorrison/GVSU-CIS641-PackingTheBits
   sidebar:
-    style: "docked"
-    background: "#E3E3E3"
-    search: true
-    contents:
-      - href: website/index.qmd
-        text: Home
-      - href: artifacts/system_request.md
-        text: System Request
-      - href: website/diagrams.qmd
-        text: Diagrams (Use Case, Activity)
+    - title: "Home"
+      style: "docked"
+      background: "#E3E3E3"
+      search: true
+      contents:
+        - href: website/artifacts.qmd
+          text: "Artifacts"
+    - title: "Artifacts"
+      style: "docked"
+      background: "#E3E3E3"
+      search: true
+      contents:
+        - href: artifacts/system_request.md
+          text: System Request
+        - href: website/diagrams.qmd
+          text: Diagrams (Use Case, Activity)
 
 format:
   html:
