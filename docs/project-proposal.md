@@ -8,11 +8,11 @@ DNA sequencing is a common practice in biomedical research. The sequencing proce
 sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the
 full length DNA strands into smaller chunks. These chunks are then placed on a "sequencer," where the individual bases
 are read from the DNA fragments. The output from the sequencer is called a "read" and is then aligned back to a
-reference genome (the human reference genome is about three billion bases longer) in order to find where the small
+reference genome (the human reference genome is about three billion bases long) in order to find where the small
 fragment (usually around 100-150 bases in length) came from.
 
 One possible analysis that can be done is to find the "coverage" across the entire genome. To do this, you count the
-total number of reads that covers each individual loci, or base, in the genome. One example of performing this analysis
+total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis
 is as a part of a quality control pipeline within [BISCUIT](https://github.com/huishenlab/biscuit) (a project I maintain
 for work) to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses
 [bedtools](https://github.com/arq5x/bedtools2) to do this, but it is a slow process. One option for improving the speed
