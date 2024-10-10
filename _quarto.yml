@@ -7,7 +7,7 @@ project:
 website:
   title: "WGBS Genome Coverage"
   description: "Coverage from WGBS experiments"
-  site-path: "/website/"
+  site-url: "https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/website/"
   page-footer:
     left: "Copyright 2024, Jacob Morrison"
     right:
