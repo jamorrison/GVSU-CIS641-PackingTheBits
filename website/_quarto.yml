@@ -19,6 +19,10 @@ website:
     contents:
       - href: index.qmd
         text: Home
+      - href: system_request.qmd
+        text: System Request
+      - href: diagrams.qmd
+        text: Diagrams (Use Case, Activity)
 
 format:
   html:
