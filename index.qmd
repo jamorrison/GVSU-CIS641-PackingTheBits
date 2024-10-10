@@ -25,5 +25,5 @@ completion.
 
 # Deliverables
 
-- [System Request](../artifacts/system_request.md)
-- [Diagrams (Use Case, Activity)](diagrams.qmd)
+- [System Request](artifacts/system_request.md)
+- [Diagrams (Use Case, Activity)](website/diagrams.qmd)
