@@ -24,6 +24,7 @@ website:
       background: "#E3E3E3"
       search: true
       contents:
+        - index.qmd
         - href: website/artifacts.qmd
           text: "Artifacts"
     - title: "Artifacts"
@@ -31,6 +32,7 @@ website:
       background: "#E3E3E3"
       search: true
       contents:
+        - artifacts.qmd
         - href: artifacts/system_request.md
           text: System Request
         - href: website/diagrams.qmd
