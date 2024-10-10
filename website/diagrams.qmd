@@ -11,6 +11,7 @@ title: Diagrams
 # Activity Diagrams
 
 ![Activity Diagram 1: Command Line Interface](images/activity_diagram_1_cli.pdf)
-![Activity Diagram 1: Command Line Interface](../artifacts/activity_diagram_1_cli.pdf)
+
+![test](images/test.pdf)
 
 ![Activity Diagram 2: Command Line Interface](images/activity_diagram_2_processing.pdf)
