@@ -10,11 +10,13 @@ website:
   page-footer:
     left: "Copyright 2024, Jacob Morrison"
   navbar:
+    background: primary
+    search: true
     left:
-      - href: index.qmd
-        text: "Home"
-      - href: website/artifacts.qmd
-        text: "Artifacts"
+      - text: "Home"
+        href: index.qmd
+      - text: "Artifacts"
+        href: website/artifacts.qmd
     right:
       - icon: github
         href: https://github.com/jamorrison/GVSU-CIS641-PackingTheBits
@@ -22,21 +24,19 @@ website:
     - title: "Home"
       style: "docked"
       background: "#E3E3E3"
-      search: true
       contents:
         - index.qmd
-        - href: website/artifacts.qmd
-          text: "Artifacts"
+        - text: "Artifacts"
+          href: website/artifacts.qmd
     - title: "Artifacts"
       style: "docked"
       background: "#E3E3E3"
-      search: true
       contents:
-        - artifacts.qmd
-        - href: artifacts/system_request.md
-          text: System Request
-        - href: website/diagrams.qmd
-          text: Diagrams (Use Case, Activity)
+        - website/artifacts.qmd
+        - text: "System Request"
+          href: artifacts/system_request.md
+        - text: "Diagrams (Use Case, Activity)"
+          href: website/diagrams.qmd
 
 format:
   html:
