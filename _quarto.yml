@@ -43,6 +43,8 @@ website:
         - text: "---"
         - text: "Project Proposal"
           href: docs/project-proposal.md
+        - text: "Software Requirements Specification"
+          href: docs/software_requirements_specification.md
     - title: "Meeting Minutes"
       style: "docked"
       background: "#E3E3E3"
