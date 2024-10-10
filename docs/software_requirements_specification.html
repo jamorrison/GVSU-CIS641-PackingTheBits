@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Documents – WGBS Genome Coverage</title>
+<title>software_requirements_specification – WGBS Genome Coverage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Artifacts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../website/docs.html" aria-current="page"> 
+    <a class="nav-link" href="../website/docs.html"> 
 <span class="menu-text">Documents</span></a>
   </li>  
   <li class="nav-item">
@@ -117,78 +117,51 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../website/docs.html">Documents</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../website/docs.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Documents</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../docs/project-proposal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project Proposal</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#collected-project-documents" id="toc-collected-project-documents" class="nav-link active" data-scroll-target="#collected-project-documents">Collected Project Documents</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#functional-requirements" id="toc-functional-requirements" class="nav-link" data-scroll-target="#functional-requirements">Functional Requirements</a></li>
+  <li><a href="#non-functional-requirements" id="toc-non-functional-requirements" class="nav-link" data-scroll-target="#non-functional-requirements">Non-Functional Requirements</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Documents</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="collected-project-documents" class="level1">
-<h1>Collected Project Documents</h1>
-<ul>
-<li><a href="../docs/project-proposal.html">Project proposal</a></li>
-<li><a href="../docs/software_requirements_specification.html">Software Requirements Specification</a></li>
-</ul>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.</p>
+</section>
+<section id="functional-requirements" class="level1">
+<h1>Functional Requirements</h1>
+<ol type="1">
+<li>Command Line Interface</li>
+<li>The command line interface shall accept an integer for the amount of CPU threads.</li>
+<li>The command line interface shall accept a file path for the input.</li>
+<li>The command line interface shall check the input is valid.</li>
+<li>The command line interface shall accept a file path for the output.</li>
+</ol>
+</section>
+<section id="non-functional-requirements" class="level1">
+<h1>Non-Functional Requirements</h1>
+<ol type="1">
+<li>General</li>
+<li>The program shall be run from a terminal.</li>
+<li>The program shall use English usage comments.</li>
+<li>The program shall run process at least one million basepairs of data per second.</li>
+<li>The program shall provide a help message for the user.</li>
+</ol>
 
 
 </section>

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Genomic Coverage from Whole Genome Bisulfite Sequencing Data",
     "section": "",
-    "text": "Description\nDNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.\nOne possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within BISCUIT to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses bedtools to do this, but it is a slow process. One option for improving the speed of this process would be to use mosdepth, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.\nThis project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.\n\n\nDeliverables\n\nArtifacts\nDocuments\nMeeting Minutes"
+    "text": "Description\nDNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.\nOne possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within BISCUIT to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses bedtools to do this, but it is a slow process. One option for improving the speed of this process would be to use mosdepth, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.\nThis project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.\n\n\nDeliverables\n\nArtifacts\n\nSystem request\nDiagrams (use case, activity, etc.)\n\nDocuments\n\nProject proposal\nSoftware Requirements Specification\n\nMeeting Minutes\n\n30 September 2024\n07 October 2024"
   },
   {
     "objectID": "website/diagrams.html",
@@ -73,6 +73,13 @@
     ]
   },
   {
+    "objectID": "docs/software_requirements_specification.html",
+    "href": "docs/software_requirements_specification.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Overview\nThis document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.\n\n\nFunctional Requirements\n\nCommand Line Interface\nThe command line interface shall accept an integer for the amount of CPU threads.\nThe command line interface shall accept a file path for the input.\nThe command line interface shall check the input is valid.\nThe command line interface shall accept a file path for the output.\n\n\n\nNon-Functional Requirements\n\nGeneral\nThe program shall be run from a terminal.\nThe program shall use English usage comments.\nThe program shall run process at least one million basepairs of data per second.\nThe program shall provide a help message for the user."
+  },
+  {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
     "title": "WGBS Genome Coverage",
@@ -99,7 +106,7 @@
     "href": "website/docs.html",
     "title": "Documents",
     "section": "",
-    "text": "Collected Project Documents\n\nProject proposal",
+    "text": "Collected Project Documents\n\nProject proposal\nSoftware Requirements Specification",
     "crumbs": [
       "Documents"
     ]
