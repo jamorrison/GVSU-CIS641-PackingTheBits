@@ -1,1 +1,1 @@
-Sitemap: https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/sitemap.xml
+Sitemap: https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/website/sitemap.xml
