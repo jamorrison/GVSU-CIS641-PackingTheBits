@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Jacob Morrison – WGBS Genome Coverage</title>
+<title>Genomic Coverage from Whole Genome Bisulfite Sequencing Data – WGBS Genome Coverage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,6 +111,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./system_request.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">System Request</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diagrams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diagrams (Use Case, Activity)</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -121,9 +133,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#fun-facts" id="toc-fun-facts" class="nav-link active" data-scroll-target="#fun-facts">Fun Facts</a></li>
-  <li><a href="#basic-technical-background" id="toc-basic-technical-background" class="nav-link" data-scroll-target="#basic-technical-background">Basic Technical Background</a></li>
-  <li><a href="#gvsu-cis-641-project" id="toc-gvsu-cis-641-project" class="nav-link" data-scroll-target="#gvsu-cis-641-project">GVSU CIS 641 Project</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a></li>
+  <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a></li>
   </ul>
 </nav>
     </div>
@@ -132,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Jacob Morrison</h1>
+<h1 class="title">Genomic Coverage from Whole Genome Bisulfite Sequencing Data</h1>
 </div>
 
 
@@ -149,45 +160,18 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This website is adapted from my <a href="https://jamorrison.github.io">original personal website</a>. It has been updated to be built with <a href="https://quarto.org">Quarto</a>. The text and publication list has also been updated.</p>
-</div>
-</div>
-<p>My name is Jacob Morrison and I am a Bioinformatics Research Scientist in the <a href="https://shenlab.vai.org">Shen lab</a>.</p>
-<p>A brief background on my research can be found on the <a href="about_me.qmd">About Me</a> page and a list of my publications can be found on the <a href="publications.qmd">Publications</a> page.</p>
-<section id="fun-facts" class="level2">
-<h2 class="anchored" data-anchor-id="fun-facts">Fun Facts</h2>
-<ul>
-<li>I spend a lot of time reading books (typically fantasy and thrillers)</li>
-<li>I also enjoy playing with my son</li>
-<li>For work, I write software to aid in studying the origins of ovarian cancer</li>
-</ul>
+<section id="description" class="level1">
+<h1>Description</h1>
+<p>DNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.</p>
+<p>One possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within <a href="https://github.com/huishenlab/biscuit">BISCUIT</a> to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses <a href="https://github.com/arq5x/bedtools2">bedtools</a> to do this, but it is a slow process. One option for improving the speed of this process would be to use <a href="https://github.com/brentp/mosdepth">mosdepth</a>, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.</p>
+<p>This project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.</p>
 </section>
-<section id="basic-technical-background" class="level2">
-<h2 class="anchored" data-anchor-id="basic-technical-background">Basic Technical Background</h2>
-<p>Here is a basic overview of my technical skills. More detail can be found on the <a href="about_me.qmd">About Me</a> page.</p>
+<section id="deliverables" class="level1">
+<h1>Deliverables</h1>
 <ul>
-<li>Ph.D.&nbsp;in Particle Physics</li>
-<li>Programming for 13 years
-<ul>
-<li>Started with C++</li>
-<li>Over time, I’ve added Python, Rust, C, R, and other languages</li>
-</ul></li>
+<li><a href="./system_request.html">System Request</a></li>
+<li><a href="./diagrams.html">Diagrams (Use Case, Activity)</a></li>
 </ul>
-</section>
-<section id="gvsu-cis-641-project" class="level2">
-<h2 class="anchored" data-anchor-id="gvsu-cis-641-project">GVSU CIS 641 Project</h2>
-<p>As a part of my M.S. in Applied Computer Science at GVSU, I took CIS 641: Systems Analysis and Design which required a full semester project as a part of the homework.</p>
-<p>For my project, I worked on a tool which calculates the “coverage” across an entire genome. A genome is the full set of A’s, T’s, C’s, and G’s that comprise a species’ DNA. The coverage is the number of “reads” (small chunks of DNA that have been sequenced), that span a given location in the genome. One of the tools I maintain at work is <a href="https://github.com/huishenlab/biscuit">BISCUIT</a>, which aligns reads to their correct location in the genome. It has a quality control step that finds the coverage to ensure a sequencing experiment has consistently covered the entire genome. Currently, the quality control step uses <a href="https://github.com/arq5x/bedtools2">bedtools</a>, but it is slow and I took the opportunity provided by my full semester project to work to improve the speed of this process. It was written in C in order to plug in to BISCUIT following completion of the class and is multithreaded for improved processing efficiency.</p>
 
 
 </section>

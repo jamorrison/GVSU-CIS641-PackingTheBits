@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/system_request.html</loc>
+    <lastmod>2024-10-10T16:11:56.601Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/diagrams.html</loc>
+    <lastmod>2024-10-10T16:11:56.601Z</lastmod>
+  </url>
+  <url>
     <loc>https://jamorrison.github.io/GVSU-CIS641-PackingTheBits/index.html</loc>
-    <lastmod>2024-10-10T15:47:06.628Z</lastmod>
+    <lastmod>2024-10-10T16:11:56.601Z</lastmod>
   </url>
 </urlset>
