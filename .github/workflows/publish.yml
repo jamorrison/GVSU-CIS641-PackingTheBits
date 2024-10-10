@@ -2,7 +2,9 @@ on:
   workflow_dispatch:
   push:
     branches: main
-    paths: website/**
+    paths: 
+      - website/**
+      - _quarto.yml
 
 name: Quarto Publish
 
