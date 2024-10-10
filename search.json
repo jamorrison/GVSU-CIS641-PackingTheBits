@@ -77,7 +77,11 @@
     "href": "docs/software_requirements_specification.html",
     "title": "Overview",
     "section": "",
-    "text": "Overview\nThis document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.\n\n\nFunctional Requirements\n\nCommand Line Interface\nThe command line interface shall accept an integer for the amount of CPU threads.\nThe command line interface shall accept a file path for the input.\nThe command line interface shall check the input is valid.\nThe command line interface shall accept a file path for the output.\n\n\n\nNon-Functional Requirements\n\nGeneral\nThe program shall be run from a terminal.\nThe program shall use English usage comments.\nThe program shall run process at least one million basepairs of data per second.\nThe program shall provide a help message for the user."
+    "text": "Overview\nThis document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.\n\n\nFunctional Requirements\n\nCommand Line Interface\nThe command line interface shall accept an integer for the amount of CPU threads.\nThe command line interface shall accept a file path for the input.\nThe command line interface shall check the input is valid.\nThe command line interface shall accept a file path for the output.\n\n\n\nNon-Functional Requirements\n\nGeneral\nThe program shall be run from a terminal.\nThe program shall use English usage comments.\nThe program shall run process at least one million basepairs of data per second.\nThe program shall provide a help message for the user.",
+    "crumbs": [
+      "Documents",
+      "Software Requirements Specification"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
