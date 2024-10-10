@@ -1,0 +1,35 @@
+project:
+  type: website
+  preview:
+    host: 0.0.0.0
+    port: 4000
+
+website:
+  title: "WGBS Genome Coverage"
+  description: "Coverage from WGBS experiments"
+  page-footer:
+    left: "Copyright 2024, Jacob Morrison"
+    right:
+      - icon: github
+        href: https://github.com/jamorrison/GVSU-CIS641-PackingTheBits
+  sidebar:
+    style: "docked"
+    background: "#E3E3E3"
+    search: true
+    contents:
+      - href: index.qmd
+        text: Home
+
+format:
+  html:
+    theme: yeti
+    highlight-style: solarized
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-block-border-left: "#000000"
+    code-block-bg: "#F3F3F3"
+    number-sections: false
+
+
+

@@ -1,0 +1,43 @@
+---
+title: "Jacob Morrison"
+---
+
+::: {.callout-note}
+This website is adapted from my [original personal website](https://jamorrison.github.io). It has been updated to be
+built with [Quarto](https://quarto.org). The text and publication list has also been updated.
+:::
+
+My name is Jacob Morrison and I am a Bioinformatics Research Scientist in the [Shen lab](https://shenlab.vai.org).
+
+A brief background on my research can be found on the [About Me](about_me.qmd) page and a list of my publications can
+be found on the [Publications](publications.qmd) page.
+
+## Fun Facts
+
+- I spend a lot of time reading books (typically fantasy and thrillers)
+- I also enjoy playing with my son
+- For work, I write software to aid in studying the origins of ovarian cancer
+
+## Basic Technical Background
+
+Here is a basic overview of my technical skills. More detail can be found on the [About Me](about_me.qmd) page.
+
+- Ph.D. in Particle Physics
+- Programming for 13 years
+  - Started with C++
+  - Over time, I've added Python, Rust, C, R, and other languages
+
+## GVSU CIS 641 Project
+
+As a part of my M.S. in Applied Computer Science at GVSU, I took CIS 641: Systems Analysis and Design which required a
+full semester project as a part of the homework.
+
+For my project, I worked on a tool which calculates the "coverage" across an entire genome. A genome is the full set of
+A's, T's, C's, and G's that comprise a species' DNA. The coverage is the number of "reads" (small chunks of DNA that
+have been sequenced), that span a given location in the genome. One of the tools I maintain at work is
+[BISCUIT](https://github.com/huishenlab/biscuit), which aligns reads to their correct location in the genome. It has a
+quality control step that finds the coverage to ensure a sequencing experiment has consistently covered the entire
+genome. Currently, the quality control step uses [bedtools](https://github.com/arq5x/bedtools2), but it is slow and I
+took the opportunity provided by my full semester project to work to improve the speed of this process. It was written
+in C in order to plug in to BISCUIT following completion of the class and is multithreaded for improved processing
+efficiency.
