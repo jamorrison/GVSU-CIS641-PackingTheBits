@@ -19,6 +19,8 @@ website:
         href: website/artifacts.qmd
       - text: "Documents"
         href: website/docs.qmd
+      - text: "Meetings"
+        href: website/meetings.qmd
     right:
       - icon: github
         href: https://github.com/jamorrison/GVSU-CIS641-PackingTheBits
@@ -41,6 +43,16 @@ website:
         - text: "---"
         - text: "Project Proposal"
           href: docs/project-proposal.md
+    - title: "Meeting Minutes"
+      style: "docked"
+      background: "#E3E3E3"
+      contents:
+        - website/meetings.qmd
+        - text: "---"
+        - text: "2024-09-30"
+          href: meetings/GVSU-CIS641-PackingTheBits-2024-09-30.md
+        - text: "2024-10-07"
+          href: meetings/GVSU-CIS641-PackingTheBits-2024-10-07.md
 
 format:
   html:
