@@ -5,3 +5,4 @@ title: Artifacts
 # Collected Project Artifacts
 
 - [System request](../artifacts/system_request.md)
+- [Diagrams (use case, activity, etc.)](diagrams.qmd)

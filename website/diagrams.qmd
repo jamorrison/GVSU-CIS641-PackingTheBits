@@ -4,9 +4,9 @@ title: Diagrams
 
 # Use Case Diagrams
 
-![Use Case Diagram 1: Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg)
+![Use Case Diagram 1: Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg){height=50%}
 
-![Use Case Diagram 2: Processing](../artifacts/use_case_diagram_2_processing.jpg)
+![Use Case Diagram 2: Processing](../artifacts/use_case_diagram_2_processing.jpg){height=50%}
 
 # Activity Diagrams
 
