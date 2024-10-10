@@ -1,8 +1,46 @@
 [
   {
-    "objectID": "system_request.html",
-    "href": "system_request.html",
-    "title": "System Request",
+    "objectID": "website/index.html",
+    "href": "website/index.html",
+    "title": "Genomic Coverage from Whole Genome Bisulfite Sequencing Data",
+    "section": "",
+    "text": "Description\nDNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.\nOne possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within BISCUIT to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses bedtools to do this, but it is a slow process. One option for improving the speed of this process would be to use mosdepth, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.\nThis project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.\n\n\nDeliverables\n\nSystem Request\nDiagrams (Use Case, Activity)",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "website/404.html",
+    "href": "website/404.html",
+    "title": "Page Not Found",
+    "section": "",
+    "text": "The page you requested cannot be found. Try searching to find what you’re looking for."
+  },
+  {
+    "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
+    "href": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
+    "title": "WGBS Genome Coverage",
+    "section": "",
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 30 September 2024\nTime: 15:50\nDiscussion points:\n\nInitial project proposal complete (HW2)\nSystem request complete (IC1)\nUse case diagrams started (IC2, in progress)\n\nGoals for next week (include responsibilities)\nAll responsibilities handled by Jacob Morrison\n\nStart requirement specification\nStart thinking about what data needs to be collected\nStart forming collected data into potential data structures"
+  },
+  {
+    "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html#meeting-minutes",
+    "href": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html#meeting-minutes",
+    "title": "WGBS Genome Coverage",
+    "section": "",
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 30 September 2024\nTime: 15:50\nDiscussion points:\n\nInitial project proposal complete (HW2)\nSystem request complete (IC1)\nUse case diagrams started (IC2, in progress)\n\nGoals for next week (include responsibilities)\nAll responsibilities handled by Jacob Morrison\n\nStart requirement specification\nStart thinking about what data needs to be collected\nStart forming collected data into potential data structures"
+  },
+  {
+    "objectID": "docs/project-proposal.html",
+    "href": "docs/project-proposal.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Team name: Packing the Bits\nTeam members: Jacob Morrison\n\nIntroduction\nDNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.\nOne possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within BISCUIT (a project I maintain for work) to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses bedtools to do this, but it is a slow process. One option for improving the speed of this process would be to use mosdepth, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics that I need.\nI propose writing a small tool that improves upon the existing bedtools implementation and calculates the metrics I need on the fly. The tool will be written in C for plugging in to BISCUIT following the completion of class. It will also be multithreaded to improve the efficiency of the single-threaded bedtools option. Depending on the final state of the project, it may be sufficient to warrant an academic publication (either as a pre-print or a peer-reviewed application note).\n\n\nAnticipated Technologies\n\nOS: macOS or Linux\nEditor: vim\nLanguage: C\nThird-Party Libraries:\n\nhtslib\nPOSIX threads\nzlib\n\n\n\n\nMethod/Approach\nBroadly, I plan to start off with doing as much analysis and design ahead of time as I can. This will include defining as many requirements at the outset of the project (although I anticipate having to revise these during the implementation stage). I plan to give myself the most time on the implementation stage, with an approximately equal amount of time for analysis, design, and implementation. Testing will have a shorter amount of dedicated time; however, I plan to write some of the tests during the implementation stage. For the sake of this project, most of my tests will focus on the output of the tool to ensure it returns the same values as before. I will include some unit tests on some of the smaller functionality, but these won’t be the focus of my tests.\n\n\nEstimated Timeline\n\n\n\nTask\nEstimated Completion Date\n\n\n\n\nAnalysis\n30 September 2024\n\n\nDesign\n14 October 2024\n\n\nRequirements\n14 October 2024\n\n\nImplementation\n14 November 2024\n\n\nTesting\n31 November 2024\n\n\nWrapping Up\n6 December 2024\n\n\n\n\n\nAnticipated Problems\nPotential problems include, but are not limited to:\n\nDesign\n\nCreating class diagrams\n\nImplementation\n\nHandling reads that span adjacent regions handled by different threads\nMerging regions of similar coverage that span adjacent regions\nHandling regions of interest to calculate metrics for\n\nTesting\n\nUnit testing"
+  },
+  {
+    "objectID": "artifacts/system_request.html",
+    "href": "artifacts/system_request.html",
+    "title": "Request Creator",
     "section": "",
     "text": "Request Creator\n\nJacob Morrison\n\n\n\nProject Sponsor\nDr. Erik Fredericks\n\n\nBusiness Need\nThis project exists to improve the efficiency of quality control of DNA sequencing experiments by merging multiple steps of the process into a single executable.\n\n\nBusiness Requirements\n\nMerge coverage determination and statistical calculations\nUse multithreading to improve efficiency\nIntegrate process within existing toolkit\n\n\n\nBusiness Value\nI expect this project will reduce the time it takes to run the full quality control script, thereby decreasing the time it takes to complete the initial analysis. Further, this reduction in time will benefit clinical users, who often work in environments with limited resources and tight timelines.\n\n\nSpecial Issues or Constraints\n\nProject will be as a standalone tool before being integrated into existing toolkit\nPotential issue: Merging data from individual threads\nPotential issue: Allowing user to process a subset of data",
     "crumbs": [
@@ -10,23 +48,27 @@
     ]
   },
   {
-    "objectID": "diagrams.html",
-    "href": "diagrams.html",
-    "title": "Diagrams",
+    "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html",
+    "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html",
+    "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Use Case Diagrams\n\n\n\nUse Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing\n\n\n\n\nActivity Diagrams\n \n\n\n\nActivity Diagram 2: Command Line Interface",
-    "crumbs": [
-      "Diagrams (Use Case, Activity)"
-    ]
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 07 October 2024\nTime: 13:10\nDiscussion points:\n\nUse case diagrams created (IC2)\nActivity diagrams created (IC2)\nRequirements started (HW3, in progress)\nSome data that needs to be collected\n\nCoverage at each base in region\nWhether a read covers a base or not\n\nSome data structures\n\nNeed a data structure for passing shared information to each thread\nNeed an array for storing coverages in each region\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish requirements specification\nBegin implementation\nCreate presentation for midterm"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Genomic Coverage from Whole Genome Bisulfite Sequencing Data",
+    "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html#meeting-minutes",
+    "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html#meeting-minutes",
+    "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Description\nDNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.\nOne possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within BISCUIT to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses bedtools to do this, but it is a slow process. One option for improving the speed of this process would be to use mosdepth, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.\nThis project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.\n\n\nDeliverables\n\nSystem Request\nDiagrams (Use Case, Activity)",
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 07 October 2024\nTime: 13:10\nDiscussion points:\n\nUse case diagrams created (IC2)\nActivity diagrams created (IC2)\nRequirements started (HW3, in progress)\nSome data that needs to be collected\n\nCoverage at each base in region\nWhether a read covers a base or not\n\nSome data structures\n\nNeed a data structure for passing shared information to each thread\nNeed an array for storing coverages in each region\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish requirements specification\nBegin implementation\nCreate presentation for midterm"
+  },
+  {
+    "objectID": "website/diagrams.html",
+    "href": "website/diagrams.html",
+    "title": "Diagrams",
+    "section": "",
+    "text": "Use Case Diagrams\n\n\n\nUse Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing\n\n\n\n\nActivity Diagrams\n\n\n\nActivity Diagram 1: Command Line Interface\n\n\n\n\n\nActivity Diagram 2: Command Line Interface",
     "crumbs": [
-      "Home"
+      "Diagrams (Use Case, Activity)"
     ]
   }
 ]
