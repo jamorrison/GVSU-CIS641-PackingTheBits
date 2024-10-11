@@ -4,6 +4,9 @@ on:
     branches: main
     paths: 
       - website/**
+      - artifacts/**
+      - docs/**
+      - meetings/**
       - _quarto.yml
 
 name: Quarto Publish
