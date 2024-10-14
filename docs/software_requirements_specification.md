@@ -14,7 +14,7 @@ functional and non-functional requirements are described.
 1. Command Line Interface Requirements
     1. The command line interface shall accept an integer for the amount of CPU threads.
     2. The command line interface shall accept a file path for the input.
-    3. The command line interface shall check the input is valid.
+    3. The command line interface shall check the inputs are valid.
     4. The command line interface shall accept a file path for the output.
     5. The command line interface shall accept an optional file of regions of interest.
     6. The command line interface shall accept an integer for chromosome bin width.
@@ -82,7 +82,7 @@ functional and non-functional requirements are described.
     4. The program shall use eight (8) gigabytes or less of random access memory.
     5. The program shall compile in fifteen (15) seconds or less.
 3. Usability Requirements
-    1. The program shall use English usage comments.
+    1. The program shall use English comments.
     2. The program shall provide a help message for the user.
     3. The program shall provide error messages upon system failure.
     4. The program shall having a companion website describing usage.
