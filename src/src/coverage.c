@@ -42,7 +42,7 @@
 
 typedef struct regions_t {
     char     *chrm;    /* chromosome */
-    size_t    n;       /* number of reginos */
+    size_t    n;       /* number of regions */
     uint32_t *locs[2]; /* region starts (idx: 0) and lengths (idx: 1) */
 } regions_t;
 
@@ -92,7 +92,6 @@ static inline int compare_targets(const void *a, const void *b) {
 
 typedef struct {
     wqueue_t(record) *q;
-    char **bam_fns;
     char *outfn;
     char *header;
     target_v *targets;
@@ -175,6 +174,30 @@ static void *coverage_write_func(void *data) {
     return 0;
 }
 
+static void format_coverage(kstring_t *bed, char *chrm, window_t *w, covg_conf_t *conf, uint32_t *covgs) {
+    uint32_t start = w->beg - 1;
+    uint32_t width = 1;
+    uint32_t covg = covgs[0];
+
+    uint32_t arr_len = w->end - w->beg;
+    int i;
+    for (i=1; i<arr_len; i++) {
+        if (covgs[i] != covg) {
+            ksprintf(bed, "%s\t%u\t%u\t%u\n", chrm, start, start + width, covg);
+
+            start += width;
+            width = 1;
+            covg = covgs[i];
+            continue;
+        }
+
+        width += 1;
+    }
+
+    // Catch rest of the region
+    ksprintf(bed, "%s\t%u\t%u\t%u\n", chrm, start, start + width, covg);
+}
+
 static void *process_func(void *data) {
     result_t *res  = (result_t*) data;
     covg_conf_t *conf = (covg_conf_t*) res->conf;
@@ -200,15 +223,70 @@ static void *process_func(void *data) {
         rec.tid = w.tid;
         char *chrm = header->target_name[w.tid];
 
+        uint32_t *coverages = calloc(w.end - w.beg, sizeof(uint32_t));
+
         // The output string
         rec.s.l = rec.s.m = 0; rec.s.s = 0;
 
-        ksprintf(&rec.s, "%lli\t%i\t%u\t%u\n", w.block_id, w.tid, w.beg, w.end);
+        //ksprintf(&rec.s, "%lli\t%i\t%u\t%u\n", w.block_id, w.tid, w.beg, w.end);
+
+        hts_itr_t *iter = sam_itr_queryi(idx, w.tid, w.beg>1?(w.beg-1):1, w.end);
+        bam1_t *b = bam_init1();
+        int ret;
+        while ((ret = sam_itr_next(in, iter, b))>0) {
+            bam1_core_t *c = &b->core;
+
+            // Read-based filtering
+            if (c->flag > 0) { // only when any flag is set
+                if (c->flag & BAM_FSECONDARY) continue;
+                if (c->flag & BAM_FDUP) continue;
+                if (c->flag & BAM_FQCFAIL) continue;
+            }
+
+            uint32_t rpos = c->pos + 1; // 1-based reference position
+            uint32_t qpos = 0;
+
+            int i;
+            for (i=0; i<c->n_cigar; ++i) {
+                uint32_t op    = bam_cigar_op(bam_get_cigar(b)[i]);
+                uint32_t oplen = bam_cigar_oplen(bam_get_cigar(b)[i]);
+                switch(op) {
+                    case BAM_CMATCH:
+                    case BAM_CEQUAL:
+                    case BAM_CDIFF:
+                        for (j=0; j<oplen; ++j) {
+                            uint32_t idx = rpos + j - w.beg;
+                            coverages[idx] += 1;
+                            //ksprintf(&rec.s, "name: %s, idx: %u\n", bam_get_qname(b), idx);
+                        }
+                        rpos += oplen;
+                        qpos += oplen;
+                        break;
+                    case BAM_CINS:
+                        qpos += oplen;
+                        break;
+                    case BAM_CDEL:
+                        rpos += oplen;
+                        break;
+                    case BAM_CSOFT_CLIP:
+                        qpos += oplen;
+                        break;
+                    default:
+                        fprintf(stderr, "Unknown cigar %u\n", op);
+                        abort();
+                }
+            }
+        }
+
+        // produce coverage output
+        format_coverage(&rec.s, chrm, &w, conf, coverages);
 
         // set record block id
         rec.block_id = w.block_id;
         // put output string to output queue
         wqueue_put2(record, res->rq, rec);
+
+        free(coverages);
     }
 
     bam_hdr_destroy(header);
@@ -220,7 +298,7 @@ static void *process_func(void *data) {
 
 void covg_conf_init(covg_conf_t *conf) {
     conf->step = 100000;
-    conf->n_threads = 3;
+    conf->n_threads = 1;
 }
 
 static int usage() {
