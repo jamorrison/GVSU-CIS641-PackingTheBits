@@ -1,2 +1,5 @@
 /_site/
 /.quarto/
+
+src/build
+src/lib
