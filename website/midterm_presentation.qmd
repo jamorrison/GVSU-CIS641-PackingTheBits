@@ -6,4 +6,4 @@ title: Midterm Presentation
 
 [Download presentation](../docs/midterm_presentation.pdf)
 
-![](../docs/midterm_presentation.pdf)
+![](../docs/midterm_presentation.pdf){width=100%}
