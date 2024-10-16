@@ -238,9 +238,11 @@ static void *process_func(void *data) {
 
             // Read-based filtering
             if (c->flag > 0) { // only when any flag is set
+                if (c->flag & BAM_FUNMAP) continue;
                 if (c->flag & BAM_FSECONDARY) continue;
-                if (c->flag & BAM_FDUP) continue;
                 if (c->flag & BAM_FQCFAIL) continue;
+                if (c->flag & BAM_FDUP) continue;
+                if (c->flag & BAM_FSUPPLEMENTARY) continue;
             }
 
             uint32_t rpos = c->pos + 1; // 1-based reference position
