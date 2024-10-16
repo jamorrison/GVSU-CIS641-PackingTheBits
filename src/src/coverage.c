@@ -265,13 +265,15 @@ static void *process_func(void *data) {
                         qpos += oplen;
                         break;
                     case BAM_CINS:
+                    case BAM_CSOFT_CLIP:
                         qpos += oplen;
                         break;
                     case BAM_CDEL:
+                    case BAM_CREF_SKIP:
                         rpos += oplen;
                         break;
-                    case BAM_CSOFT_CLIP:
-                        qpos += oplen;
+                    case BAM_CHARD_CLIP:
+                    case BAM_CPAD:
                         break;
                     default:
                         fprintf(stderr, "Unknown cigar %u\n", op);
