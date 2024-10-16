@@ -2,8 +2,5 @@
 title: Midterm Presentation
 ---
 
-# Midterm Presentation
-
-[Download presentation](../docs/midterm_presentation.pdf)
-
-![](../docs/midterm_presentation.pdf){width=100%,height=20%}
+PDFs are difficult to render nicely in browsers, so please
+[download the presentation.](../docs/midterm_presentation.pdf)
