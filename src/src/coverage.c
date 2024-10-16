@@ -99,6 +99,7 @@ typedef struct {
 } writer_conf_t;
 
 void pop_record_by_block_id(record_v *records, int64_t block_id, record_t *record) {
+    fprintf(stderr, "pop_record_by_block_id entry\n");
     uint64_t i;
     record_t *r;
     for (i=0; i<records->size; ++i) {
@@ -110,9 +111,11 @@ void pop_record_by_block_id(record_v *records, int64_t block_id, record_t *recor
         }
     }
     record->block_id = RECORD_SLOT_OBSOLETE;
+    fprintf(stderr, "pop_record_by_block_id exit\n");
 }
 
 void put_into_record_v(record_v *records, record_t rec) {
+    fprintf(stderr, "put_into_record_v entry\n");
     uint64_t i;
     record_t *r;
 
@@ -121,6 +124,7 @@ void put_into_record_v(record_v *records, record_t rec) {
         r = ref_record_v(records, i);
         if (r->block_id == RECORD_SLOT_OBSOLETE) {
             *r = rec;
+            fprintf(stderr, "put_into_record_v exit\n");
             return;
         }
     }
@@ -128,10 +132,12 @@ void put_into_record_v(record_v *records, record_t rec) {
     /* get a new slot */
     r = next_ref_record_v(records);
     *r = rec;
+    fprintf(stderr, "put_into_record_v exit\n");
     return;
 }
 
 static void *coverage_write_func(void *data) {
+    fprintf(stderr, "coverage_write_func entry\n");
     writer_conf_t *c = (writer_conf_t*) data;
 
     FILE *out;
@@ -171,15 +177,18 @@ static void *coverage_write_func(void *data) {
         fclose(out);
     }
 
+    fprintf(stderr, "coverage_write_func exit\n");
     return 0;
 }
 
 static void format_coverage(kstring_t *bed, char *chrm, window_t *w, covg_conf_t *conf, uint32_t *covgs) {
+    fprintf(stderr, "format_coverage entry\n");
     uint32_t start = w->beg - 1;
     uint32_t width = 1;
     uint32_t covg = covgs[0];
 
     uint32_t arr_len = w->end - w->beg;
+    fprintf(stderr, "array length: %u\n", arr_len);
     int i;
     for (i=1; i<arr_len; i++) {
         if (covgs[i] != covg) {
@@ -196,9 +205,11 @@ static void format_coverage(kstring_t *bed, char *chrm, window_t *w, covg_conf_t
 
     // Catch rest of the region
     ksprintf(bed, "%s\t%u\t%u\t%u\n", chrm, start, start + width, covg);
+    fprintf(stderr, "format_coverage exit\n");
 }
 
 static void *process_func(void *data) {
+    fprintf(stderr, "process_func entry\n");
     result_t *res  = (result_t*) data;
     covg_conf_t *conf = (covg_conf_t*) res->conf;
 
@@ -257,9 +268,11 @@ static void *process_func(void *data) {
                     case BAM_CEQUAL:
                     case BAM_CDIFF:
                         for (j=0; j<oplen; ++j) {
-                            uint32_t idx = rpos + j - w.beg;
-                            coverages[idx] += 1;
-                            //ksprintf(&rec.s, "name: %s, idx: %u\n", bam_get_qname(b), idx);
+                            fprintf(stderr, "name: %s, w.beg: %u, rpos: %u, j: %u, w.end: %u\n", bam_get_qname(b), w.beg, rpos, j, w.end);
+                            if (w.beg <= rpos && rpos < w.end) {
+                                uint32_t idx = rpos + j - w.beg;
+                                coverages[idx] += 1;
+                            }
                         }
                         rpos += oplen;
                         qpos += oplen;
@@ -284,11 +297,12 @@ static void *process_func(void *data) {
 
         // produce coverage output
         format_coverage(&rec.s, chrm, &w, conf, coverages);
+        fprintf(stderr, "done printing me some coverage\n");
 
         // set record block id
         rec.block_id = w.block_id;
         // put output string to output queue
-        wqueue_put2(record, res->rq, rec);
+        //wqueue_put2(record, res->rq, rec);
 
         free(coverages);
     }
@@ -297,6 +311,7 @@ static void *process_func(void *data) {
     hts_idx_destroy(idx);
     hts_close(in);
 
+    fprintf(stderr, "process_func exit\n");
     return 0;
 }
 
@@ -379,18 +394,18 @@ int main_coverage(int argc, char *argv[]) {
     result_t *results = calloc(conf.n_threads, sizeof(result_t));
 
     // Setup writer
-    pthread_t writer;
-    writer_conf_t writer_conf = {
-        .q = wqueue_init(record, conf.step),
-        .outfn = out_fn,
-        .header = 0,
-        .targets = targets,
-        .conf = &conf,
-    };
-    pthread_create(&writer, NULL, coverage_write_func, &writer_conf);
+    //pthread_t writer;
+    //writer_conf_t writer_conf = {
+    //    .q = wqueue_init(record, conf.step),
+    //    .outfn = out_fn,
+    //    .header = 0,
+    //    .targets = targets,
+    //    .conf = &conf,
+    //};
+    //pthread_create(&writer, NULL, coverage_write_func, &writer_conf);
     for (i=0; i<conf.n_threads; ++i) {
         results[i].q = wq;
-        results[i].rq = writer_conf.q;
+        //results[i].rq = writer_conf.q;
         results[i].bam_fn = infn;
         results[i].conf = &conf;
         pthread_create(&processors[i], NULL, process_func, &results[i]);
@@ -424,10 +439,10 @@ int main_coverage(int argc, char *argv[]) {
     }
 
     record_t rec = { .block_id = RECORD_QUEUE_END };
-    wqueue_put2(record, writer_conf.q, rec);
-    pthread_join(writer, NULL);
+    //wqueue_put2(record, writer_conf.q, rec);
+    //pthread_join(writer, NULL);
 
-    wqueue_destroy(record, writer_conf.q);
+    //wqueue_destroy(record, writer_conf.q);
     free_target_v(targets);
     free(results);
     free(processors);
