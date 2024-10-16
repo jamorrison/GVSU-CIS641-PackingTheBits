@@ -6,3 +6,4 @@ title: Documents
 
 - [Project proposal](../docs/project-proposal.md)
 - [Software Requirements Specification](../docs/software_requirements_specification.md)
+- [Midterm Presentation](midterm_presentation.qmd)
