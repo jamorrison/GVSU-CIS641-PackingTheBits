@@ -237,6 +237,9 @@ static void *process_func(void *data) {
             bam1_core_t *c = &b->core;
 
             // Read-based filtering
+            // TODO: If I want to get the exact same results as from bedtools, I
+            //       will likely need to adjust my filters to match bedtools:
+            //       genomeCoverageBed/genomeCoverageBed.cpp:L303 and following
             if (c->flag > 0) { // only when any flag is set
                 if (c->flag & BAM_FUNMAP) continue;
                 if (c->flag & BAM_FSECONDARY) continue;
