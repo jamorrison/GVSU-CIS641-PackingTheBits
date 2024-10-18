@@ -137,6 +137,42 @@ void put_into_record_v(record_v *records, record_t rec) {
     return;
 }
 
+static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerator, uint32_t *denominator) {
+    khint_t k;
+    int absent;
+    kh_foreach(merge_from, k) {
+        uint32_t covg = kh_key(merge_from, k);
+        uint32_t base = kh_val(merge_from, k);
+
+        *numerator += covg * base;
+        *denominator += base;
+
+        khint_t key = cm_put(merge_into, covg, &absent);
+        if (absent) {
+            kh_val(merge_into, key) = base;
+        } else {
+            kh_val(merge_into, key) += base;
+        }
+    }
+}
+
+static double variance_numerator(covg_map *cm, double mean) {
+    double numerator = 0;
+
+    khint_t k;
+    kh_foreach(cm, k) {
+        double covg = (double)(kh_key(cm, k));
+        double base = (double)(kh_val(cm, k));
+
+        numerator += base * (covg - mean) * (covg - mean);
+
+        // TODO: work in writing to output file
+        //fprintf(out, "%u\t%u\n", covg, base);
+    }
+
+    return numerator;
+}
+
 static void *coverage_write_func(void *data) {
     writer_conf_t *c = (writer_conf_t*) data;
 
@@ -161,70 +197,21 @@ static void *coverage_write_func(void *data) {
         wqueue_get(record, c->q, &rec);
         if(rec.block_id == RECORD_QUEUE_END) break;
 
-        khint_t k_all;
-        int absent_all;
-        kh_foreach(rec.all, k_all) {
-            uint32_t covg = kh_key(rec.all, k_all);
-            uint32_t base = kh_val(rec.all, k_all);
-            num_all += covg * base;
-            den_all += base;
-            //fprintf(stderr, "covg: %u, n_base: %u, num_all: %u, den_all: %u\n", covg, base, num_all, den_all);
-
-            khint_t key = cm_put(merged_all, covg, &absent_all);
-            if (absent_all) {
-                kh_val(merged_all, key) = base;
-            } else {
-                kh_val(merged_all, key) += base;
-            }
-        }
+        merge(rec.all, merged_all, &num_all, &den_all);
+        merge(rec.q40, merged_q40, &num_q40, &den_q40);
 
         cm_destroy(rec.all);
-
-        khint_t k_q40;
-        int absent_q40;
-        kh_foreach(rec.q40, k_q40) {
-            uint32_t covg = kh_key(rec.q40, k_q40);
-            uint32_t base = kh_val(rec.q40, k_q40);
-            num_q40 += covg * base;
-            den_q40 += base;
-            //fprintf(stderr, "covg: %u, n_base: %u, num_q40: %u, den_q40: %u\n", covg, base, num_q40, den_q40);
-
-            khint_t key = cm_put(merged_q40, covg, &absent_q40);
-            if (absent_q40) {
-                kh_val(merged_q40, key) = base;
-            } else {
-                kh_val(merged_q40, key) += base;
-            }
-        }
-
         cm_destroy(rec.q40);
     }
 
     double mean_all = (double)num_all / (double)den_all;
     double mean_q40 = (double)num_q40 / (double)den_q40;
 
-    khint_t k_all;
-    uint32_t var_num_all = 0; // numerator of variance calculation
-    kh_foreach(merged_all, k_all) {
-        uint32_t covg = kh_key(merged_all, k_all);
-        uint32_t base = kh_val(merged_all, k_all);
-        var_num_all += base * (covg - mean_all) * (covg - mean_all);
+    double var_num_all = variance_numerator(merged_all, mean_all);
+    double var_num_q40 = variance_numerator(merged_q40, mean_q40);
 
-        fprintf(out, "%u\t%u\n", covg, base);
-    }
-
-    khint_t k_q40;
-    uint32_t var_num_q40 = 0; // numerator of variance calculation
-    kh_foreach(merged_q40, k_q40) {
-        uint32_t covg = kh_key(merged_q40, k_q40);
-        uint32_t base = kh_val(merged_q40, k_q40);
-        var_num_q40 += base * (covg - mean_q40) * (covg - mean_q40);
-
-        fprintf(out, "%u\t%u\n", covg, base);
-    }
-
-    double sigma_all = sqrt((double)var_num_all / (double)den_all);
-    double sigma_q40 = sqrt((double)var_num_q40 / (double)den_q40);
+    double sigma_all = sqrt(var_num_all / (double)den_all);
+    double sigma_q40 = sqrt(var_num_q40 / (double)den_q40);
 
     fprintf(stderr, "all\t%lf\t%lf\t%lf\n", mean_all, sigma_all, sigma_all/mean_all);
     fprintf(stderr, "q40\t%lf\t%lf\t%lf\n", mean_q40, sigma_q40, sigma_q40/mean_q40);
