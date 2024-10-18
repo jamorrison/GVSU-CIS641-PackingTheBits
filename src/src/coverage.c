@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <math.h>
 
 #include "wqueue.h"
 #include "wvec.h"
@@ -34,11 +35,15 @@
 #include "hts.h"
 #include "sam.h"
 
+#include "khashl.h"
+
 #include "coverage.h"
 
 // Record related structs and functions
 #define RECORD_QUEUE_END -2
 #define RECORD_SLOT_OBSOLETE -1
+
+KHASHL_MAP_INIT(KH_LOCAL, covg_map, cm, uint32_t, uint32_t, kh_hash_uint32, kh_eq_generic)
 
 typedef struct regions_t {
     char     *chrm;    /* chromosome */
@@ -51,7 +56,8 @@ DEFINE_VECTOR(regions_v, regions_t)
 // Information stored for each window
 typedef struct {
     int64_t   block_id; /* ID of block processed by thread */
-    kstring_t s;        /* stores entries to print */
+    covg_map  *all;     /* hash map : (key: coverage, value: number of bases with coverage) */
+    covg_map  *q40;     /* hash map : (key: coverage, value: number of bases with coverage) */
     int       tid;      /* contig ID number */
 } record_t;
 
@@ -141,30 +147,91 @@ static void *coverage_write_func(void *data) {
         out = stdout;
     }
 
-    int64_t next_block = 0;
-    record_v *records = init_record_v(20);
+    fprintf(out, "BISCUITqc Depth Distribution - ...\ndepth\tcount\n");
 
+    covg_map *merged_all = cm_init();
+    covg_map *merged_q40 = cm_init();
+
+    uint32_t num_all = 0; // coverage * (N bases with coverage)
+    uint32_t den_all = 0; // N bases with coverage
+    uint32_t num_q40 = 0; // coverage * (N bases with coverage)
+    uint32_t den_q40 = 0; // N bases with coverage
     while (1) {
         record_t rec;
         wqueue_get(record, c->q, &rec);
         if(rec.block_id == RECORD_QUEUE_END) break;
 
-        if (rec.block_id == next_block) {
-            do {
-                if (rec.s.s) fputs(rec.s.s, out);
-                free(rec.s.s);
+        khint_t k_all;
+        int absent_all;
+        kh_foreach(rec.all, k_all) {
+            uint32_t covg = kh_key(rec.all, k_all);
+            uint32_t base = kh_val(rec.all, k_all);
+            num_all += covg * base;
+            den_all += base;
+            //fprintf(stderr, "covg: %u, n_base: %u, num_all: %u, den_all: %u\n", covg, base, num_all, den_all);
 
-                // Get next block from shelf if available else return OBSOLETE and retrieve new block from queue
-                next_block++;
-                pop_record_by_block_id(records, next_block, &rec);
-            } while (rec.block_id != RECORD_SLOT_OBSOLETE);
-        } else {
-            // Shelf the block if not next
-            put_into_record_v(records, rec);
+            khint_t key = cm_put(merged_all, covg, &absent_all);
+            if (absent_all) {
+                kh_val(merged_all, key) = base;
+            } else {
+                kh_val(merged_all, key) += base;
+            }
         }
+
+        cm_destroy(rec.all);
+
+        khint_t k_q40;
+        int absent_q40;
+        kh_foreach(rec.q40, k_q40) {
+            uint32_t covg = kh_key(rec.q40, k_q40);
+            uint32_t base = kh_val(rec.q40, k_q40);
+            num_q40 += covg * base;
+            den_q40 += base;
+            //fprintf(stderr, "covg: %u, n_base: %u, num_q40: %u, den_q40: %u\n", covg, base, num_q40, den_q40);
+
+            khint_t key = cm_put(merged_q40, covg, &absent_q40);
+            if (absent_q40) {
+                kh_val(merged_q40, key) = base;
+            } else {
+                kh_val(merged_q40, key) += base;
+            }
+        }
+
+        cm_destroy(rec.q40);
     }
 
-    free_record_v(records);
+    double mean_all = (double)num_all / (double)den_all;
+    double mean_q40 = (double)num_q40 / (double)den_q40;
+
+    khint_t k_all;
+    uint32_t var_num_all = 0; // numerator of variance calculation
+    kh_foreach(merged_all, k_all) {
+        uint32_t covg = kh_key(merged_all, k_all);
+        uint32_t base = kh_val(merged_all, k_all);
+        var_num_all += base * (covg - mean_all) * (covg - mean_all);
+
+        fprintf(out, "%u\t%u\n", covg, base);
+    }
+
+    khint_t k_q40;
+    uint32_t var_num_q40 = 0; // numerator of variance calculation
+    kh_foreach(merged_q40, k_q40) {
+        uint32_t covg = kh_key(merged_q40, k_q40);
+        uint32_t base = kh_val(merged_q40, k_q40);
+        var_num_q40 += base * (covg - mean_q40) * (covg - mean_q40);
+
+        fprintf(out, "%u\t%u\n", covg, base);
+    }
+
+    double sigma_all = sqrt((double)var_num_all / (double)den_all);
+    double sigma_q40 = sqrt((double)var_num_q40 / (double)den_q40);
+
+    fprintf(stderr, "all\t%lf\t%lf\t%lf\n", mean_all, sigma_all, sigma_all/mean_all);
+    fprintf(stderr, "q40\t%lf\t%lf\t%lf\n", mean_q40, sigma_q40, sigma_q40/mean_q40);
+
+    cm_destroy(merged_q40);
+    cm_destroy(merged_all);
+
     if (c->outfn) {
         // For stdout, will close at the end of main
         fflush(out);
@@ -174,28 +241,48 @@ static void *coverage_write_func(void *data) {
     return 0;
 }
 
-static void format_coverage(kstring_t *bed, char *chrm, window_t *w, covg_conf_t *conf, uint32_t *covgs) {
-    uint32_t start = w->beg - 1;
-    uint32_t width = 1;
-    uint32_t covg = covgs[0];
+static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len) {
+    int absent_all, absent_q40;
+    khint_t k_all, k_q40;
 
-    uint32_t arr_len = w->end - w->beg;
-    int i;
-    for (i=1; i<arr_len; i++) {
-        if (covgs[i] != covg) {
-            ksprintf(bed, "%s\t%u\t%u\t%u\n", chrm, start, start + width, covg);
+    uint32_t i;
+    for (i=0; i<arr_len; i++) {
+        uint8_t is_match_all = 0;
+        uint8_t is_match_q40 = 0;
 
-            start += width;
-            width = 1;
-            covg = covgs[i];
-            continue;
+        // If the current coverage is the same as the last one, we know the coverage has been seen before
+        // and the correct bucket is already loaded up, so shortcircuit by automatically incrementing value
+        //if (i > 0 && all_covgs[i] == all_covgs[i-1]) {
+        if (i > 0) {
+            is_match_all = all_covgs[i] == all_covgs[i-1];
+            is_match_q40 = all_covgs[i] == all_covgs[i-1];
+
+            if (is_match_all) {
+                kh_val(all, k_all) += 1;
+            }
+            if (is_match_q40) {
+                kh_val(q40, k_q40) += 1;
+            }
         }
 
-        width += 1;
-    }
+        if (!is_match_all) {
+            k_all = cm_put(all, all_covgs[i], &absent_all);
+            if (absent_all) {
+                kh_val(all, k_all) = 1;
+            } else {
+                kh_val(all, k_all) += 1;
+            }
+        }
 
-    // Catch rest of the region
-    ksprintf(bed, "%s\t%u\t%u\t%u\n", chrm, start, start + width, covg);
+        if (!is_match_q40) {
+            k_q40 = cm_put(q40, q40_covgs[i], &absent_q40);
+            if (absent_q40) {
+                kh_val(q40, k_q40) = 1;
+            } else {
+                kh_val(q40, k_q40) += 1;
+            }
+        }
+    }
 }
 
 static void *process_func(void *data) {
@@ -223,12 +310,8 @@ static void *process_func(void *data) {
         rec.tid = w.tid;
         char *chrm = header->target_name[w.tid];
 
-        uint32_t *coverages = calloc(w.end - w.beg, sizeof(uint32_t));
-
-        // The output string
-        rec.s.l = rec.s.m = 0; rec.s.s = 0;
-
-        //ksprintf(&rec.s, "%lli\t%i\t%u\t%u\n", w.block_id, w.tid, w.beg, w.end);
+        uint32_t *all_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
+        uint32_t *q40_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
 
         hts_itr_t *iter = sam_itr_queryi(idx, w.tid, w.beg>1?(w.beg-1):1, w.end);
         bam1_t *b = bam_init1();
@@ -262,7 +345,10 @@ static void *process_func(void *data) {
                         for (j=0; j<oplen; ++j) {
                             if (w.beg <= rpos && rpos+j < w.end) {
                                 uint32_t idx = rpos + j - w.beg;
-                                coverages[idx] += 1;
+                                all_covgs[idx] += 1;
+                                if (c->qual >= 40) {
+                                    q40_covgs[idx] += 1;
+                                }
                             }
                         }
                         rpos += oplen;
@@ -287,7 +373,9 @@ static void *process_func(void *data) {
         }
 
         // produce coverage output
-        format_coverage(&rec.s, chrm, &w, conf, coverages);
+        rec.all = cm_init();
+        rec.q40 = cm_init();
+        format_coverage_data(rec.all, rec.q40, all_covgs, q40_covgs, w.end-w.beg);
 
         // set record block id
         rec.block_id = w.block_id;
@@ -297,7 +385,8 @@ static void *process_func(void *data) {
         bam_destroy1(b);
         hts_itr_destroy(iter);
 
-        free(coverages);
+        free(q40_covgs);
+        free(all_covgs);
     }
 
     bam_hdr_destroy(header);
