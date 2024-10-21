@@ -121,14 +121,14 @@ static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerato
     }
 }
 
-static void process_coverage_results(covg_map *cm, double mean, char *covg_fname, char *tag, double *numerator) {
+static void process_coverage_results(covg_map *cm, double mean, char *covg_fname, char *tag, uint32_t *numerator) {
     FILE *out = fopen(covg_fname, "w");
     fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", tag);
 
     khint_t k;
     kh_foreach(cm, k) {
-        double covg = (double)(kh_key(cm, k));
-        double base = (double)(kh_val(cm, k));
+        uint32_t covg = kh_key(cm, k);
+        uint32_t base = kh_val(cm, k);
 
         *numerator += base * (covg - mean) * (covg - mean);
 
@@ -171,14 +171,14 @@ static void *coverage_write_func(void *data) {
     }
 
     double mean_all = (double)num_all / (double)den_all;
-    double var_num_all = 0.0;
+    uint32_t var_num_all = 0;
     process_coverage_results(merged_all, mean_all, "covdist_all_base_table.txt", "All Bases", &var_num_all);
-    double sigma_all = sqrt(var_num_all / (double)den_all);
+    double sigma_all = sqrt((double)var_num_all / (double)den_all);
 
     double mean_q40 = (double)num_q40 / (double)den_q40;
-    double var_num_q40 = 0.0;
+    uint32_t var_num_q40 = 0;
     process_coverage_results(merged_q40, mean_q40, "covdist_q40_base_table.txt", "Q40 Bases", &var_num_q40);
-    double sigma_q40 = sqrt(var_num_q40 / (double)den_q40);
+    double sigma_q40 = sqrt((double)var_num_q40 / (double)den_q40);
 
     fprintf(stderr, "all\t%lf\t%lf\t%lf\n", mean_all, sigma_all, sigma_all/mean_all);
     fprintf(stderr, "q40\t%lf\t%lf\t%lf\n", mean_q40, sigma_q40, sigma_q40/mean_q40);
