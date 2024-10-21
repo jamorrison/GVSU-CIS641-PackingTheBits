@@ -29,8 +29,11 @@
 #include <inttypes.h>
 #include <math.h>
 
+#include "zlib.h"
+
 #include "wqueue.h"
 #include "wvec.h"
+#include "wzmisc.h"
 
 #include "hts.h"
 #include "sam.h"
@@ -47,11 +50,73 @@ KHASHL_MAP_INIT(KH_LOCAL, covg_map, cm, uint32_t, uint32_t, kh_hash_uint32, kh_e
 
 typedef struct regions_t {
     char     *chrm;    /* chromosome */
+    size_t    cap;     /* array capacity for both starts and widths */
     size_t    n;       /* number of regions */
-    uint32_t *locs[2]; /* region starts (idx: 0) and lengths (idx: 1) */
+    uint32_t *starts; /* region starts */
+    uint32_t *widths; /* region widths */
 } regions_t;
 
 DEFINE_VECTOR(regions_v, regions_t)
+
+void destroy_regions(regions_v *regions) {
+    uint32_t i;
+    for (i=0; i<regions->size; i++) {
+        regions_t *reg = ref_regions_v(regions, i);
+        free(reg->starts);
+        free(reg->widths);
+        free(reg->chrm);
+    }
+    free_regions_v(regions);
+}
+
+void realloc_regions(regions_t *reg) {
+    // Could potentially make this a parameter that can be toggled to increase speed further
+    // Larger value = fewer allocations, but more excess memory used
+    // Smaller value = more allocations, but less memory overhead
+    size_t additional = 10000;
+
+    reg->starts = realloc(reg->starts, (reg->n+additional)*sizeof(uint32_t));
+    if (!reg->starts) {
+        fprintf(stderr, "Failed to properly allocate space for region starts\n");
+        exit(1);
+    }
+
+    reg->widths = realloc(reg->widths, (reg->n+additional)*sizeof(uint32_t));
+    if (!reg->widths) {
+        fprintf(stderr, "Failed to properly allocate space for region widths\n");
+        exit(1);
+    }
+
+    reg->cap += additional;
+}
+
+// Get all regions from one chromosome
+static inline regions_t *get_regions(regions_v *regions, char *chrm) {
+    uint32_t i;
+    regions_t *reg;
+    for (i=0; i<regions->size; ++i) {
+        reg = ref_regions_v(regions, i);
+        if (strcmp(reg->chrm, chrm) == 0) { return reg; }
+    }
+
+    return NULL;
+}
+
+static inline regions_t *get_n_insert_region(regions_v *regions, char *chrm) {
+    regions_t *reg = get_regions(regions, chrm);
+    if (!reg) {
+        reg = next_ref_regions_v(regions);
+        reg->chrm = strdup(chrm);
+        reg->starts = calloc(1, sizeof(uint32_t));
+        reg->widths = calloc(1, sizeof(uint32_t));
+        reg->n = 0;
+        reg->cap = 1;
+    }
+    return reg;
+}
+
+#define regions_test(regs, i) regs[(i)>>3]&(1<<((i)&0x7))
+#define regions_set(regs, i) regs[(i)>>3] |= 1<<((i)&0x7)
 
 // Information stored for each window
 typedef struct {
@@ -350,6 +415,82 @@ static void *process_func(void *data) {
     return 0;
 }
 
+regions_v *bed_init_regions(char *bed_fn) {
+    regions_v *regions = init_regions_v(2);
+    kstring_t line;
+    line.l = line.m = 0;
+    line.s = 0;
+
+    // Read BED file
+    regions_t *reg = 0;
+    char *tok;
+
+    gzFile fh = gzopen(bed_fn, "r");
+    if (fh == NULL) {
+        free(line.s);
+        fprintf(stderr, "Could not find regions BED file: %s\n", bed_fn);
+        gzclose(fh);
+        exit(1);
+    }
+
+    uint32_t n_lines = 0;
+    uint8_t first_char = 1;
+    while (1) {
+        int c = gzgetc(fh);
+        if (c < 0 && first_char) {
+            free(line.s);
+            fprintf(stderr, "Regions BED file (%s) is empty\n", bed_fn);
+            gzclose(fh);
+            exit(1);
+        }
+        first_char = 0;
+
+        if (c == '\n' || c == EOF || c < 0) {
+            if (strcount_char(line.s, '\t') == 2) {
+                // Get chromosome
+                tok = strtok(line.s, "\t");
+                if (!reg || strcmp(reg->chrm, tok) != 0) {
+                    fprintf(stderr, "new chromosome found: %s\n", tok);
+                    n_lines = 0;
+                    reg = get_n_insert_region(regions, tok);
+                }
+
+                // Adjust number of elements
+                if (n_lines > reg->cap) {
+                    realloc_regions(reg);
+                }
+
+                // Get start
+                tok = strtok(NULL, "\t");
+                ensure_number(tok);
+                uint32_t start = (uint32_t)atoi(tok);
+
+                tok = strtok(NULL, "\t");
+                ensure_number(tok);
+                uint32_t end = (uint32_t)atoi(tok);
+
+                reg->starts[reg->n] = start;
+                reg->widths[reg->n] = end - start;
+
+                n_lines++;
+                reg->n++;
+            }
+
+            line.l = 0;
+            if (c == EOF || c < 0) {
+                break;
+            }
+        } else {
+            kputc(c, &line);
+        }
+    }
+
+    gzclose(fh);
+    free(line.s);
+
+    return regions;
+}
+
 void covg_conf_init(covg_conf_t *conf) {
     conf->step = 100000;
     conf->n_threads = 1;
@@ -374,6 +515,7 @@ static int usage() {
 
 int main_coverage(int argc, char *argv[]) {
     char *region_bed_fn = 0;
+    char *cpg_bed_fn = 0;
     char *out_fn = 0;
 
     covg_conf_t conf;
@@ -381,11 +523,12 @@ int main_coverage(int argc, char *argv[]) {
 
     int c;
     if (argc < 2) { return usage(); }
-    while ((c=getopt(argc, argv, ":@:o:r:s:")) >= 0) {
+    while ((c=getopt(argc, argv, ":@:m:o:r:s:")) >= 0) {
         switch (c) {
             case '@': conf.n_threads = atoi(optarg); break;
             case 'o': out_fn = optarg; break;
             case 'r': region_bed_fn = optarg; break;
+            case 'm': cpg_bed_fn = optarg; break;
             case 's': conf.step = atoi(optarg); break;
             case ':': usage(); fprintf(stderr, "Option needs an argument: -%c\n", optopt); return 1;
             case '?': usage(); fprintf(stderr, "Unrecognized option: -%c\n", optopt); return 1;
@@ -401,7 +544,8 @@ int main_coverage(int argc, char *argv[]) {
     char *infn = argv[optind++];
 
     // TODO: Placeholder until I implement region coverages
-    regions_v *regions = NULL;
+    regions_v *cpg_regions = cpg_bed_fn ? bed_init_regions(cpg_bed_fn) : NULL;
+    fprintf(stderr, "Number of chromosomes: %u\n", cpg_regions->size);
 
     htsFile *in = hts_open(infn, "rb");
     if (in == NULL) {
@@ -484,8 +628,8 @@ int main_coverage(int argc, char *argv[]) {
     hts_close(in);
     bam_hdr_destroy(header);
 
-    //if (regions)
-    //    destroy_regions(regions);
+    if (cpg_regions)
+        destroy_regions(cpg_regions);
 
     return 0;
 }
