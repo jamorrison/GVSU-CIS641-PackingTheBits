@@ -140,11 +140,11 @@ DEFINE_WQUEUE(window, window_t)
 
 // Shared information across threads
 typedef struct {
-    char             *bam_fn;  /* BAM filename */
-    regions_v        *regions; /* vector of regions */
-    wqueue_t(window) *q;       /* window queue */
-    wqueue_t(record) *rq;      /* records queue */
-    covg_conf_t      *conf;    /* config variables */
+    char             *bam_fn;      /* BAM filename */
+    regions_v        *cpg_regions; /* vector of CpGs */
+    wqueue_t(window) *q;           /* window queue */
+    wqueue_t(record) *rq;          /* records queue */
+    covg_conf_t      *conf;        /* config variables */
 } result_t;
 
 // Contig info
@@ -210,6 +210,33 @@ static void process_coverage_results(covg_map *cm, uint32_t mean_numerator, uint
     fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
 }
 
+typedef struct {
+    covg_map *all_base; /* all reads base coverage */
+    covg_map *q40_base; /* q40 reads cpg coverage */
+    //covg_map *all_cpg; /* all reads base coverage */
+    //covg_map *q40_cpg; /* q40 reads cpg coverage */
+} maps_t;
+
+static inline maps_t *init_maps() {
+    maps_t *out = calloc(1, sizeof(maps_t));
+
+    out->all_base = cm_init();
+    out->q40_base = cm_init();
+    //out->all_cpg  = cm_init();
+    //out->q40_cpg  = cm_init();
+
+    return out;
+}
+
+static inline void destroy_maps(maps_t *maps) {
+    //cm_destroy(maps->q40_cpg);
+    //cm_destroy(maps->all_cpg);
+    cm_destroy(maps->q40_base);
+    cm_destroy(maps->all_base);
+
+    free(maps);
+}
+
 static void *coverage_write_func(void *data) {
     writer_conf_t *c = (writer_conf_t*) data;
 
@@ -222,8 +249,7 @@ static void *coverage_write_func(void *data) {
 
     fprintf(out, "BISCUITqc Depth Distribution - ...\ndepth\tcount\n");
 
-    covg_map *merged_all = cm_init();
-    covg_map *merged_q40 = cm_init();
+    maps_t *maps = init_maps();
 
     uint32_t num_all = 0; // coverage * (N bases with coverage)
     uint32_t den_all = 0; // N bases with coverage
@@ -234,8 +260,8 @@ static void *coverage_write_func(void *data) {
         wqueue_get(record, c->q, &rec);
         if(rec.block_id == RECORD_QUEUE_END) break;
 
-        merge(rec.all, merged_all, &num_all, &den_all);
-        merge(rec.q40, merged_q40, &num_q40, &den_q40);
+        merge(rec.all, maps->all_base, &num_all, &den_all);
+        merge(rec.q40, maps->q40_base, &num_q40, &den_q40);
 
         cm_destroy(rec.all);
         cm_destroy(rec.q40);
@@ -244,14 +270,13 @@ static void *coverage_write_func(void *data) {
     FILE *cv_table = fopen("cv_table.txt", "w");
     fprintf(cv_table, "BISCUITqc Uniformity Table\ngroup\tmu\tsigma\tcv\n");
 
-    process_coverage_results(merged_all, num_all, den_all, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
-    process_coverage_results(merged_q40, num_q40, den_q40, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
+    process_coverage_results(maps->all_base, num_all, den_all, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
+    process_coverage_results(maps->q40_base, num_q40, den_q40, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
 
     fflush(cv_table);
     fclose(cv_table);
 
-    cm_destroy(merged_q40);
-    cm_destroy(merged_all);
+    destroy_maps(maps);
 
     if (c->outfn) {
         // For stdout, will close at the end of main
@@ -262,12 +287,16 @@ static void *coverage_write_func(void *data) {
     return 0;
 }
 
-static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len) {
+static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
     int absent_all, absent_q40;
     khint_t k_all, k_q40;
 
     uint32_t i;
     for (i=0; i<arr_len; i++) {
+        if (cpgs && regions_test(cpgs, i)) {
+            fprintf(stderr, "cpg covered base! %u\n", i);
+        }
+
         uint8_t is_match_all = 0;
         uint8_t is_match_q40 = 0;
 
@@ -328,6 +357,29 @@ static void *process_func(void *data) {
         if (w.tid == -1) break;
 
         char *chrm = header->target_name[w.tid];
+
+        uint8_t *cpgs = NULL;
+        if (res->cpg_regions) {
+            cpgs = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
+            regions_t *reg = get_regions(res->cpg_regions, chrm);
+
+            // If chromosome is found in CpG regions file
+            int j;
+            if (reg) {
+                for (j=0; j<reg->n; j++) {
+                    uint32_t start = reg->starts[j];
+                    uint32_t width = reg->widths[j];
+                    if (start+width >= w.beg && start < w.end) {
+                        int k;
+                        for (k=0; k<width; k++) {
+                            if (start+k >= w.beg && start+k < w.end) {
+                                regions_set(cpgs, start+k-w.beg);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         uint32_t *all_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
         uint32_t *q40_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
@@ -394,7 +446,7 @@ static void *process_func(void *data) {
         // produce coverage output
         rec.all = cm_init();
         rec.q40 = cm_init();
-        format_coverage_data(rec.all, rec.q40, all_covgs, q40_covgs, w.end-w.beg);
+        format_coverage_data(rec.all, rec.q40, all_covgs, q40_covgs, w.end-w.beg, cpgs);
 
         // set record block id
         rec.block_id = w.block_id;
@@ -406,6 +458,7 @@ static void *process_func(void *data) {
 
         free(q40_covgs);
         free(all_covgs);
+        free(cpgs);
     }
 
     bam_hdr_destroy(header);
@@ -456,7 +509,7 @@ regions_v *bed_init_regions(char *bed_fn) {
                 }
 
                 // Adjust number of elements
-                if (n_lines > reg->cap) {
+                if (n_lines == reg->cap) {
                     realloc_regions(reg);
                 }
 
@@ -584,6 +637,7 @@ int main_coverage(int argc, char *argv[]) {
     for (i=0; i<conf.n_threads; ++i) {
         results[i].q = wq;
         results[i].rq = writer_conf.q;
+        results[i].cpg_regions = cpg_regions;
         results[i].bam_fn = infn;
         results[i].conf = &conf;
         pthread_create(&processors[i], NULL, process_func, &results[i]);
