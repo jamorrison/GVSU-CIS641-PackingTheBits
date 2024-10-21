@@ -58,7 +58,6 @@ typedef struct {
     int64_t   block_id; /* ID of block processed by thread */
     covg_map  *all;     /* hash map : (key: coverage, value: number of bases with coverage) */
     covg_map  *q40;     /* hash map : (key: coverage, value: number of bases with coverage) */
-    int       tid;      /* contig ID number */
 } record_t;
 
 DEFINE_VECTOR(record_v, record_t)
@@ -99,43 +98,9 @@ static inline int compare_targets(const void *a, const void *b) {
 typedef struct {
     wqueue_t(record) *q;
     char *outfn;
-    char *header;
     target_v *targets;
     covg_conf_t *conf;
 } writer_conf_t;
-
-void pop_record_by_block_id(record_v *records, int64_t block_id, record_t *record) {
-    uint64_t i;
-    record_t *r;
-    for (i=0; i<records->size; ++i) {
-        r = ref_record_v(records, i);
-        if (r->block_id == block_id) {
-            *record = *r;             /* copy the record and set slot on shelf to OBSOLETE */
-            r->block_id = RECORD_SLOT_OBSOLETE;
-            return;
-        }
-    }
-    record->block_id = RECORD_SLOT_OBSOLETE;
-}
-
-void put_into_record_v(record_v *records, record_t rec) {
-    uint64_t i;
-    record_t *r;
-
-    /* fill blanks */
-    for (i=0; i<records->size; ++i) {
-        r = ref_record_v(records, i);
-        if (r->block_id == RECORD_SLOT_OBSOLETE) {
-            *r = rec;
-            return;
-        }
-    }
-
-    /* get a new slot */
-    r = next_ref_record_v(records);
-    *r = rec;
-    return;
-}
 
 static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerator, uint32_t *denominator) {
     khint_t k;
@@ -156,21 +121,22 @@ static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerato
     }
 }
 
-static double variance_numerator(covg_map *cm, double mean) {
-    double numerator = 0;
+static void process_coverage_results(covg_map *cm, double mean, char *covg_fname, char *tag, double *numerator) {
+    FILE *out = fopen(covg_fname, "w");
+    fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", tag);
 
     khint_t k;
     kh_foreach(cm, k) {
         double covg = (double)(kh_key(cm, k));
         double base = (double)(kh_val(cm, k));
 
-        numerator += base * (covg - mean) * (covg - mean);
+        *numerator += base * (covg - mean) * (covg - mean);
 
-        // TODO: work in writing to output file
-        //fprintf(out, "%u\t%u\n", covg, base);
+        fprintf(out, "%u\t%u\n", covg, base);
     }
 
-    return numerator;
+    fflush(out);
+    fclose(out);
 }
 
 static void *coverage_write_func(void *data) {
@@ -205,12 +171,13 @@ static void *coverage_write_func(void *data) {
     }
 
     double mean_all = (double)num_all / (double)den_all;
-    double mean_q40 = (double)num_q40 / (double)den_q40;
-
-    double var_num_all = variance_numerator(merged_all, mean_all);
-    double var_num_q40 = variance_numerator(merged_q40, mean_q40);
-
+    double var_num_all = 0.0;
+    process_coverage_results(merged_all, mean_all, "covdist_all_base_table.txt", "All Bases", &var_num_all);
     double sigma_all = sqrt(var_num_all / (double)den_all);
+
+    double mean_q40 = (double)num_q40 / (double)den_q40;
+    double var_num_q40 = 0.0;
+    process_coverage_results(merged_q40, mean_q40, "covdist_q40_base_table.txt", "Q40 Bases", &var_num_q40);
     double sigma_q40 = sqrt(var_num_q40 / (double)den_q40);
 
     fprintf(stderr, "all\t%lf\t%lf\t%lf\n", mean_all, sigma_all, sigma_all/mean_all);
@@ -294,7 +261,6 @@ static void *process_func(void *data) {
         wqueue_get(window, res->q, &w);
         if (w.tid == -1) break;
 
-        rec.tid = w.tid;
         char *chrm = header->target_name[w.tid];
 
         uint32_t *all_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
@@ -466,7 +432,6 @@ int main_coverage(int argc, char *argv[]) {
     writer_conf_t writer_conf = {
         .q = wqueue_init(record, conf.step),
         .outfn = out_fn,
-        .header = 0,
         .targets = targets,
         .conf = &conf,
     };
