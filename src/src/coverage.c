@@ -121,22 +121,28 @@ static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerato
     }
 }
 
-static void process_coverage_results(covg_map *cm, double mean, char *covg_fname, char *tag, uint32_t *numerator) {
+static void process_coverage_results(covg_map *cm, uint32_t mean_numerator, uint32_t denominator, char *covg_fname, char *covdist_tag, FILE *cv_file, char *cv_tag) {
+    double mean = (double)mean_numerator / (double)denominator;
+
     FILE *out = fopen(covg_fname, "w");
-    fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", tag);
+    fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", covdist_tag);
 
     khint_t k;
+    uint32_t variance_numerator = 0;
     kh_foreach(cm, k) {
         uint32_t covg = kh_key(cm, k);
         uint32_t base = kh_val(cm, k);
 
-        *numerator += base * (covg - mean) * (covg - mean);
+        variance_numerator += base * (covg - mean) * (covg - mean);
 
         fprintf(out, "%u\t%u\n", covg, base);
     }
 
     fflush(out);
     fclose(out);
+
+    double sigma = sqrt((double)variance_numerator / (double)denominator);
+    fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
 }
 
 static void *coverage_write_func(void *data) {
@@ -170,18 +176,14 @@ static void *coverage_write_func(void *data) {
         cm_destroy(rec.q40);
     }
 
-    double mean_all = (double)num_all / (double)den_all;
-    uint32_t var_num_all = 0;
-    process_coverage_results(merged_all, mean_all, "covdist_all_base_table.txt", "All Bases", &var_num_all);
-    double sigma_all = sqrt((double)var_num_all / (double)den_all);
+    FILE *cv_table = fopen("cv_table.txt", "w");
+    fprintf(cv_table, "BISCUITqc Uniformity Table\ngroup\tmu\tsigma\tcv\n");
 
-    double mean_q40 = (double)num_q40 / (double)den_q40;
-    uint32_t var_num_q40 = 0;
-    process_coverage_results(merged_q40, mean_q40, "covdist_q40_base_table.txt", "Q40 Bases", &var_num_q40);
-    double sigma_q40 = sqrt((double)var_num_q40 / (double)den_q40);
+    process_coverage_results(merged_all, num_all, den_all, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
+    process_coverage_results(merged_q40, num_q40, den_q40, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
 
-    fprintf(stderr, "all\t%lf\t%lf\t%lf\n", mean_all, sigma_all, sigma_all/mean_all);
-    fprintf(stderr, "q40\t%lf\t%lf\t%lf\n", mean_q40, sigma_q40, sigma_q40/mean_q40);
+    fflush(cv_table);
+    fclose(cv_table);
 
     cm_destroy(merged_q40);
     cm_destroy(merged_all);
