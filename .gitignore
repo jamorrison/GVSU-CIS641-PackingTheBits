@@ -3,3 +3,5 @@
 
 src/build
 src/lib
+
+tests/*.txt
