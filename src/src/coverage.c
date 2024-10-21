@@ -208,7 +208,6 @@ static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_cov
 
         // If the current coverage is the same as the last one, we know the coverage has been seen before
         // and the correct bucket is already loaded up, so shortcircuit by automatically incrementing value
-        //if (i > 0 && all_covgs[i] == all_covgs[i-1]) {
         if (i > 0) {
             is_match_all = all_covgs[i] == all_covgs[i-1];
             is_match_q40 = all_covgs[i] == all_covgs[i-1];
