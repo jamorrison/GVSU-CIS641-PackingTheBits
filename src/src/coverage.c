@@ -48,6 +48,37 @@
 
 KHASHL_MAP_INIT(KH_LOCAL, covg_map, cm, uint32_t, uint32_t, kh_hash_uint32, kh_eq_generic)
 
+typedef struct {
+    uint32_t num; /* fraction numerator */
+    uint32_t den; /* fraction denominator */
+} fraction_t;
+
+static inline fraction_t init_fraction() {
+    fraction_t out;
+    out.num = 0;
+    out.den = 0;
+
+    return out;
+}
+
+static inline double divide(fraction_t frac) {
+    return (double)frac.num / (double)frac.den;
+}
+
+typedef struct {
+    fraction_t all_base;
+    fraction_t q40_base;
+} total_coverage_t;
+
+static inline total_coverage_t init_total_coverage() {
+    total_coverage_t out;
+
+    out.all_base = init_fraction();
+    out.q40_base = init_fraction();
+
+    return out;
+}
+
 typedef struct regions_t {
     char     *chrm;    /* chromosome */
     size_t    cap;     /* array capacity for both starts and widths */
@@ -167,15 +198,15 @@ typedef struct {
     covg_conf_t *conf;
 } writer_conf_t;
 
-static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerator, uint32_t *denominator) {
+static void merge(covg_map *merge_from, covg_map *merge_into, fraction_t *frac) {
     khint_t k;
     int absent;
     kh_foreach(merge_from, k) {
         uint32_t covg = kh_key(merge_from, k);
         uint32_t base = kh_val(merge_from, k);
 
-        *numerator += covg * base;
-        *denominator += base;
+        frac->num += covg * base;
+        frac->den += base;
 
         khint_t key = cm_put(merge_into, covg, &absent);
         if (absent) {
@@ -186,8 +217,8 @@ static void merge(covg_map *merge_from, covg_map *merge_into, uint32_t *numerato
     }
 }
 
-static void process_coverage_results(covg_map *cm, uint32_t mean_numerator, uint32_t denominator, char *covg_fname, char *covdist_tag, FILE *cv_file, char *cv_tag) {
-    double mean = (double)mean_numerator / (double)denominator;
+static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_fname, char *covdist_tag, FILE *cv_file, char *cv_tag) {
+    double mean = divide(frac);
 
     FILE *out = fopen(covg_fname, "w");
     fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", covdist_tag);
@@ -206,7 +237,7 @@ static void process_coverage_results(covg_map *cm, uint32_t mean_numerator, uint
     fflush(out);
     fclose(out);
 
-    double sigma = sqrt((double)variance_numerator / (double)denominator);
+    double sigma = sqrt((double)variance_numerator / (double)frac.den);
     fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
 }
 
@@ -251,17 +282,14 @@ static void *coverage_write_func(void *data) {
 
     maps_t *maps = init_maps();
 
-    uint32_t num_all = 0; // coverage * (N bases with coverage)
-    uint32_t den_all = 0; // N bases with coverage
-    uint32_t num_q40 = 0; // coverage * (N bases with coverage)
-    uint32_t den_q40 = 0; // N bases with coverage
+    total_coverage_t covg_fracs = init_total_coverage();
     while (1) {
         record_t rec;
         wqueue_get(record, c->q, &rec);
         if(rec.block_id == RECORD_QUEUE_END) break;
 
-        merge(rec.all, maps->all_base, &num_all, &den_all);
-        merge(rec.q40, maps->q40_base, &num_q40, &den_q40);
+        merge(rec.all, maps->all_base, &covg_fracs.all_base);
+        merge(rec.q40, maps->q40_base, &covg_fracs.q40_base);
 
         cm_destroy(rec.all);
         cm_destroy(rec.q40);
@@ -270,8 +298,8 @@ static void *coverage_write_func(void *data) {
     FILE *cv_table = fopen("cv_table.txt", "w");
     fprintf(cv_table, "BISCUITqc Uniformity Table\ngroup\tmu\tsigma\tcv\n");
 
-    process_coverage_results(maps->all_base, num_all, den_all, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
-    process_coverage_results(maps->q40_base, num_q40, den_q40, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
+    process_coverage_results(maps->all_base, covg_fracs.all_base, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
+    process_coverage_results(maps->q40_base, covg_fracs.q40_base, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
 
     fflush(cv_table);
     fclose(cv_table);
