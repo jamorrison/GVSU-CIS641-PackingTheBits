@@ -371,10 +371,11 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
             }
         }
 
+        // Always check if we're in CpG location. We'll also always pull the bucket for each hash map
+        // to simplify finding buckets (rather than checking the last coverage like the all_base and
+        // q40_base above)
         uint8_t is_cpg = regions_test(cpgs, i);
         if (is_cpg) {
-            fprintf(stderr, "cpg covered base! %u\n", i);
-
             k_all_cpg = cm_put(maps->all_cpg, all_covgs[i], &abs_all_cpg);
             if (abs_all_cpg) {
                 kh_val(maps->all_cpg, k_all_cpg) = 1;
