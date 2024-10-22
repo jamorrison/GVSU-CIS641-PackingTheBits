@@ -384,23 +384,19 @@ static void *process_func(void *data) {
 
         char *chrm = header->target_name[w.tid];
 
-        uint8_t *cpgs = NULL;
-        if (res->cpg_regions) {
-            cpgs = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
-            regions_t *reg = get_regions(res->cpg_regions, chrm);
-
-            // If chromosome is found in CpG regions file
+        // Extract CpGs
+        uint8_t *cpgs = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
+        regions_t *reg = get_regions(res->cpg_regions, chrm);
+        if (reg) {
             int j;
-            if (reg) {
-                for (j=0; j<reg->n; j++) {
-                    uint32_t start = reg->starts[j];
-                    uint32_t width = reg->widths[j];
-                    if (start+width >= w.beg && start < w.end) {
-                        int k;
-                        for (k=0; k<width; k++) {
-                            if (start+k >= w.beg && start+k < w.end) {
-                                regions_set(cpgs, start+k-w.beg);
-                            }
+            for (j=0; j<reg->n; j++) {
+                uint32_t start = reg->starts[j];
+                uint32_t width = reg->widths[j];
+                if (start+width >= w.beg && start < w.end) {
+                    int k;
+                    for (k=0; k<width; k++) {
+                        if (start+k >= w.beg && start+k < w.end) {
+                            regions_set(cpgs, start+k-w.beg);
                         }
                     }
                 }
@@ -579,7 +575,7 @@ static int usage() {
     covg_conf_init(&conf);
 
     fprintf(stderr, "\n");
-    fprintf(stderr, "Usage: coverage [options] <in.bam>\n");
+    fprintf(stderr, "Usage: coverage [options] <cpgs.bed.gz> <in.bam>\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "Options:\n");
     fprintf(stderr, "    -o STR    Output filename\n");
@@ -592,8 +588,6 @@ static int usage() {
 }
 
 int main_coverage(int argc, char *argv[]) {
-    char *region_bed_fn = 0;
-    char *cpg_bed_fn = 0;
     char *out_fn = 0;
 
     covg_conf_t conf;
@@ -601,12 +595,10 @@ int main_coverage(int argc, char *argv[]) {
 
     int c;
     if (argc < 2) { return usage(); }
-    while ((c=getopt(argc, argv, ":@:m:o:r:s:")) >= 0) {
+    while ((c=getopt(argc, argv, ":@:o:r:s:")) >= 0) {
         switch (c) {
             case '@': conf.n_threads = atoi(optarg); break;
             case 'o': out_fn = optarg; break;
-            case 'r': region_bed_fn = optarg; break;
-            case 'm': cpg_bed_fn = optarg; break;
             case 's': conf.step = atoi(optarg); break;
             case ':': usage(); fprintf(stderr, "Option needs an argument: -%c\n", optopt); return 1;
             case '?': usage(); fprintf(stderr, "Unrecognized option: -%c\n", optopt); return 1;
@@ -614,15 +606,15 @@ int main_coverage(int argc, char *argv[]) {
         }
     }
 
-    if (optind + 1 > argc) {
+    if (optind + 2 > argc) {
         usage();
-        fprintf(stderr, "BAM input is missing\n");
+        fprintf(stderr, "CpG BED file or BAM input is missing\n");
         return 1;
     }
+    char *cpg_bed_fn = argv[optind++];
     char *infn = argv[optind++];
 
-    // TODO: Placeholder until I implement region coverages
-    regions_v *cpg_regions = cpg_bed_fn ? bed_init_regions(cpg_bed_fn) : NULL;
+    regions_v *cpg_regions = bed_init_regions(cpg_bed_fn);
     fprintf(stderr, "Number of chromosomes: %u\n", cpg_regions->size);
 
     htsFile *in = hts_open(infn, "rb");
