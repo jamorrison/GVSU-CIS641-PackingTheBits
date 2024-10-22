@@ -68,6 +68,8 @@ static inline double divide(fraction_t frac) {
 typedef struct {
     fraction_t all_base;
     fraction_t q40_base;
+    fraction_t all_cpg;
+    fraction_t q40_cpg;
 } total_coverage_t;
 
 static inline total_coverage_t init_total_coverage() {
@@ -75,6 +77,8 @@ static inline total_coverage_t init_total_coverage() {
 
     out.all_base = init_fraction();
     out.q40_base = init_fraction();
+    out.all_cpg  = init_fraction();
+    out.q40_cpg  = init_fraction();
 
     return out;
 }
@@ -82,8 +86,8 @@ static inline total_coverage_t init_total_coverage() {
 typedef struct {
     covg_map *all_base; /* all reads base coverage */
     covg_map *q40_base; /* q40 reads cpg coverage */
-    //covg_map *all_cpg; /* all reads base coverage */
-    //covg_map *q40_cpg; /* q40 reads cpg coverage */
+    covg_map *all_cpg; /* all reads base coverage */
+    covg_map *q40_cpg; /* q40 reads cpg coverage */
 } maps_t;
 
 static inline maps_t *init_maps() {
@@ -91,15 +95,15 @@ static inline maps_t *init_maps() {
 
     out->all_base = cm_init();
     out->q40_base = cm_init();
-    //out->all_cpg  = cm_init();
-    //out->q40_cpg  = cm_init();
+    out->all_cpg  = cm_init();
+    out->q40_cpg  = cm_init();
 
     return out;
 }
 
 static inline void destroy_maps(maps_t *maps) {
-    //cm_destroy(maps->q40_cpg);
-    //cm_destroy(maps->all_cpg);
+    cm_destroy(maps->q40_cpg);
+    cm_destroy(maps->all_cpg);
     cm_destroy(maps->q40_base);
     cm_destroy(maps->all_base);
 
@@ -244,7 +248,12 @@ static void merge(covg_map *merge_from, covg_map *merge_into, fraction_t *frac) 
 }
 
 static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_fname, char *covdist_tag, FILE *cv_file, char *cv_tag) {
-    double mean = divide(frac);
+    uint8_t is_nonzero = frac.num > 0 && frac.den > 0;
+
+    double mean = -1.0;
+    if (is_nonzero) {
+        mean = divide(frac);
+    }
 
     FILE *out = fopen(covg_fname, "w");
     fprintf(out, "BISCUITqc Depth Distribution - %s\ndepth\tcount\n", covdist_tag);
@@ -255,7 +264,9 @@ static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_f
         uint32_t covg = kh_key(cm, k);
         uint32_t base = kh_val(cm, k);
 
-        variance_numerator += base * (covg - mean) * (covg - mean);
+        if (is_nonzero) {
+            variance_numerator += base * (covg - mean) * (covg - mean);
+        }
 
         fprintf(out, "%u\t%u\n", covg, base);
     }
@@ -263,8 +274,10 @@ static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_f
     fflush(out);
     fclose(out);
 
-    double sigma = sqrt((double)variance_numerator / (double)frac.den);
-    fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
+    if (is_nonzero) {
+        double sigma = sqrt((double)variance_numerator / (double)frac.den);
+        fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
+    }
 }
 
 static void *coverage_write_func(void *data) {
@@ -289,6 +302,8 @@ static void *coverage_write_func(void *data) {
 
         merge(rec.maps->all_base, maps->all_base, &covg_fracs.all_base);
         merge(rec.maps->q40_base, maps->q40_base, &covg_fracs.q40_base);
+        merge(rec.maps->all_cpg , maps->all_cpg , &covg_fracs.all_cpg );
+        merge(rec.maps->q40_cpg , maps->q40_cpg , &covg_fracs.q40_cpg );
 
         destroy_maps(rec.maps);
     }
@@ -298,6 +313,8 @@ static void *coverage_write_func(void *data) {
 
     process_coverage_results(maps->all_base, covg_fracs.all_base, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
     process_coverage_results(maps->q40_base, covg_fracs.q40_base, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
+    process_coverage_results(maps->all_cpg , covg_fracs.all_cpg , "covdist_all_cpg_table.txt" , "All CpGs" , cv_table, "all_cpg" );
+    process_coverage_results(maps->q40_cpg , covg_fracs.q40_cpg , "covdist_q40_cpg_table.txt" , "Q40 CpGs" , cv_table, "q40_cpg" );
 
     fflush(cv_table);
     fclose(cv_table);
@@ -314,15 +331,11 @@ static void *coverage_write_func(void *data) {
 }
 
 static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
-    int absent_all, absent_q40;
-    khint_t k_all, k_q40;
+    int abs_all_base, abs_q40_base, abs_all_cpg, abs_q40_cpg;
+    khint_t k_all_base, k_q40_base, k_all_cpg, k_q40_cpg;
 
     uint32_t i;
     for (i=0; i<arr_len; i++) {
-        if (cpgs && regions_test(cpgs, i)) {
-            fprintf(stderr, "cpg covered base! %u\n", i);
-        }
-
         uint8_t is_match_all = 0;
         uint8_t is_match_q40 = 0;
 
@@ -333,28 +346,47 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
             is_match_q40 = all_covgs[i] == all_covgs[i-1];
 
             if (is_match_all) {
-                kh_val(maps->all_base, k_all) += 1;
+                kh_val(maps->all_base, k_all_base) += 1;
             }
             if (is_match_q40) {
-                kh_val(maps->q40_base, k_q40) += 1;
+                kh_val(maps->q40_base, k_q40_base) += 1;
             }
         }
 
         if (!is_match_all) {
-            k_all = cm_put(maps->all_base, all_covgs[i], &absent_all);
-            if (absent_all) {
-                kh_val(maps->all_base, k_all) = 1;
+            k_all_base = cm_put(maps->all_base, all_covgs[i], &abs_all_base);
+            if (abs_all_base) {
+                kh_val(maps->all_base, k_all_base) = 1;
             } else {
-                kh_val(maps->all_base, k_all) += 1;
+                kh_val(maps->all_base, k_all_base) += 1;
             }
         }
 
         if (!is_match_q40) {
-            k_q40 = cm_put(maps->q40_base, q40_covgs[i], &absent_q40);
-            if (absent_q40) {
-                kh_val(maps->q40_base, k_q40) = 1;
+            k_q40_base = cm_put(maps->q40_base, q40_covgs[i], &abs_q40_base);
+            if (abs_q40_base) {
+                kh_val(maps->q40_base, k_q40_base) = 1;
             } else {
-                kh_val(maps->q40_base, k_q40) += 1;
+                kh_val(maps->q40_base, k_q40_base) += 1;
+            }
+        }
+
+        uint8_t is_cpg = regions_test(cpgs, i);
+        if (is_cpg) {
+            fprintf(stderr, "cpg covered base! %u\n", i);
+
+            k_all_cpg = cm_put(maps->all_cpg, all_covgs[i], &abs_all_cpg);
+            if (abs_all_cpg) {
+                kh_val(maps->all_cpg, k_all_cpg) = 1;
+            } else {
+                kh_val(maps->all_cpg, k_all_cpg) += 1;
+            }
+
+            k_q40_cpg = cm_put(maps->q40_cpg, q40_covgs[i], &abs_q40_cpg);
+            if (abs_q40_cpg) {
+                kh_val(maps->q40_cpg, k_q40_cpg) = 1;
+            } else {
+                kh_val(maps->q40_cpg, k_q40_cpg) += 1;
             }
         }
     }
