@@ -79,6 +79,33 @@ static inline total_coverage_t init_total_coverage() {
     return out;
 }
 
+typedef struct {
+    covg_map *all_base; /* all reads base coverage */
+    covg_map *q40_base; /* q40 reads cpg coverage */
+    //covg_map *all_cpg; /* all reads base coverage */
+    //covg_map *q40_cpg; /* q40 reads cpg coverage */
+} maps_t;
+
+static inline maps_t *init_maps() {
+    maps_t *out = calloc(1, sizeof(maps_t));
+
+    out->all_base = cm_init();
+    out->q40_base = cm_init();
+    //out->all_cpg  = cm_init();
+    //out->q40_cpg  = cm_init();
+
+    return out;
+}
+
+static inline void destroy_maps(maps_t *maps) {
+    //cm_destroy(maps->q40_cpg);
+    //cm_destroy(maps->all_cpg);
+    cm_destroy(maps->q40_base);
+    cm_destroy(maps->all_base);
+
+    free(maps);
+}
+
 typedef struct regions_t {
     char     *chrm;    /* chromosome */
     size_t    cap;     /* array capacity for both starts and widths */
@@ -151,9 +178,8 @@ static inline regions_t *get_n_insert_region(regions_v *regions, char *chrm) {
 
 // Information stored for each window
 typedef struct {
-    int64_t   block_id; /* ID of block processed by thread */
-    covg_map  *all;     /* hash map : (key: coverage, value: number of bases with coverage) */
-    covg_map  *q40;     /* hash map : (key: coverage, value: number of bases with coverage) */
+    int64_t  block_id; /* ID of block processed by thread */
+    maps_t  *maps;     /* coverage hash maps */
 } record_t;
 
 DEFINE_VECTOR(record_v, record_t)
@@ -241,33 +267,6 @@ static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_f
     fprintf(cv_file, "%s\t%lf\t%lf\t%lf\n", cv_tag, mean, sigma, sigma/mean);
 }
 
-typedef struct {
-    covg_map *all_base; /* all reads base coverage */
-    covg_map *q40_base; /* q40 reads cpg coverage */
-    //covg_map *all_cpg; /* all reads base coverage */
-    //covg_map *q40_cpg; /* q40 reads cpg coverage */
-} maps_t;
-
-static inline maps_t *init_maps() {
-    maps_t *out = calloc(1, sizeof(maps_t));
-
-    out->all_base = cm_init();
-    out->q40_base = cm_init();
-    //out->all_cpg  = cm_init();
-    //out->q40_cpg  = cm_init();
-
-    return out;
-}
-
-static inline void destroy_maps(maps_t *maps) {
-    //cm_destroy(maps->q40_cpg);
-    //cm_destroy(maps->all_cpg);
-    cm_destroy(maps->q40_base);
-    cm_destroy(maps->all_base);
-
-    free(maps);
-}
-
 static void *coverage_write_func(void *data) {
     writer_conf_t *c = (writer_conf_t*) data;
 
@@ -288,11 +287,10 @@ static void *coverage_write_func(void *data) {
         wqueue_get(record, c->q, &rec);
         if(rec.block_id == RECORD_QUEUE_END) break;
 
-        merge(rec.all, maps->all_base, &covg_fracs.all_base);
-        merge(rec.q40, maps->q40_base, &covg_fracs.q40_base);
+        merge(rec.maps->all_base, maps->all_base, &covg_fracs.all_base);
+        merge(rec.maps->q40_base, maps->q40_base, &covg_fracs.q40_base);
 
-        cm_destroy(rec.all);
-        cm_destroy(rec.q40);
+        destroy_maps(rec.maps);
     }
 
     FILE *cv_table = fopen("cv_table.txt", "w");
@@ -315,7 +313,7 @@ static void *coverage_write_func(void *data) {
     return 0;
 }
 
-static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
+static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
     int absent_all, absent_q40;
     khint_t k_all, k_q40;
 
@@ -335,28 +333,28 @@ static void format_coverage_data(covg_map *all, covg_map *q40, uint32_t *all_cov
             is_match_q40 = all_covgs[i] == all_covgs[i-1];
 
             if (is_match_all) {
-                kh_val(all, k_all) += 1;
+                kh_val(maps->all_base, k_all) += 1;
             }
             if (is_match_q40) {
-                kh_val(q40, k_q40) += 1;
+                kh_val(maps->q40_base, k_q40) += 1;
             }
         }
 
         if (!is_match_all) {
-            k_all = cm_put(all, all_covgs[i], &absent_all);
+            k_all = cm_put(maps->all_base, all_covgs[i], &absent_all);
             if (absent_all) {
-                kh_val(all, k_all) = 1;
+                kh_val(maps->all_base, k_all) = 1;
             } else {
-                kh_val(all, k_all) += 1;
+                kh_val(maps->all_base, k_all) += 1;
             }
         }
 
         if (!is_match_q40) {
-            k_q40 = cm_put(q40, q40_covgs[i], &absent_q40);
+            k_q40 = cm_put(maps->q40_base, q40_covgs[i], &absent_q40);
             if (absent_q40) {
-                kh_val(q40, k_q40) = 1;
+                kh_val(maps->q40_base, k_q40) = 1;
             } else {
-                kh_val(q40, k_q40) += 1;
+                kh_val(maps->q40_base, k_q40) += 1;
             }
         }
     }
@@ -472,9 +470,8 @@ static void *process_func(void *data) {
         }
 
         // produce coverage output
-        rec.all = cm_init();
-        rec.q40 = cm_init();
-        format_coverage_data(rec.all, rec.q40, all_covgs, q40_covgs, w.end-w.beg, cpgs);
+        rec.maps = init_maps();
+        format_coverage_data(rec.maps, all_covgs, q40_covgs, w.end-w.beg, cpgs);
 
         // set record block id
         rec.block_id = w.block_id;
