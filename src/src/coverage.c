@@ -330,6 +330,14 @@ static void *coverage_write_func(void *data) {
     return 0;
 }
 
+static inline void increment_map(covg_map *map, khint_t bucket, int absent) {
+    if (absent) {
+        kh_val(map, bucket) = 1;
+    } else {
+        kh_val(map, bucket) += 1;
+    }
+}
+
 static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
     int abs_all_base, abs_q40_base, abs_all_cpg, abs_q40_cpg;
     khint_t k_all_base, k_q40_base, k_all_cpg, k_q40_cpg;
@@ -355,20 +363,12 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
 
         if (!is_match_all) {
             k_all_base = cm_put(maps->all_base, all_covgs[i], &abs_all_base);
-            if (abs_all_base) {
-                kh_val(maps->all_base, k_all_base) = 1;
-            } else {
-                kh_val(maps->all_base, k_all_base) += 1;
-            }
+            increment_map(maps->all_base, k_all_base, abs_all_base);
         }
 
         if (!is_match_q40) {
             k_q40_base = cm_put(maps->q40_base, q40_covgs[i], &abs_q40_base);
-            if (abs_q40_base) {
-                kh_val(maps->q40_base, k_q40_base) = 1;
-            } else {
-                kh_val(maps->q40_base, k_q40_base) += 1;
-            }
+            increment_map(maps->q40_base, k_q40_base, abs_q40_base);
         }
 
         // Always check if we're in CpG location. We'll also always pull the bucket for each hash map
@@ -377,18 +377,10 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
         uint8_t is_cpg = regions_test(cpgs, i);
         if (is_cpg) {
             k_all_cpg = cm_put(maps->all_cpg, all_covgs[i], &abs_all_cpg);
-            if (abs_all_cpg) {
-                kh_val(maps->all_cpg, k_all_cpg) = 1;
-            } else {
-                kh_val(maps->all_cpg, k_all_cpg) += 1;
-            }
+            increment_map(maps->all_cpg, k_all_cpg, abs_all_cpg);
 
             k_q40_cpg = cm_put(maps->q40_cpg, q40_covgs[i], &abs_q40_cpg);
-            if (abs_q40_cpg) {
-                kh_val(maps->q40_cpg, k_q40_cpg) = 1;
-            } else {
-                kh_val(maps->q40_cpg, k_q40_cpg) += 1;
-            }
+            increment_map(maps->q40_cpg, k_q40_cpg, abs_q40_cpg);
         }
     }
 }
