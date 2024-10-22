@@ -290,8 +290,6 @@ static void *coverage_write_func(void *data) {
         out = stdout;
     }
 
-    fprintf(out, "BISCUITqc Depth Distribution - ...\ndepth\tcount\n");
-
     maps_t *maps = init_maps();
 
     total_coverage_t covg_fracs = init_total_coverage();
