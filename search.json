@@ -154,7 +154,7 @@
     "href": "website/diagrams.html",
     "title": "Diagrams",
     "section": "",
-    "text": "Use Case Diagrams\n\n\n\nUse Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing\n\n\n\n\nActivity Diagrams\n\n\n\nActivity Diagram 1: Command Line Interface\n\n\n\n\n\nActivity Diagram 2: Command Line Interface",
+    "text": "Use Case Diagrams\n\n\n\nUse Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing\n\n\n\n\nActivity Diagrams\n\n\n\nActivity Diagram 1: Command Line Interface\n\n\n\n\n\nActivity Diagram 2: Command Line Interface\n\n\n\n\nCRC Card\n\n\n\nCRC Card: Command Line Interface\n\n\n\n\nClass Diagram\n\n\n\nClass Diagram: Command Line Interface\n\n\n\n\nObject Diagram\n\n\n\nObject Diagram: Command Line Interface",
     "crumbs": [
       "Artifacts",
       "Diagrams (Use Case, Activity)"
