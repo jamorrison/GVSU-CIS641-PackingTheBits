@@ -223,7 +223,7 @@ static inline int compare_targets(const void *a, const void *b) {
 
 typedef struct {
     wqueue_t(record) *q;
-    char *outfn;
+    char *prefix;
     target_v *targets;
     covg_conf_t *conf;
 } writer_conf_t;
@@ -280,15 +280,59 @@ static void process_coverage_results(covg_map *cm, fraction_t frac, char *covg_f
     }
 }
 
+typedef struct {
+    char *cv_table; /* coefficient of variation table */
+    char *all_base; /* all base coverage */
+    char *q40_base; /* Q40 base coverage */
+    char *all_cpg;  /* all cpg coverage */
+    char *q40_cpg;  /* Q40 cpg coverage */
+} output_names_t;
+
+static inline output_names_t *init_output_names(char *prefix) {
+    output_names_t *out = calloc(1, sizeof(output_names_t));
+
+    size_t len_prefix = (prefix == NULL) ? 0 : strlen(prefix)+1;
+
+    out->cv_table = calloc(len_prefix + 15, sizeof(char));
+    out->all_base = calloc(len_prefix + 30, sizeof(char));
+    out->q40_base = calloc(len_prefix + 30, sizeof(char));
+    out->all_cpg = calloc(len_prefix + 30, sizeof(char));
+    out->q40_cpg = calloc(len_prefix + 30, sizeof(char));
+
+    if (prefix != NULL) {
+        strcat(out->cv_table, prefix);
+        strcat(out->all_base, prefix);
+        strcat(out->q40_base, prefix);
+        strcat(out->all_cpg, prefix);
+        strcat(out->q40_cpg, prefix);
+
+        strcat(out->cv_table, "_");
+        strcat(out->all_base, "_");
+        strcat(out->q40_base, "_");
+        strcat(out->all_cpg, "_");
+        strcat(out->q40_cpg, "_");
+    }
+
+    strcat(out->cv_table, "cv_table.txt");
+    strcat(out->all_base, "covdist_all_base_table.txt");
+    strcat(out->q40_base, "covdist_q40_base_table.txt");
+    strcat(out->all_cpg, "covdist_all_cpg_table.txt");
+    strcat(out->q40_cpg, "covdist_q40_cpg_table.txt");
+
+    return out;
+}
+
+static inline output_names_t *destroy_output_names(output_names_t *get_wrecked) {
+    free(get_wrecked->q40_cpg);
+    free(get_wrecked->all_cpg);
+    free(get_wrecked->q40_base);
+    free(get_wrecked->all_base);
+    free(get_wrecked->cv_table);
+    free(get_wrecked);
+}
+
 static void *coverage_write_func(void *data) {
     writer_conf_t *c = (writer_conf_t*) data;
-
-    FILE *out;
-    if (c->outfn) {
-        out = fopen(c->outfn, "w");
-    } else {
-        out = stdout;
-    }
 
     maps_t *maps = init_maps();
 
@@ -306,24 +350,21 @@ static void *coverage_write_func(void *data) {
         destroy_maps(rec.maps);
     }
 
-    FILE *cv_table = fopen("cv_table.txt", "w");
+    output_names_t *names = init_output_names(c->prefix);
+
+    FILE *cv_table = fopen(names->cv_table, "w");
     fprintf(cv_table, "BISCUITqc Uniformity Table\ngroup\tmu\tsigma\tcv\n");
 
-    process_coverage_results(maps->all_base, covg_fracs.all_base, "covdist_all_base_table.txt", "All Bases", cv_table, "all_base");
-    process_coverage_results(maps->q40_base, covg_fracs.q40_base, "covdist_q40_base_table.txt", "Q40 Bases", cv_table, "q40_base");
-    process_coverage_results(maps->all_cpg , covg_fracs.all_cpg , "covdist_all_cpg_table.txt" , "All CpGs" , cv_table, "all_cpg" );
-    process_coverage_results(maps->q40_cpg , covg_fracs.q40_cpg , "covdist_q40_cpg_table.txt" , "Q40 CpGs" , cv_table, "q40_cpg" );
+    process_coverage_results(maps->all_base, covg_fracs.all_base, names->all_base, "All Bases", cv_table, "all_base");
+    process_coverage_results(maps->q40_base, covg_fracs.q40_base, names->q40_base, "Q40 Bases", cv_table, "q40_base");
+    process_coverage_results(maps->all_cpg , covg_fracs.all_cpg , names->all_cpg , "All CpGs" , cv_table, "all_cpg" );
+    process_coverage_results(maps->q40_cpg , covg_fracs.q40_cpg , names->q40_cpg , "Q40 CpGs" , cv_table, "q40_cpg" );
 
     fflush(cv_table);
     fclose(cv_table);
 
+    destroy_output_names(names);
     destroy_maps(maps);
-
-    if (c->outfn) {
-        // For stdout, will close at the end of main
-        fflush(out);
-        fclose(out);
-    }
 
     return 0;
 }
@@ -601,7 +642,7 @@ static int usage() {
     fprintf(stderr, "Usage: coverage [options] <cpgs.bed.gz> <in.bam>\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "Options:\n");
-    fprintf(stderr, "    -o STR    Output filename\n");
+    fprintf(stderr, "    -p STR    Prefix for output file names\n");
     fprintf(stderr, "    -r STR    BED file of regions of interest\n");
     fprintf(stderr, "    -s INT    Step size of windows [%d]\n", conf.step);
     fprintf(stderr, "    -@ INT    Number of threads [%d]\n", conf.n_threads);
@@ -611,17 +652,17 @@ static int usage() {
 }
 
 int main_coverage(int argc, char *argv[]) {
-    char *out_fn = 0;
+    char *prefix = 0;
 
     covg_conf_t conf;
     covg_conf_init(&conf);
 
     int c;
     if (argc < 2) { return usage(); }
-    while ((c=getopt(argc, argv, ":@:o:r:s:")) >= 0) {
+    while ((c=getopt(argc, argv, ":@:p:r:s:")) >= 0) {
         switch (c) {
             case '@': conf.n_threads = atoi(optarg); break;
-            case 'o': out_fn = optarg; break;
+            case 'p': prefix = optarg; break;
             case 's': conf.step = atoi(optarg); break;
             case ':': usage(); fprintf(stderr, "Option needs an argument: -%c\n", optopt); return 1;
             case '?': usage(); fprintf(stderr, "Unrecognized option: -%c\n", optopt); return 1;
@@ -669,7 +710,7 @@ int main_coverage(int argc, char *argv[]) {
     pthread_t writer;
     writer_conf_t writer_conf = {
         .q = wqueue_init(record, conf.step),
-        .outfn = out_fn,
+        .prefix = prefix ? prefix : NULL,
         .targets = targets,
         .conf = &conf,
     };
