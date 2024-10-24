@@ -447,7 +447,7 @@ static void *process_func(void *data) {
                 if (c->flag & BAM_FSUPPLEMENTARY) continue;
             }
 
-            uint32_t rpos = c->pos + 1; // 1-based reference position
+            uint32_t rpos = c->pos; // 0-based reference position
             uint32_t qpos = 0;
 
             int i;
@@ -692,7 +692,7 @@ int main_coverage(int argc, char *argv[]) {
     uint32_t j;
     for (j=0; j<targets->size; ++j) {
         t = ref_target_v(targets, j);
-        for (wbeg=1; wbeg<t->len; wbeg += conf.step, block_id++) {
+        for (wbeg=0; wbeg<t->len; wbeg += conf.step, block_id++) {
             w.tid = t->tid;
             w.block_id = block_id;
             w.beg = wbeg;
