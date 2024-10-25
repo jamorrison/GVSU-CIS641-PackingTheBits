@@ -70,6 +70,7 @@ typedef struct {
     fraction_t q40_base;
     fraction_t all_cpg;
     fraction_t q40_cpg;
+    fraction_t top_base;
 } total_coverage_t;
 
 static inline total_coverage_t init_total_coverage() {
@@ -79,6 +80,7 @@ static inline total_coverage_t init_total_coverage() {
     out.q40_base = init_fraction();
     out.all_cpg  = init_fraction();
     out.q40_cpg  = init_fraction();
+    out.top_base = init_fraction();
 
     return out;
 }
@@ -88,6 +90,7 @@ typedef struct {
     covg_map *q40_base; /* q40 reads cpg coverage */
     covg_map *all_cpg; /* all reads base coverage */
     covg_map *q40_cpg; /* q40 reads cpg coverage */
+    covg_map *top_base; /* all reads top GC content coverage */
 } maps_t;
 
 static inline maps_t *init_maps() {
@@ -97,11 +100,13 @@ static inline maps_t *init_maps() {
     out->q40_base = cm_init();
     out->all_cpg  = cm_init();
     out->q40_cpg  = cm_init();
+    out->top_base = cm_init();
 
     return out;
 }
 
 static inline void destroy_maps(maps_t *maps) {
+    cm_destroy(maps->top_base);
     cm_destroy(maps->q40_cpg);
     cm_destroy(maps->all_cpg);
     cm_destroy(maps->q40_base);
@@ -201,8 +206,10 @@ DEFINE_WQUEUE(window, window_t)
 
 // Shared information across threads
 typedef struct {
+    uint8_t           has_top;     /* has top GC content coverages */
     char             *bam_fn;      /* BAM filename */
     regions_v        *cpg_regions; /* vector of CpGs */
+    regions_v        *top_regions; /* vector of top GC content regions */
     wqueue_t(window) *q;           /* window queue */
     wqueue_t(record) *rq;          /* records queue */
     covg_conf_t      *conf;        /* config variables */
@@ -222,6 +229,7 @@ static inline int compare_targets(const void *a, const void *b) {
 }
 
 typedef struct {
+    uint8_t has_top;
     wqueue_t(record) *q;
     char *prefix;
     target_v *targets;
@@ -286,6 +294,7 @@ typedef struct {
     char *q40_base; /* Q40 base coverage */
     char *all_cpg;  /* all cpg coverage */
     char *q40_cpg;  /* Q40 cpg coverage */
+    char *top_base; /* all Top GC content base coverage */
 } output_names_t;
 
 static inline output_names_t *init_output_names(char *prefix) {
@@ -298,6 +307,7 @@ static inline output_names_t *init_output_names(char *prefix) {
     out->q40_base = calloc(len_prefix + 30, sizeof(char));
     out->all_cpg = calloc(len_prefix + 30, sizeof(char));
     out->q40_cpg = calloc(len_prefix + 30, sizeof(char));
+    out->top_base = calloc(len_prefix + 35, sizeof(char));
 
     if (prefix != NULL) {
         strcat(out->cv_table, prefix);
@@ -305,12 +315,14 @@ static inline output_names_t *init_output_names(char *prefix) {
         strcat(out->q40_base, prefix);
         strcat(out->all_cpg, prefix);
         strcat(out->q40_cpg, prefix);
+        strcat(out->top_base, prefix);
 
         strcat(out->cv_table, "_");
         strcat(out->all_base, "_");
         strcat(out->q40_base, "_");
         strcat(out->all_cpg, "_");
         strcat(out->q40_cpg, "_");
+        strcat(out->top_base, "_");
     }
 
     strcat(out->cv_table, "cv_table.txt");
@@ -318,11 +330,13 @@ static inline output_names_t *init_output_names(char *prefix) {
     strcat(out->q40_base, "covdist_q40_base_table.txt");
     strcat(out->all_cpg, "covdist_all_cpg_table.txt");
     strcat(out->q40_cpg, "covdist_q40_cpg_table.txt");
+    strcat(out->top_base, "covdist_all_base_topgc_table.txt");
 
     return out;
 }
 
 static inline output_names_t *destroy_output_names(output_names_t *get_wrecked) {
+    free(get_wrecked->top_base);
     free(get_wrecked->q40_cpg);
     free(get_wrecked->all_cpg);
     free(get_wrecked->q40_base);
@@ -346,6 +360,7 @@ static void *coverage_write_func(void *data) {
         merge(rec.maps->q40_base, maps->q40_base, &covg_fracs.q40_base);
         merge(rec.maps->all_cpg , maps->all_cpg , &covg_fracs.all_cpg );
         merge(rec.maps->q40_cpg , maps->q40_cpg , &covg_fracs.q40_cpg );
+        if (c->has_top) { merge(rec.maps->top_base, maps->top_base, &covg_fracs.top_base); }
 
         destroy_maps(rec.maps);
     }
@@ -359,6 +374,9 @@ static void *coverage_write_func(void *data) {
     process_coverage_results(maps->q40_base, covg_fracs.q40_base, names->q40_base, "Q40 Bases", cv_table, "q40_base");
     process_coverage_results(maps->all_cpg , covg_fracs.all_cpg , names->all_cpg , "All CpGs" , cv_table, "all_cpg" );
     process_coverage_results(maps->q40_cpg , covg_fracs.q40_cpg , names->q40_cpg , "Q40 CpGs" , cv_table, "q40_cpg" );
+    if (c->has_top) {
+        process_coverage_results(maps->top_base, covg_fracs.top_base, names->top_base, "All Top GC Bases", cv_table, "all_base_topgc");
+    }
 
     fflush(cv_table);
     fclose(cv_table);
@@ -377,9 +395,9 @@ static inline void increment_map(covg_map *map, khint_t bucket, int absent) {
     }
 }
 
-static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs) {
-    int abs_all_base, abs_q40_base, abs_all_cpg, abs_q40_cpg;
-    khint_t k_all_base, k_q40_base, k_all_cpg, k_q40_cpg;
+static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q40_covgs, uint32_t arr_len, uint8_t *cpgs, uint8_t *tops) {
+    int abs_all_base, abs_q40_base, abs_all_cpg, abs_q40_cpg, abs_top_base;
+    khint_t k_all_base, k_q40_base, k_all_cpg, k_q40_cpg, k_top_base;
 
     uint32_t i;
     for (i=0; i<arr_len; i++) {
@@ -421,6 +439,14 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
             k_q40_cpg = cm_put(maps->q40_cpg, q40_covgs[i], &abs_q40_cpg);
             increment_map(maps->q40_cpg, k_q40_cpg, abs_q40_cpg);
         }
+
+        // Only check the top GC content if the file is provided
+        if (tops) {
+            if (regions_test(tops, i)) {
+                k_top_base = cm_put(maps->top_base, all_covgs[i], &abs_top_base);
+                increment_map(maps->top_base, k_top_base, abs_top_base);
+            }
+        }
     }
 }
 
@@ -461,6 +487,27 @@ static void *process_func(void *data) {
                     for (k=0; k<width; k++) {
                         if (start+k >= w.beg && start+k < w.end) {
                             regions_set(cpgs, start+k-w.beg);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Extract top GC content regions
+        uint8_t *tops = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
+        if (res->top_regions) {
+            regions_t *top = get_regions(res->top_regions, chrm);
+            if (top) {
+                int j;
+                for (j=0; j<top->n; j++) {
+                    uint32_t start = top->starts[j];
+                    uint32_t width = top->widths[j];
+                    if (start+width >= w.beg && start < w.end) {
+                        int k;
+                        for (k=0; k<width; k++) {
+                            if (start+k >= w.beg && start+k < w.end) {
+                                regions_set(tops, start+k-w.beg);
+                            }
                         }
                     }
                 }
@@ -531,7 +578,7 @@ static void *process_func(void *data) {
 
         // produce coverage output
         rec.maps = init_maps();
-        format_coverage_data(rec.maps, all_covgs, q40_covgs, w.end-w.beg, cpgs);
+        format_coverage_data(rec.maps, all_covgs, q40_covgs, w.end-w.beg, cpgs, tops);
 
         // set record block id
         rec.block_id = w.block_id;
@@ -543,6 +590,7 @@ static void *process_func(void *data) {
 
         free(q40_covgs);
         free(all_covgs);
+        if (tops) { free(tops); }
         free(cpgs);
     }
 
@@ -553,7 +601,7 @@ static void *process_func(void *data) {
     return 0;
 }
 
-regions_v *bed_init_regions(char *bed_fn) {
+regions_v *bed_init_regions(char *bed_fn, int n_cols) {
     regions_v *regions = init_regions_v(2);
     kstring_t line;
     line.l = line.m = 0;
@@ -584,7 +632,7 @@ regions_v *bed_init_regions(char *bed_fn) {
         first_char = 0;
 
         if (c == '\n' || c == EOF || c < 0) {
-            if (strcount_char(line.s, '\t') == 2) {
+            if (strcount_char(line.s, '\t') == n_cols) {
                 // Get chromosome
                 tok = strtok(line.s, "\t");
                 if (!reg || strcmp(reg->chrm, tok) != 0) {
@@ -653,17 +701,19 @@ static int usage() {
 
 int main_coverage(int argc, char *argv[]) {
     char *prefix = 0;
+    char *top_fn = 0;
 
     covg_conf_t conf;
     covg_conf_init(&conf);
 
     int c;
     if (argc < 2) { return usage(); }
-    while ((c=getopt(argc, argv, ":@:p:r:s:")) >= 0) {
+    while ((c=getopt(argc, argv, ":@:p:r:s:t:")) >= 0) {
         switch (c) {
             case '@': conf.n_threads = atoi(optarg); break;
             case 'p': prefix = optarg; break;
             case 's': conf.step = atoi(optarg); break;
+            case 't': top_fn = optarg; break;
             case ':': usage(); fprintf(stderr, "Option needs an argument: -%c\n", optopt); return 1;
             case '?': usage(); fprintf(stderr, "Unrecognized option: -%c\n", optopt); return 1;
             default: return usage();
@@ -678,8 +728,11 @@ int main_coverage(int argc, char *argv[]) {
     char *cpg_bed_fn = argv[optind++];
     char *infn = argv[optind++];
 
-    regions_v *cpg_regions = bed_init_regions(cpg_bed_fn);
+    regions_v *cpg_regions = bed_init_regions(cpg_bed_fn, 2);
     fprintf(stderr, "Number of chromosomes: %u\n", cpg_regions->size);
+
+    regions_v *top_regions = top_fn ? bed_init_regions(top_fn, 3) : NULL;
+    fprintf(stderr, "top_fn: %s\n", top_fn);
 
     htsFile *in = hts_open(infn, "rb");
     if (in == NULL) {
@@ -709,6 +762,7 @@ int main_coverage(int argc, char *argv[]) {
     // Setup writer
     pthread_t writer;
     writer_conf_t writer_conf = {
+        .has_top = (top_fn) ? 1 : 0,
         .q = wqueue_init(record, conf.step),
         .prefix = prefix ? prefix : NULL,
         .targets = targets,
@@ -719,6 +773,7 @@ int main_coverage(int argc, char *argv[]) {
         results[i].q = wq;
         results[i].rq = writer_conf.q;
         results[i].cpg_regions = cpg_regions;
+        results[i].top_regions = top_regions;
         results[i].bam_fn = infn;
         results[i].conf = &conf;
         pthread_create(&processors[i], NULL, process_func, &results[i]);
@@ -765,6 +820,8 @@ int main_coverage(int argc, char *argv[]) {
 
     if (cpg_regions)
         destroy_regions(cpg_regions);
+    if (top_regions)
+        destroy_regions(top_regions);
 
     return 0;
 }
