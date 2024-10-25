@@ -5,3 +5,4 @@ src/build
 src/lib
 
 tests/*.txt
+tests/*.tsv
