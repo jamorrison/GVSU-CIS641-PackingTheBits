@@ -13,3 +13,15 @@ title: Diagrams
 ![Activity Diagram 1: Command Line Interface](../artifacts/activity_diagram_1_cli.jpg)
 
 ![Activity Diagram 2: Command Line Interface](../artifacts/activity_diagram_2_processing.jpg)
+
+# CRC Card
+
+![CRC Card: Command Line Interface](../artifacts/crc_cli_v2.png)
+
+# Class Diagram
+
+![Class Diagram: Command Line Interface](../artifacts/class_diagram.png)
+
+# Object Diagram
+
+![Object Diagram: Command Line Interface](../artifacts/object_diagram.png)
