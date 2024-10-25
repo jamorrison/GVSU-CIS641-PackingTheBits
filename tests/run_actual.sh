@@ -124,6 +124,48 @@ ${TIME}/time \
     --append \
     bedtools intersect -sorted -a q40_coverage.bed -b ${TOP} | run_awk actual_cv_table.txt actual_covdist_q40_base_topgc_table.txt "q40_base_topgc"
 
+echo -e "BISCUITqc Depth Distribution - All Top GC CpGs\ndepth\tcount" > actual_covdist_all_cpg_topgc_table.txt
+${TIME}/time \
+    --format="depth_all_base_topgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a all_cpg.bed -b ${TOP} | run_awk actual_cv_table.txt actual_covdist_all_cpg_topgc_table.txt "all_cpg_topgc"
+
+echo -e "BISCUITqc Depth Distribution - Q40 Top GC CpGs\ndepth\tcount" > actual_covdist_q40_cpg_topgc_table.txt
+${TIME}/time \
+    --format="depth_q40_base_topgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a q40_cpg.bed -b ${TOP} | run_awk actual_cv_table.txt actual_covdist_q40_cpg_topgc_table.txt "q40_cpg_topgc"
+
+echo -e "BISCUITqc Depth Distribution - All Bot GC Bases\ndepth\tcount" > actual_covdist_all_base_botgc_table.txt
+${TIME}/time \
+    --format="depth_all_base_botgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a all_coverage.bed -b ${BOT} | run_awk actual_cv_table.txt actual_covdist_all_base_botgc_table.txt "all_base_botgc"
+
+echo -e "BISCUITqc Depth Distribution - Q40 Bot GC Bases\ndepth\tcount" > actual_covdist_q40_base_botgc_table.txt
+${TIME}/time \
+    --format="depth_q40_base_botgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a q40_coverage.bed -b ${BOT} | run_awk actual_cv_table.txt actual_covdist_q40_base_botgc_table.txt "q40_base_botgc"
+
+echo -e "BISCUITqc Depth Distribution - All Bot GC CpGs\ndepth\tcount" > actual_covdist_all_cpg_botgc_table.txt
+${TIME}/time \
+    --format="depth_all_base_botgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a all_cpg.bed -b ${BOT} | run_awk actual_cv_table.txt actual_covdist_all_cpg_botgc_table.txt "all_cpg_botgc"
+
+echo -e "BISCUITqc Depth Distribution - Q40 Bot GC CpGs\ndepth\tcount" > actual_covdist_q40_cpg_botgc_table.txt
+${TIME}/time \
+    --format="depth_q40_base_botgc\t%e" \
+    --output=${OUT} \
+    --append \
+    bedtools intersect -sorted -a q40_cpg.bed -b ${BOT} | run_awk actual_cv_table.txt actual_covdist_q40_cpg_botgc_table.txt "q40_cpg_botgc"
+
 rm all_coverage.bed q40_coverage.bed all_cpg.bed q40_cpg.bed
 
 awk '{ sum += $2 } END { print sum }' < actual_timing.tsv
