@@ -422,7 +422,7 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
         // and the correct bucket is already loaded up, so shortcircuit by automatically incrementing value
         if (i > 0) {
             is_match_all = all_covgs[i] == all_covgs[i-1];
-            is_match_q40 = all_covgs[i] == all_covgs[i-1];
+            is_match_q40 = q40_covgs[i] == q40_covgs[i-1];
 
             if (is_match_all) {
                 kh_val(maps->all_base, k_all_base) += 1;
