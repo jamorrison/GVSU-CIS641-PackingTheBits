@@ -37,6 +37,7 @@
 
 #include "hts.h"
 #include "sam.h"
+#include "tbx.h"
 
 #include "khashl.h"
 
@@ -207,7 +208,7 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
         // Always check if we're in CpG location. We'll also always pull the bucket for each hash map
         // to simplify finding buckets (rather than checking the last coverage like the all_base and
         // q40_base above)
-        uint8_t is_cpg = regions_test(cpgs, i);
+        uint8_t is_cpg = region_test(cpgs, i);
         if (is_cpg) {
             k_all_cpg = cm_put(maps->all_cpg, all_covgs[i], &abs_all_cpg);
             increment_map(maps->all_cpg, k_all_cpg, abs_all_cpg);
@@ -225,7 +226,7 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
         // longer in the region. If the flag is on, then check if the coverage is the same, otherwise
         // pull the bucket. This also goes for the bottom GC content regions as well.
         if (tops) {
-            if (regions_test(tops, i)) {
+            if (region_test(tops, i)) {
                 k_all_base_top = cm_put(maps->all_base_top, all_covgs[i], &abs_all_base_top);
                 increment_map(maps->all_base_top, k_all_base_top, abs_all_base_top);
 
@@ -244,7 +245,7 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
 
         // Only check the bottom GC content if the file is provided
         if (bots) {
-            if (regions_test(bots, i)) {
+            if (region_test(bots, i)) {
                 k_all_base_bot = cm_put(maps->all_base_bot, all_covgs[i], &abs_all_base_bot);
                 increment_map(maps->all_base_bot, k_all_base_bot, abs_all_base_bot);
 
@@ -261,6 +262,48 @@ static void format_coverage_data(maps_t *maps, uint32_t *all_covgs, uint32_t *q4
             }
         }
     }
+}
+
+static uint8_t *set_bit_array(htsFile *bed, tbx_t *tbx, int tid, uint32_t window_beg, uint32_t window_end, int n_cols) {
+    // Must be free'd when done being used
+    uint8_t *out = calloc((window_end - window_beg)/8 + 1, sizeof(uint8_t));
+    if (bed == NULL) {
+        return out;
+    }
+
+    hts_itr_t *iter = tbx_itr_queryi(tbx, tid, window_beg, window_end);
+    kstring_t str = {0, 256, (char *)calloc(256, sizeof(char))};
+
+    char *tok = NULL;
+    while (tbx_itr_next(bed, tbx, iter, &str) >= 0) {
+        if (strcount_char(str.s, '\t') == n_cols) {
+            // Chromosome
+            tok = strtok(str.s, "\t");
+
+            // Start
+            tok = strtok(NULL, "\t");
+            ensure_number(tok);
+            uint32_t start = (uint32_t)atoi(tok);
+
+            // End
+            tok = strtok(NULL, "\t");
+            ensure_number(tok);
+            uint32_t end = (uint32_t)atoi(tok);
+
+            uint32_t width = end - start;
+            uint32_t i;
+            for (i=0; i<width; i++) {
+                if (start+i >= window_beg && start+i < window_end) {
+                    region_set(out, start + i - window_beg);
+                }
+            }
+        }
+    }
+
+    free(str.s);
+    hts_itr_destroy(iter);
+
+    return out;
 }
 
 // Function that is run by each thread, collects coverages across genome (factoring in CIGAR string), and then
@@ -287,68 +330,6 @@ static void *process_func(void *data) {
 
         char *chrm = header->target_name[w.tid];
 
-        // TODO: CpG, top GC content, and bottom GC content all have the same basic structure
-        //       I bet I can pull these out into a single function to reduce repeated code
-        // Extract CpGs
-        uint8_t *cpgs = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
-        regions_t *reg = get_regions(res->cpg_regions, chrm);
-        if (reg) {
-            int j;
-            for (j=0; j<reg->n; j++) {
-                uint32_t start = reg->starts[j];
-                uint32_t width = reg->widths[j];
-                if (start+width >= w.beg && start < w.end) {
-                    int k;
-                    for (k=0; k<width; k++) {
-                        if (start+k >= w.beg && start+k < w.end) {
-                            regions_set(cpgs, start+k-w.beg);
-                        }
-                    }
-                }
-            }
-        }
-
-        // Extract top GC content regions
-        uint8_t *tops = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
-        if (res->top_regions) {
-            regions_t *top = get_regions(res->top_regions, chrm);
-            if (top) {
-                int j;
-                for (j=0; j<top->n; j++) {
-                    uint32_t start = top->starts[j];
-                    uint32_t width = top->widths[j];
-                    if (start+width >= w.beg && start < w.end) {
-                        int k;
-                        for (k=0; k<width; k++) {
-                            if (start+k >= w.beg && start+k < w.end) {
-                                regions_set(tops, start+k-w.beg);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Extract bottom GC content regions
-        uint8_t *bots = calloc((w.end - w.beg)/8 + 1, sizeof(uint8_t));
-        if (res->bot_regions) {
-            regions_t *bot = get_regions(res->bot_regions, chrm);
-            if (bot) {
-                int j;
-                for (j=0; j<bot->n; j++) {
-                    uint32_t start = bot->starts[j];
-                    uint32_t width = bot->widths[j];
-                    if (start+width >= w.beg && start < w.end) {
-                        int k;
-                        for (k=0; k<width; k++) {
-                            if (start+k >= w.beg && start+k < w.end) {
-                                regions_set(bots, start+k-w.beg);
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         // Tabulate coverages across window
         uint32_t *all_covgs = calloc(w.end - w.beg, sizeof(uint32_t));
@@ -419,7 +400,7 @@ static void *process_func(void *data) {
 
         // Produce coverage output
         rec.maps = init_maps();
-        format_coverage_data(rec.maps, all_covgs, q40_covgs, w.end-w.beg, cpgs, tops, bots);
+        format_coverage_data(rec.maps, all_covgs, q40_covgs, w.end-w.beg, w.cpg, w.top, w.bot);
 
         // Set record block id and put output maps into output queue
         rec.block_id = w.block_id;
@@ -431,9 +412,9 @@ static void *process_func(void *data) {
 
         free(q40_covgs);
         free(all_covgs);
-        if (bots) { free(bots); }
-        if (tops) { free(tops); }
-        free(cpgs);
+        free(w.bot);
+        free(w.top);
+        free(w.cpg);
     }
 
     // Final clean up
@@ -442,88 +423,6 @@ static void *process_func(void *data) {
     hts_close(in);
 
     return 0;
-}
-
-// Read BED file and turn it into a vector of regions
-static regions_v *bed_init_regions(char *bed_fn, int n_cols) {
-    regions_v *regions = init_regions_v(2);
-    kstring_t line;
-    line.l = line.m = 0;
-    line.s = 0;
-
-    regions_t *reg = 0;
-    char *tok;
-
-    // Open BED file
-    gzFile fh = gzopen(bed_fn, "r");
-    if (fh == NULL) {
-        free(line.s);
-        fprintf(stderr, "Could not find regions BED file: %s\n", bed_fn);
-        gzclose(fh);
-        exit(1);
-    }
-
-    // Read BED file
-    uint32_t n_lines = 0;
-    uint8_t first_char = 1;
-    while (1) {
-        int c = gzgetc(fh);
-
-        // Error out if we have an empty region BED file
-        if (c < 0 && first_char) {
-            free(line.s);
-            fprintf(stderr, "Regions BED file (%s) is empty\n", bed_fn);
-            gzclose(fh);
-            exit(1);
-        }
-        first_char = 0;
-
-        // Process line
-        if (c == '\n' || c == EOF || c < 0) {
-            if (strcount_char(line.s, '\t') == n_cols) {
-                // Get chromosome
-                tok = strtok(line.s, "\t");
-                if (!reg || strcmp(reg->chrm, tok) != 0) {
-                    n_lines = 0;
-                    reg = get_n_insert_region(regions, tok);
-                }
-
-                // If needed, adjust length of array
-                if (n_lines == reg->cap) {
-                    realloc_regions(reg);
-                }
-
-                // Get start
-                tok = strtok(NULL, "\t");
-                ensure_number(tok);
-                uint32_t start = (uint32_t)atoi(tok);
-
-                // Get end
-                tok = strtok(NULL, "\t");
-                ensure_number(tok);
-                uint32_t end = (uint32_t)atoi(tok);
-
-                reg->starts[reg->n] = start;
-                reg->widths[reg->n] = end - start;
-
-                n_lines++;
-                reg->n++;
-            }
-
-            line.l = 0;
-            if (c == EOF || c < 0) {
-                break;
-            }
-        } else {
-            kputc(c, &line);
-        }
-    }
-
-    // Clean up
-    gzclose(fh);
-    free(line.s);
-
-    return regions;
 }
 
 // Print usage for tool
@@ -582,15 +481,6 @@ int main_coverage(int argc, char *argv[]) {
     char *cpg_bed_fn = argv[optind++];
     char *infn = argv[optind++];
 
-    // Read CpG BED file
-    regions_v *cpg_regions = bed_init_regions(cpg_bed_fn, 2);
-
-    // Read top GC content windows BED file
-    regions_v *top_regions = top_fn ? bed_init_regions(top_fn, 3) : NULL;
-
-    // Read bottom GC content windows BED file
-    regions_v *bot_regions = bot_fn ? bed_init_regions(bot_fn, 3) : NULL;
-
     // Read input BAM to get chromosome sizes for setting windows
     htsFile *in = hts_open(infn, "rb");
     if (in == NULL) {
@@ -629,9 +519,6 @@ int main_coverage(int argc, char *argv[]) {
     for (i=0; i<conf.n_threads; ++i) {
         results[i].q = wq;
         results[i].rq = writer_conf.q;
-        results[i].cpg_regions = cpg_regions;
-        results[i].top_regions = top_regions;
-        results[i].bot_regions = bot_regions;
         results[i].bam_fn = infn;
         pthread_create(&processors[i], NULL, process_func, &results[i]);
     }
@@ -642,6 +529,15 @@ int main_coverage(int argc, char *argv[]) {
     int64_t block_id = 0;
 
     // Setup windows and add to queue for processing
+    htsFile *cpg_bed = hts_open(cpg_bed_fn, "r");
+    tbx_t *cpg_tbx = tbx_index_load3(cpg_bed_fn, NULL, 0);
+
+    htsFile *top_bed = top_fn ? hts_open(top_fn, "r") : NULL;
+    tbx_t *top_tbx = top_fn ? tbx_index_load3(top_fn, NULL, 0) : NULL;
+
+    htsFile *bot_bed = bot_fn ? hts_open(bot_fn, "r") : NULL;
+    tbx_t *bot_tbx = bot_fn ? tbx_index_load3(bot_fn, NULL, 0) : NULL;
+
     size_t j;
     for (j=0; j<targets->size; ++j) {
         t = ref_target_v(targets, j);
@@ -651,6 +547,9 @@ int main_coverage(int argc, char *argv[]) {
             w.beg = wbeg;
             w.end = wbeg + conf.step;
             if (w.end > t->len) w.end = t->len;
+            w.cpg = set_bit_array(cpg_bed, cpg_tbx, t->tid, wbeg, wbeg+conf.step > t->len ? t->len : wbeg+conf.step, 2);
+            w.top = set_bit_array(top_bed, top_tbx, t->tid, wbeg, wbeg+conf.step > t->len ? t->len : wbeg+conf.step, 3);
+            w.bot = set_bit_array(bot_bed, bot_tbx, t->tid, wbeg, wbeg+conf.step > t->len ? t->len : wbeg+conf.step, 3);
             wqueue_put(window, wq, &w);
         }
     }
@@ -672,6 +571,12 @@ int main_coverage(int argc, char *argv[]) {
     pthread_join(writer, NULL);
 
     // Clean up
+    tbx_destroy(bot_tbx);
+    hts_close(bot_bed);
+    tbx_destroy(top_tbx);
+    hts_close(top_bed);
+    tbx_destroy(cpg_tbx);
+    hts_close(cpg_bed);
     wqueue_destroy(record, writer_conf.q);
     free_target_v(targets);
     free(results);
@@ -679,13 +584,6 @@ int main_coverage(int argc, char *argv[]) {
     wqueue_destroy(window, wq);
     hts_close(in);
     bam_hdr_destroy(header);
-
-    if (bot_regions)
-        destroy_regions(bot_regions);
-    if (top_regions)
-        destroy_regions(top_regions);
-    if (cpg_regions)
-        destroy_regions(cpg_regions);
 
     return 0;
 }

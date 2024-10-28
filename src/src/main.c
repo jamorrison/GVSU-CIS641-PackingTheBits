@@ -47,14 +47,10 @@ static double realtime() {
 }
 
 int main_coverage(int argc, char *argv[]);
-int main_coverage2(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
-    int ret;
-
     double t_real = realtime();
-    if (strcmp(argv[1], "coverage1") == 0) { ret = main_coverage(argc-1, argv+1); }
-    else if (strcmp(argv[1], "coverage2") == 0) { ret = main_coverage2(argc-1, argv+1); }
+    int ret = main_coverage(argc, argv);
 
     fflush(stdout); /* not enough for remote file systems */
     fclose(stdout);

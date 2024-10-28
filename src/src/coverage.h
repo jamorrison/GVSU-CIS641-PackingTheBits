@@ -140,86 +140,9 @@ static inline void destroy_maps(maps_t *maps) {
     free(maps);
 }
 
-// Arrays of region starts and widths, plus some helpful related values
-typedef struct regions_t {
-    size_t    n;      /* number of regions */
-    size_t    cap;    /* array capacity for both starts and widths */
-    char     *chrm;   /* chromosome */
-    uint32_t *starts; /* region starts */
-    uint32_t *widths; /* region widths */
-} regions_t;
-
-DEFINE_VECTOR(regions_v, regions_t)
-
-// Loop through all regions in vector, freeing memory as we go
-static inline void destroy_regions(regions_v *regions) {
-    size_t i;
-    for (i=0; i<regions->size; i++) {
-        regions_t *reg = ref_regions_v(regions, i);
-        free(reg->widths);
-        free(reg->starts);
-        free(reg->chrm);
-    }
-
-    free_regions_v(regions);
-}
-
-// Reallocate memory for start and width arrays
-// Given its own function to reduce clutter elsewhere
-static void realloc_regions(regions_t *reg) {
-    // Could potentially make this a parameter that can be toggled to increase speed further
-    // Larger value = fewer allocations, but more excess memory used
-    // Smaller value = more allocations, but less memory overhead
-    size_t additional = 10000;
-
-    reg->starts = realloc(reg->starts, (reg->n+additional)*sizeof(uint32_t));
-    if (!reg->starts) {
-        fprintf(stderr, "Failed to properly allocate space for region starts\n");
-        exit(1);
-    }
-
-    reg->widths = realloc(reg->widths, (reg->n+additional)*sizeof(uint32_t));
-    if (!reg->widths) {
-        fprintf(stderr, "Failed to properly allocate space for region widths\n");
-        exit(1);
-    }
-
-    // Used for knowing when to reallocate again, so be sure and increment what our capacity actually is
-    reg->cap += additional;
-}
-
-// Get all regions from one chromosome, return NULL if chromosome not found
-static inline regions_t *get_regions(regions_v *regions, char *chrm) {
-    regions_t *reg;
-
-    size_t i;
-    for (i=0; i<regions->size; ++i) {
-        reg = ref_regions_v(regions, i);
-        if (strcmp(reg->chrm, chrm) == 0) { return reg; }
-    }
-
-    return NULL;
-}
-
-// Retrieve regions for chromosome, or initialize regions if chromosome not found
-static inline regions_t *get_n_insert_region(regions_v *regions, char *chrm) {
-    regions_t *reg = get_regions(regions, chrm);
-
-    if (!reg) {
-        reg = next_ref_regions_v(regions);
-        reg->n = 0;
-        reg->cap = 1;
-        reg->chrm = strdup(chrm);
-        reg->starts = calloc(1, sizeof(uint32_t));
-        reg->widths = calloc(1, sizeof(uint32_t));
-    }
-
-    return reg;
-}
-
 // Test and set bits for whether a region covers a certain base
-#define regions_test(regs, i) regs[(i)>>3]&(1<<((i)&0x7))
-#define regions_set(regs, i) regs[(i)>>3] |= 1<<((i)&0x7)
+#define region_test(regs, i) regs[(i)>>3]&(1<<((i)&0x7))
+#define region_set(regs, i) regs[(i)>>3] |= 1<<((i)&0x7)
 
 // Record related structs and functions
 #define RECORD_QUEUE_END -2
@@ -235,13 +158,13 @@ DEFINE_WQUEUE(record, record_t)
 
 // Window blocks for processing regions
 typedef struct {
-    int64_t  block_id; /* ID number for window */
-    int32_t  tid;      /* contig ID number of region */
-    uint32_t beg;      /* beginning of region for window */
-    uint32_t end;      /* end of region for window */
-    uint8_t *cpg;
-    uint8_t *top;
-    uint8_t *bot;
+    int64_t   block_id; /* ID number for window */
+    int32_t   tid;      /* contig ID number of region */
+    uint32_t  beg;      /* beginning of region for window */
+    uint32_t  end;      /* end of region for window */
+    uint8_t  *cpg;      /* bit array of CpG locations */
+    uint8_t  *top;      /* bit array of top GC content regions */
+    uint8_t  *bot;      /* bit array of bottom GC content regions */
 } window_t;
 
 // Queue for pulling windows for multithreaded processing
@@ -250,22 +173,9 @@ DEFINE_WQUEUE(window, window_t)
 // Information shared across threads
 typedef struct {
     char             *bam_fn;      /* BAM filename */
-    regions_v        *cpg_regions; /* vector of CpGs */
-    regions_v        *top_regions; /* vector of top GC content regions */
-    regions_v        *bot_regions; /* vector of bottom GC content regions */
     wqueue_t(window) *q;           /* window queue */
     wqueue_t(record) *rq;          /* records queue */
 } result_t;
-
-// Information shared across threads
-typedef struct {
-    char             *bam_fn;      /* BAM filename */
-    char             *cpg_regions; /* bgzip'd BED file of CpGs */
-    char             *top_regions; /* bgzip'd BED file of top GC content regions */
-    char             *bot_regions; /* bgzip'd BED file of bottom GC content regions */
-    wqueue_t(window) *q;           /* window queue */
-    wqueue_t(record) *rq;          /* records queue */
-} result2_t;
 
 // Contig info
 typedef struct {
