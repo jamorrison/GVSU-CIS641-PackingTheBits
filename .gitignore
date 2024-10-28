@@ -7,3 +7,4 @@ src/lib
 tests/*.txt
 tests/*.tsv
 tests/*.gz
+tests/*.tbi
