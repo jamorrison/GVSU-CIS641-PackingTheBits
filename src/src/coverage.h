@@ -239,6 +239,9 @@ typedef struct {
     int32_t  tid;      /* contig ID number of region */
     uint32_t beg;      /* beginning of region for window */
     uint32_t end;      /* end of region for window */
+    uint8_t *cpg;
+    uint8_t *top;
+    uint8_t *bot;
 } window_t;
 
 // Queue for pulling windows for multithreaded processing
@@ -253,6 +256,16 @@ typedef struct {
     wqueue_t(window) *q;           /* window queue */
     wqueue_t(record) *rq;          /* records queue */
 } result_t;
+
+// Information shared across threads
+typedef struct {
+    char             *bam_fn;      /* BAM filename */
+    char             *cpg_regions; /* bgzip'd BED file of CpGs */
+    char             *top_regions; /* bgzip'd BED file of top GC content regions */
+    char             *bot_regions; /* bgzip'd BED file of bottom GC content regions */
+    wqueue_t(window) *q;           /* window queue */
+    wqueue_t(record) *rq;          /* records queue */
+} result2_t;
 
 // Contig info
 typedef struct {
