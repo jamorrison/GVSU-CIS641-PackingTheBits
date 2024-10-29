@@ -78,28 +78,30 @@ functional and non-functional requirements are described.
         fall in the bottom GC windows shall be "q40_cpg_botgc" when a bottom GC file is provided.
     5. There shall be one covdist file for each set of coverages found (listed in Functional Requirements 3.5.1-3.5.12).
         1. One covdist file shall be for bases covered by all applicable reads and shall have the tag "All Bases".
-        2. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and shall have the tag "Q40 Bases".
+        2. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and shall have the tag "Q40 Bases".
         3. One covdist file shall be for CpGs covered by all applicable reads and shall have the tag "All CpGs".
-        4. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and shall have the tag "Q40 CpGs".
+        4. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and shall have the tag "Q40 CpGs".
         5. One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall
         have the tag "All Top GC Bases" when a top GC file is provided.
-        6. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and fall in the top GC windows and shall have the tag "Q40 Top GC Bases" when a top GC file is provided.
+        6. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC Bases" when a top GC file is
+        provided.
         7. One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall
         have the tag "All Top GC CpGs" when a top GC file is provided.
-        8. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and fall in the top GC windows and shall have the tag "Q40 Top GC CpGs" when a top GC file is provided.
+        8. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC CpGs" when a top GC file is
+        provided.
         9. One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and
         shall have the tag "All Bot GC Bases" when a bottom GC file is provided.
-        10. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC Bases" when a bottom GC file is
+        10. One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC Bases" when a bottom GC file is
         provided.
         11. One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and
         shall have the tag "All Bot GC CpGs" when a bottom GC file is provided.
-        12. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty
-        (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC CpGs" when a bottom GC file is
+        12. One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to
+        forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC CpGs" when a bottom GC file is
         provided.
     6. Each covdist file shall have a two line header.
         1. The first line of each covdist file shall say: "BISCUITqc Depth Distribution - TAG" where TAG is replaced by
