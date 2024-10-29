@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Genomic Coverage from Whole Genome Bisulfite Sequencing Data – WGBS Genome Coverage</title>
+<title>software_requirements_specification_final – WGBS Genome Coverage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">WGBS Genome Coverage</span>
     </a>
   </div>
@@ -89,19 +89,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/artifacts.html"> 
+    <a class="nav-link" href="../website/artifacts.html"> 
 <span class="menu-text">Artifacts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/docs.html"> 
+    <a class="nav-link" href="../website/docs.html"> 
 <span class="menu-text">Documents</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/meetings.html"> 
+    <a class="nav-link" href="../website/meetings.html"> 
 <span class="menu-text">Meetings</span></a>
   </li>  
 </ul>
@@ -127,63 +127,229 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a></li>
-  <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#abbreviation-definitions" id="toc-abbreviation-definitions" class="nav-link" data-scroll-target="#abbreviation-definitions">Abbreviation Definitions</a></li>
+  <li><a href="#functional-requirements" id="toc-functional-requirements" class="nav-link" data-scroll-target="#functional-requirements">Functional Requirements</a></li>
+  <li><a href="#non-functional-requirements" id="toc-non-functional-requirements" class="nav-link" data-scroll-target="#non-functional-requirements">Non-Functional Requirements</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Genomic Coverage from Whole Genome Bisulfite Sequencing Data</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="description" class="level1">
-<h1>Description</h1>
-<p>DNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.</p>
-<p>One possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within <a href="https://github.com/huishenlab/biscuit">BISCUIT</a> to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses <a href="https://github.com/arq5x/bedtools2">bedtools</a> to do this, but it is a slow process. One option for improving the speed of this process would be to use <a href="https://github.com/brentp/mosdepth">mosdepth</a>, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.</p>
-<p>This project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.</p>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.</p>
 </section>
-<section id="deliverables" class="level1">
-<h1>Deliverables</h1>
+<section id="abbreviation-definitions" class="level1">
+<h1>Abbreviation Definitions</h1>
 <ul>
-<li><a href="./website/artifacts.html">Artifacts</a>
-<ul>
-<li><a href="./artifacts/system_request.html">System request</a></li>
-<li><a href="./website/diagrams.html">Diagrams (use case, activity, etc.)</a></li>
-</ul></li>
-<li><a href="./website/docs.html">Documents</a>
-<ul>
-<li><a href="./docs/project-proposal.html">Project proposal</a></li>
-<li><a href="./docs/software_requirements_specification.html">Software Requirements Specification</a></li>
-<li><a href="./docs/software_requirements_specification_final.html">Software Requirements Specification (Final Version)</a></li>
-<li><a href="./website/midterm_presentation.html">Midterm Presentation</a></li>
-</ul></li>
-<li><a href="./website/meetings.html">Meeting Minutes</a>
-<ul>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html">30 September 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html">07 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html">14 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html">23 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html">28 October 2024</a></li>
-</ul></li>
+<li><strong>SAM file</strong>: Sequence Alignment Map file</li>
+<li><strong>BAM file</strong>: Binary Alignment Map file</li>
+<li><strong>BED file</strong>: Browser Extensible Data file</li>
+<li><strong>CIGAR string</strong>: Compact Idiosyncratic Gapped Alignment Report string</li>
+<li><strong>Top GC</strong>: Top ten (10) percent of windows in the genome for GC content.</li>
+<li><strong>Bottom GC</strong>: Bottom ten (10) percent of windows in the genome for GC content.</li>
+<li><strong>MAPQ</strong>: Mapping quality score</li>
 </ul>
+</section>
+<section id="functional-requirements" class="level1">
+<h1>Functional Requirements</h1>
+<ol type="1">
+<li>Command Line Interface Requirements
+<ol type="1">
+<li>The command line interface shall accept an optional integer for the number of CPU threads.</li>
+<li>The command line interface shall accept an optional integer for the window step size.</li>
+<li>The command line interface shall accept an optional string for a prefix to all output file names.</li>
+<li>The command line interface shall accept an optional file path for the genomic windows with the top ten (10) percent of GC content.</li>
+<li>The command line interface shall accept an optional file path for the genomic windows with the bottom ten (10) percent of GC content.</li>
+<li>The command line interface shall accept a required file path for the CpG genomic locations.</li>
+<li>The command line interface shall accept a required file path for the input alignment file.</li>
+<li>The command line interface shall set a default value for the number of CPU threads when the corresponding command line option is not provided.</li>
+<li>The command line interface shall set a default value for the window step size when the corresponding command line option is not provided.</li>
+<li>The command line interface shall not prepend anything to the output file names when the prefix command line option is not provided.</li>
+<li>The command line interface shall check the number of CPU threads are valid greater than zero (0).</li>
+<li>The command line interface shall set the number of CPU threads to the default value when the given value is less than or equal to zero (0).</li>
+<li>The command line interface shall check the window step size is greater than zero (0).</li>
+<li>The command line interface shall set the window step size to the default value when the given value is less than or equal to zero (0).</li>
+</ol></li>
+<li>File Input Requirements
+<ol type="1">
+<li>The program shall read Sequence Alignment Map (SAM) files.</li>
+<li>The program shall read Binary Alignment Map (BAM) files.</li>
+<li>The program shall accept one SAM or BAM file as the alignment file input.</li>
+<li>The program shall extract chromosome sizes from the input SAM or BAM files.</li>
+<li>The program shall read Browser Extensible Data (BED) files.</li>
+<li>The program shall require BED files to be block gzipped.</li>
+</ol></li>
+<li>File Output Requirements
+<ol type="1">
+<li>The program shall have two output file types: a coverage distribution file (referred to as “covdist”) and a coefficient of variation file (referred to as “cv”).</li>
+<li>The cv file shall have a two line header.
+<ol type="1">
+<li>The first line of the cv file shall say: “BISCUITqc Uniformity Table”.</li>
+<li>The second line of the cv file shall say: “group mu sigma cv”.</li>
+<li>The words on the second line of the cv file shall be separated by tab characters.</li>
+</ol></li>
+<li>All lines after the two line header in the cv file shall be tab separated.</li>
+<li>All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements 3.4.1-3.4.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation.
+<ol type="1">
+<li>The group name for coverage across bases covered by all applicable reads shall be “all_base”.</li>
+<li>The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be “q40_base”.</li>
+<li>The group name for coverage across CpGs covered by all applicable reads shall be “all_cpg”.</li>
+<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) shall be “q40_cpg”.</li>
+<li>The group name for coverage across bases covered by all applicable reads and fall in the top GC windows shall be “all_base_topgc” when a top GC file is provided.</li>
+<li>The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_base_topgc” when a top GC file is provided.</li>
+<li>The group name for coverage across CpGs covered by all applicable reads and fall in the top GC windows shall be “all_cpg_topgc” when a top GC file is provided.</li>
+<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_cpg_topgc” when a top GC file is provided.</li>
+<li>The group name for coverage across bases covered by all applicable reads and fall in the bottom GC windows shall be “all_base_botgc” when a bottom GC file is provided.</li>
+<li>The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_base_botgc” when a bottom GC file is provided.</li>
+<li>The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be “all_cpg_botgc” when a bottom GC file is provided.</li>
+<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_cpg_botgc” when a bottom GC file is provided.</li>
+</ol></li>
+<li>There shall be one covdist file for each set of coverages found (listed in Functional Requirements 3.5.1-3.5.12).
+<ol type="1">
+<li>One covdist file shall be for bases covered by all applicable reads and shall have the tag “All Bases”.</li>
+<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and shall have the tag “Q40 Bases”.</li>
+</ol>
+<ol start="3" type="1">
+<li>One covdist file shall be for CpGs covered by all applicable reads and shall have the tag “All CpGs”.</li>
+<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and shall have the tag “Q40 CpGs”.</li>
+</ol>
+<ol start="5" type="1">
+<li>One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC Bases” when a top GC file is provided.</li>
+<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and fall in the top GC windows and shall have the tag “Q40 Top GC Bases” when a top GC file is provided.</li>
+</ol>
+<ol start="7" type="1">
+<li>One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC CpGs” when a top GC file is provided.</li>
+<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and fall in the top GC windows and shall have the tag “Q40 Top GC CpGs” when a top GC file is provided.</li>
+</ol>
+<ol start="9" type="1">
+<li>One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC Bases” when a bottom GC file is provided.</li>
+<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and fall in the bottom GC windows and shall have the tag “Q40 Bot GC Bases” when a bottom GC file is provided.</li>
+</ol>
+<ol start="11" type="1">
+<li>One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC CpGs” when a bottom GC file is provided.</li>
+<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty</li>
+</ol>
+<ol start="40" type="1">
+<li>and fall in the bottom GC windows and shall have the tag “Q40 Bot GC CpGs” when a bottom GC file is provided.</li>
+</ol></li>
+<li>Each covdist file shall have a two line header.
+<ol type="1">
+<li>The first line of each covdist file shall say: “BISCUITqc Depth Distribution - TAG” where TAG is replaced by a tag unique to each covdist file (see Functional Requirements 3.5.1-3.5.12 for the tags).</li>
+<li>The second line of each covdist file shall say: “depth count”.</li>
+<li>The words on the second line of each covdist file shall be separated by tab characters.</li>
+</ol></li>
+<li>All lines after the two line header in the covdist file shall be tab separated.</li>
+<li>All lines after the two line header in the covdist file shall contain the coverage level in the first position of the line and the number of bases with that coverage level in the second position of the line.</li>
+</ol></li>
+<li>Parallel Processing Requirements
+<ol type="1">
+<li>The program shall use POSIX threads for multithreaded processing.</li>
+<li>The program shall split the chromosome into equal sized bins.
+<ol type="1">
+<li>The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly.</li>
+</ol></li>
+<li>A thread shall store its block identification number.</li>
+<li>A thread shall store its bin start position.</li>
+<li>A thread shall store its bin end position.</li>
+<li>A thread shall store a bit array of positions in the bin that are covered by CpGs.</li>
+<li>A thread shall store a bit array of positions in the bin that are covered by top GC windows.
+<ol type="1">
+<li>The bit array shall be all zeroes (0s) if no top GC file is provided.</li>
+</ol></li>
+<li>A thread shall store a bit array of positions in the bin that are covered by bottom GC windows.
+<ol type="1">
+<li>The bit array shall be all zeroes (0s) if no bottom GC file is provided.</li>
+</ol></li>
+</ol></li>
+<li>SAM/BAM File Processing Requirements
+<ol type="1">
+<li>The program shall ignore unmapped reads.</li>
+<li>The program shall ignore reads that are not primary alignments.</li>
+<li>The program shall ignore reads that fail platform/vendor quality checks.</li>
+<li>The program shall ignore reads that are PCR or optical duplicates.</li>
+<li>The program shall ignore reads that are supplementary alignments.</li>
+<li>The program shall extract the CIGAR string from a mapped read alignment.</li>
+<li>The program shall increment one base along the reference if the CIGAR operation is an alignment match.</li>
+<li>The program shall not change the reference position if the CIGAR operation is an insertion.</li>
+<li>The program shall increment one base along the reference if the CIGAR operation is a deletion.</li>
+<li>The program shall increment one base along the reference if the CIGAR operation is a skipped region from the reference.</li>
+<li>The program shall not change the reference position if the CIGAR operation is a soft clipped base.</li>
+<li>The program shall not change the reference position if the CIGAR operation is a hard clipped base.</li>
+<li>The program shall increment one base along the reference if the CIGAR operation is a sequence match.</li>
+<li>The program shall increment one base along the reference if the CIGAR operation is a sequence mismatch.</li>
+<li>The program shall count a base as covered if the CIGAR operation is an alignment match, a sequence match, or a sequence mismatch.</li>
+<li>The program shall not count a base as covered if the CIGAR operation is an insertion, a deletion, a soft clipped base, a hard clipped base, or a skipped region from the reference.</li>
+</ol></li>
+</ol>
+</section>
+<section id="non-functional-requirements" class="level1">
+<h1>Non-Functional Requirements</h1>
+<ol type="1">
+<li>Operating Requirements
+<ol type="1">
+<li>The program shall work on Linux systems.</li>
+<li>The program shall work on macOS systems.</li>
+<li>The program shall run from a terminal.</li>
+<li>The program shall work through a command line interface.</li>
+<li>The program shall work on x86 CPU architectures.</li>
+<li>The program shall work on ARM CPU architectures.</li>
+</ol></li>
+<li>Performance Requirements
+<ol type="1">
+<li>The program shall read a genomic window from a block gzipped BED file in two (2) seconds or less.</li>
+<li>The program shall process at least one thousand (1000) reads per second.</li>
+<li>The program shall process at least one million (1,000,000) basepairs of data per second.</li>
+<li>The program shall use eight (8) gigabytes or less of random access memory.</li>
+<li>The program shall compile in fifteen (15) seconds or less.</li>
+</ol></li>
+<li>Usability Requirements
+<ol type="1">
+<li>The program shall use English comments.</li>
+<li>The program shall provide a help message for the user.</li>
+<li>The program shall provide error messages upon system failure.</li>
+<li>The program shall have a companion website describing usage.</li>
+<li>The program shall provide an example dataset.</li>
+<li>The program shall provide a tutorial for users.</li>
+</ol></li>
+<li>Availability Requirements
+<ol type="1">
+<li>The program shall be available for no cost.</li>
+<li>The program shall be available to the public.</li>
+<li>The program shall be available on GitHub.</li>
+<li>The program shall be available in pre-compiled binaries.</li>
+<li>The program shall be available through bioconda.</li>
+</ol></li>
+<li>Maintainability Requirements
+<ol type="1">
+<li>The program shall use Git for version control.</li>
+<li>The program shall use semantic versioning.</li>
+<li>Issues shall be acknowledged within two (2) business days.</li>
+<li>Pull requests shall be acknowledged within two (2) business days.</li>
+<li>Minor issues (e.g., bugs) shall be resolved within five (5) business days.</li>
+<li>Major issues (e.g., feature requests) shall be resolved within fifteen (15) business days.</li>
+</ol></li>
+</ol>
 
 
 </section>
