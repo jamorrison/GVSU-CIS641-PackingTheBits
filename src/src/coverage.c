@@ -481,6 +481,16 @@ int main_coverage(int argc, char *argv[]) {
     char *cpg_bed_fn = argv[optind++];
     char *infn = argv[optind++];
 
+    // Validate the number of threads and step size
+    if (conf.n_threads < 1) {
+        fprintf(stderr, "[WARNING] Number of threads is < 1. Setting to %i\n", N_THREADS_DEFAULT);
+        conf.n_threads = N_THREADS_DEFAULT;
+    }
+    if (conf.step < 1) {
+        fprintf(stderr, "[WARNING] Window step size is < 1. Setting to %i\n", STEP_SIZE_DEFAULT);
+        conf.step = STEP_SIZE_DEFAULT;
+    }
+
     // Read input BAM to get chromosome sizes for setting windows
     htsFile *in = hts_open(infn, "rb");
     if (in == NULL) {

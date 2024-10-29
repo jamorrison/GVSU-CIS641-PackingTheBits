@@ -9,6 +9,9 @@
 
 #include "khashl.h"
 
+#define N_THREADS_DEFAULT 1
+#define STEP_SIZE_DEFAULT 100000
+
 // Command line interface configuration
 typedef struct {
     int step;
@@ -16,8 +19,8 @@ typedef struct {
 } covg_conf_t;
 
 static void covg_conf_init(covg_conf_t *conf) {
-    conf->step = 100000;
-    conf->n_threads = 1;
+    conf->step = STEP_SIZE_DEFAULT;
+    conf->n_threads = N_THREADS_DEFAULT;
 }
 
 // Store two components of a fraction separately
