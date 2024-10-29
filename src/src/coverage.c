@@ -581,10 +581,14 @@ int main_coverage(int argc, char *argv[]) {
     pthread_join(writer, NULL);
 
     // Clean up
-    tbx_destroy(bot_tbx);
-    hts_close(bot_bed);
-    tbx_destroy(top_tbx);
-    hts_close(top_bed);
+    if (bot_fn) {
+        tbx_destroy(bot_tbx);
+        hts_close(bot_bed);
+    }
+    if (top_fn) {
+        tbx_destroy(top_tbx);
+        hts_close(top_bed);
+    }
     tbx_destroy(cpg_tbx);
     hts_close(cpg_bed);
     wqueue_destroy(record, writer_conf.q);
