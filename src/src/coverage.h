@@ -286,7 +286,7 @@ static inline output_names_t *init_output_names(char *prefix) {
     return out;
 }
 
-static inline output_names_t *destroy_output_names(output_names_t *get_wrecked) {
+static inline void destroy_output_names(output_names_t *get_wrecked) {
     free(get_wrecked->q40_cpg_bot);
     free(get_wrecked->all_cpg_bot);
     free(get_wrecked->q40_base_bot);
