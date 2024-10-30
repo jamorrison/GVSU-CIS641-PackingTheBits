@@ -57,6 +57,10 @@ find_package(CURL REQUIRED)
 set(htslib_version "1.21")
 set(htslib_base "htslib-${htslib_version}")
 
+# Does not check validity of the downloaded tarball
+# NOTE: Will make CRAM files potentially unreadable.
+#       If planning to add CRAM functionality in the future, will need to remove --disable-bz2 and --disable-lzma
+# NOTE: Does not use libdeflate on macOS, so this may be slower on Mac than Linux
 if(APPLE)
     ExternalProject_Add(htslib
         DOWNLOAD_DIR ${LIB_DIR}
@@ -68,7 +72,7 @@ if(APPLE)
             mv -f ${htslib_base} htslib
         SOURCE_DIR ${LIB_DIR}/htslib
         INSTALL_DIR ${LIB_DIR}/install
-        CONFIGURE_COMMAND ${LIB_DIR}/htslib/configure --prefix=<INSTALL_DIR> --disable-bz2 --disable-lzma --disable-libcurl --without-deflate
+        CONFIGURE_COMMAND ${LIB_DIR}/htslib/configure --prefix=<INSTALL_DIR> --disable-bz2 --disable-lzma --disable-libcurl --without-libdeflate
         BUILD_COMMAND make lib-static
         INSTALL_COMMAND ""
         BUILD_IN_SOURCE 1
@@ -90,11 +94,6 @@ else()
         BUILD_IN_SOURCE 1
         )
 endif(APPLE)
-
-# Does not check validity of the downloaded tarball
-# NOTE: Will make CRAM files potentially unreadable.
-#       If planning to add CRAM functionality in the future, will need to remove --disable-bz2 and --disable-lzma
-ExternalProject_Add(htslib
 
 # Include directories
 include_directories(${utils_PREFIX} ${htslib_PREFIX}/htslib)
