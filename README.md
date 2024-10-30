@@ -29,6 +29,8 @@ pipeline.
   * POSIX threads
   * git
   * libdeflate (only needed for Linux)
+* Third-party dependencies
+  * Downloaded and installed as part of the compilation process
 
 ## Run Instructions
 
@@ -54,16 +56,16 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../
 
 # Change installation path (replace <install-path> to desired location)
 # Can also be combined with building in debug mode
-cmake cmake -DCMAKE_INSTALL_PREFIX=<install-path> ../
+cmake -DCMAKE_INSTALL_PREFIX=<install-path> ../
 ```
 4. Compile code
 ```
 # Will not install binary anywhere
-# (binary location is: build/src/coverage)
+# (binary location is: <repo-dir>/src/build/src/coverage)
 make
 
 # Compile and install
-# (binary location is: <install-path>/coverage)
+# (binary location is: <install-path>/coverage, <install-path> may be the system default)
 make install
 ```
 
