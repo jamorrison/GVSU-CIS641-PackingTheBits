@@ -359,6 +359,7 @@ static void *process_func(void *data) {
 
             // Process CIGAR string to find if a base is covered or not
             int i;
+            uint32_t j;
             for (i=0; i<c->n_cigar; ++i) {
                 uint32_t op    = bam_cigar_op(bam_get_cigar(b)[i]);
                 uint32_t oplen = bam_cigar_oplen(bam_get_cigar(b)[i]);
@@ -366,7 +367,6 @@ static void *process_func(void *data) {
                     case BAM_CMATCH:
                     case BAM_CEQUAL:
                     case BAM_CDIFF:
-                        uint32_t j;
                         for (j=0; j<oplen; ++j) {
                             if (w.beg <= rpos && rpos+j < w.end) {
                                 uint32_t idx = rpos + j - w.beg;
