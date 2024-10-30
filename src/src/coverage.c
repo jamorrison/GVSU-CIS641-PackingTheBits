@@ -460,10 +460,10 @@ int main_coverage(int argc, char *argv[]) {
     if (argc < 2) { return usage(); }
     while ((c=getopt(argc, argv, ":@:b:p:s:t:h")) >= 0) {
         switch (c) {
-            case '@': conf.n_threads = atoi(optarg); break;
+            case '@': ensure_number(optarg); conf.n_threads = atoi(optarg); break;
             case 'b': bot_fn = optarg; break;
             case 'p': prefix = optarg; break;
-            case 's': conf.step = atoi(optarg); break;
+            case 's': ensure_number(optarg); conf.step = atoi(optarg); break;
             case 't': top_fn = optarg; break;
             case 'h': usage(); return 0;
             case ':': usage(); fprintf(stderr, "Option needs an argument: -%c\n", optopt); return 1;
