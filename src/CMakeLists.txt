@@ -57,24 +57,44 @@ find_package(CURL REQUIRED)
 set(htslib_version "1.21")
 set(htslib_base "htslib-${htslib_version}")
 
+if(APPLE)
+    ExternalProject_Add(htslib
+        DOWNLOAD_DIR ${LIB_DIR}
+        DOWNLOAD_COMMAND curl --silent --show-error -k -L https://github.com/samtools/htslib/releases/download/${htslib_version}/${htslib_base}.tar.bz2 -o ${htslib_base}.tar.bz2 &&
+            echo "Skipping download verification" &&
+            mkdir -p ${htslib_base} &&
+            tar -jxf ${htslib_base}.tar.bz2 --strip-components=1 -C ${htslib_base} &&
+            rm -rf htslib &&
+            mv -f ${htslib_base} htslib
+        SOURCE_DIR ${LIB_DIR}/htslib
+        INSTALL_DIR ${LIB_DIR}/install
+        CONFIGURE_COMMAND ${LIB_DIR}/htslib/configure --prefix=<INSTALL_DIR> --disable-bz2 --disable-lzma --disable-libcurl --without-deflate
+        BUILD_COMMAND make lib-static
+        INSTALL_COMMAND ""
+        BUILD_IN_SOURCE 1
+        )
+else()
+    ExternalProject_Add(htslib
+        DOWNLOAD_DIR ${LIB_DIR}
+        DOWNLOAD_COMMAND curl --silent --show-error -k -L https://github.com/samtools/htslib/releases/download/${htslib_version}/${htslib_base}.tar.bz2 -o ${htslib_base}.tar.bz2 &&
+            echo "Skipping download verification" &&
+            mkdir -p ${htslib_base} &&
+            tar -jxf ${htslib_base}.tar.bz2 --strip-components=1 -C ${htslib_base} &&
+            rm -rf htslib &&
+            mv -f ${htslib_base} htslib
+        SOURCE_DIR ${LIB_DIR}/htslib
+        INSTALL_DIR ${LIB_DIR}/install
+        CONFIGURE_COMMAND ${LIB_DIR}/htslib/configure --prefix=<INSTALL_DIR> --disable-bz2 --disable-lzma --disable-libcurl
+        BUILD_COMMAND make lib-static
+        INSTALL_COMMAND ""
+        BUILD_IN_SOURCE 1
+        )
+endif(APPLE)
+
 # Does not check validity of the downloaded tarball
 # NOTE: Will make CRAM files potentially unreadable.
 #       If planning to add CRAM functionality in the future, will need to remove --disable-bz2 and --disable-lzma
 ExternalProject_Add(htslib
-    DOWNLOAD_DIR ${LIB_DIR}
-    DOWNLOAD_COMMAND curl --silent --show-error -k -L https://github.com/samtools/htslib/releases/download/${htslib_version}/${htslib_base}.tar.bz2 -o ${htslib_base}.tar.bz2 &&
-        echo "Skipping download verification" &&
-        mkdir -p ${htslib_base} &&
-        tar -jxf ${htslib_base}.tar.bz2 --strip-components=1 -C ${htslib_base} &&
-        rm -rf htslib &&
-        mv -f ${htslib_base} htslib
-    SOURCE_DIR ${LIB_DIR}/htslib
-    INSTALL_DIR ${LIB_DIR}/install
-    CONFIGURE_COMMAND ${LIB_DIR}/htslib/configure --prefix=<INSTALL_DIR> --disable-bz2 --disable-lzma --disable-libcurl
-    BUILD_COMMAND make lib-static
-    INSTALL_COMMAND ""
-    BUILD_IN_SOURCE 1
-    )
 
 # Include directories
 include_directories(${utils_PREFIX} ${htslib_PREFIX}/htslib)
