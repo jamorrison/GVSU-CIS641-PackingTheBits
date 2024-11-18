@@ -11,3 +11,4 @@ title: Meeting Minutes
 - [28 October 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-10-28.md)
 - [04 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-04.md)
 - [11 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-11.md)
+- [18 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-18.md)
