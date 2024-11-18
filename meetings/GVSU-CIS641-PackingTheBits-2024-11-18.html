@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Genomic Coverage from Whole Genome Bisulfite Sequencing Data – WGBS Genome Coverage</title>
+<title>gvsu-cis641-packingthebits-2024-11-18 – WGBS Genome Coverage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">WGBS Genome Coverage</span>
     </a>
   </div>
@@ -89,19 +89,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/artifacts.html"> 
+    <a class="nav-link" href="../website/artifacts.html"> 
 <span class="menu-text">Artifacts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/docs.html"> 
+    <a class="nav-link" href="../website/docs.html"> 
 <span class="menu-text">Documents</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./website/meetings.html"> 
+    <a class="nav-link" href="../website/meetings.html"> 
 <span class="menu-text">Meetings</span></a>
   </li>  
 </ul>
@@ -127,65 +127,43 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a></li>
-  <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a></li>
+  <li><a href="#meeting-minutes" id="toc-meeting-minutes" class="nav-link active" data-scroll-target="#meeting-minutes">Meeting minutes</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Genomic Coverage from Whole Genome Bisulfite Sequencing Data</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="description" class="level1">
-<h1>Description</h1>
-<p>DNA sequencing is a common practice in biomedical research. The sequencing process requires collecting DNA from a sample (e.g., a tumor biopsy or a healthy tissue nearby), extracting the DNA from the cells, and then fragmenting the full length DNA strands into smaller chunks. These chunks are then placed on a “sequencer,” where the individual bases are read from the DNA fragments. The output from the sequencer is called a “read” and is then aligned back to a reference genome (the human reference genome is about three billion bases long) in order to find where the small fragment (usually around 100-150 bases in length) came from.</p>
-<p>One possible analysis that can be done is to find the “coverage” across the entire genome. To do this, you count the total number of reads that cover each individual loci, or base, in the genome. One example of performing this analysis is as a part of a quality control pipeline within <a href="https://github.com/huishenlab/biscuit">BISCUIT</a> to verify a sequencing experiment consistently covered the entire genome. Currently, the pipeline uses <a href="https://github.com/arq5x/bedtools2">bedtools</a> to do this, but it is a slow process. One option for improving the speed of this process would be to use <a href="https://github.com/brentp/mosdepth">mosdepth</a>, a tool specifically designed for finding coverages. However, it does not calculate the exact metrics needed in the BISCUIT quality control pipeline.</p>
-<p>This project improves upon the existing bedtools implementation by calculating the needed metrics on the fly and utilizing parallelization during processing. The tool is written in C for plugging in to BISCUIT following its completion.</p>
-</section>
-<section id="deliverables" class="level1">
-<h1>Deliverables</h1>
+<section id="meeting-minutes" class="level2">
+<h2 class="anchored" data-anchor-id="meeting-minutes">Meeting minutes</h2>
+<p>Team name: Packing the Bits</p>
+<p>Members present: Jacob Morrison</p>
+<p>Date: 18 November 2024</p>
+<p>Time: 15:50</p>
+<p>Discussion points:</p>
 <ul>
-<li><a href="./website/artifacts.html">Artifacts</a>
+<li>Thoughts on what I want to do for testing
 <ul>
-<li><a href="./artifacts/system_request.html">System request</a></li>
-<li><a href="./website/diagrams.html">Diagrams (use case, activity, etc.)</a></li>
+<li>Create script to create benchmarking new version against old
+<ul>
+<li>Can use to test speed of processing</li>
+<li>Can make sure the new version is faster than the old version (and worth the effort)</li>
 </ul></li>
-<li><a href="./website/docs.html">Documents</a>
+<li>Create test files to check if different options change results or not
 <ul>
-<li><a href="./docs/project-proposal.html">Project proposal</a></li>
-<li><a href="./docs/software_requirements_specification.html">Software Requirements Specification</a></li>
-<li><a href="./docs/software_requirements_specification_final.html">Software Requirements Specification (Final Version)</a></li>
-<li><a href="./website/midterm_presentation.html">Midterm Presentation</a></li>
+<li>It’s okay if results change, but I need to know how so I can explain to users when this is deployed</li>
 </ul></li>
-<li><a href="./website/meetings.html">Meeting Minutes</a>
+</ul></li>
+<li>Homework 5 (class diagrams) started and almost done</li>
+</ul>
+<p>Goals for next week (include responsibilities):</p>
+<p>All responsibilities handled by Jacob Morrison</p>
 <ul>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html">30 September 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html">07 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html">14 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html">23 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html">28 October 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html">04 November 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-11-11.html">11 November 2024</a></li>
-<li><a href="./meetings/GVSU-CIS641-PackingTheBits-2024-11-18.html">18 November 2024</a></li>
-</ul></li>
+<li>Must complete a base level of testing to wrap up other elements of project</li>
+<li>Finish HW5 (class diagrams)</li>
 </ul>
 
 
