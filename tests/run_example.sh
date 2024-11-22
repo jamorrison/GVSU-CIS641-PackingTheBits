@@ -6,4 +6,4 @@ N_THREADS=1
 PREFIX=example
 STEP=1000000
 
-${BIN}/coverage -b ${BOT} -t ${TOP} -p ${PREFIX} -@ "${N_THREADS}" -s ${STEP} ${CPG} example.bam
+${BIN}/coverage -b ${BOT} -t ${TOP} -p ${PREFIX} -@ "${N_THREADS}" -s ${STEP} ${CPG} test_files/example.bam
