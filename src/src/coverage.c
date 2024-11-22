@@ -368,7 +368,7 @@ static void *process_func(void *data) {
                     case BAM_CEQUAL:
                     case BAM_CDIFF:
                         for (j=0; j<oplen; ++j) {
-                            if (w.beg <= rpos && rpos+j < w.end) {
+                            if (w.beg <= rpos+j && rpos+j < w.end) {
                                 uint32_t idx = rpos + j - w.beg;
                                 all_covgs[idx] += 1;
                                 if (c->qual >= 40) {
