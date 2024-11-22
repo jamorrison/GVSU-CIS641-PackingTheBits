@@ -1,21 +1,21 @@
 TIME=/varidata/research/projects/shen/tools/morrison/installed_packages/time-1.9
 OUT=actual_timing.tsv
-CPG=cpg.bed.gz
+CPG=cpg.bgzip.bed.gz
 #CPG=cpg.10.bed
-TOP=windows100bp.gc_content.top10p.bed.gz
-BOT=windows100bp.gc_content.bot10p.bed.gz
+TOP=windows100bp.gc_content.top10p.bgzip.bed.gz
+BOT=windows100bp.gc_content.bot10p.bgzip.bed.gz
 
 ${TIME}/time \
     --format="genomecov_all\t%e" \
     --output=${OUT} \
-    bedtools genomecov -bga -split -ibam new.bam | \
+    bedtools genomecov -bga -split -ibam test_files/example.bam | \
     sort -k1,1 -k2,2n > all_coverage.bed
 
 ${TIME}/time \
     --format="genomecov_q40\t%e" \
     --output=${OUT} \
     --append \
-    samtools view -q 40 -b new.bam | \
+    samtools view -q 40 -b test_files/example.bam | \
     bedtools genomecov -bga -split -ibam stdin | \
     sort -k1,1 -k2,2n > q40_coverage.bed
 
