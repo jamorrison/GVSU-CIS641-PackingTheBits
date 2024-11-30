@@ -18,7 +18,7 @@ title: Diagrams
 
 ![CRC Card: Command Line Interface](../artifacts/crc_cli_v2.png)
 
-# Class Diagram
+# Class Diagrams
 
 ![Class Diagram: Command Line Interface](../artifacts/class_diagram.png)
 ![Class Diagram: Complete](../artifacts/class_diagram_complete.jpg)
@@ -102,7 +102,19 @@ title: Diagrams
       1. Memory allocated by `output_names_t` and the underlying character array pointers is freed and returned to the
          system for assigning to other objects
 
-# Object Diagram
+# Object Diagrams
 
 ![Object Diagram: Command Line Interface](../artifacts/object_diagram.png)
 ![Object Diagram: Complete](../artifacts/object_diagram_complete.jpg)
+
+# Sequence Diagram
+
+![Sequence Diagram: Flow from User to Processing](../artifacts/sequence_diagram.jpg)
+
+# State Diagram
+
+![State Diagram: Create and Fill Bit Array](../artifacts/state_diagram.jpg)
+
+# Window Navigation Diagram
+
+![Window Navigation Diagram: Command Line Interface](../artifacts/window_nav_diagram.jpg)
