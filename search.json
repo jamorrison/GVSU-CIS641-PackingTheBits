@@ -38,56 +38,88 @@
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-18.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 18 November 2024\nTime: 15:50\nDiscussion points:\n\nThoughts on what I want to do for testing\n\nCreate script to create benchmarking new version against old\n\nCan use to test speed of processing\nCan make sure the new version is faster than the old version (and worth the effort)\n\nCreate test files to check if different options change results or not\n\nIt’s okay if results change, but I need to know how so I can explain to users when this is deployed\n\n\nHomework 5 (class diagrams) started and almost done\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nMust complete a base level of testing to wrap up other elements of project\nFinish HW5 (class diagrams)"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 18 November 2024\nTime: 15:50\nDiscussion points:\n\nThoughts on what I want to do for testing\n\nCreate script to create benchmarking new version against old\n\nCan use to test speed of processing\nCan make sure the new version is faster than the old version (and worth the effort)\n\nCreate test files to check if different options change results or not\n\nIt’s okay if results change, but I need to know how so I can explain to users when this is deployed\n\n\nHomework 5 (class diagrams) started and almost done\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nMust complete a base level of testing to wrap up other elements of project\nFinish HW5 (class diagrams)",
+    "crumbs": [
+      "Meetings",
+      "2024-11-18"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-11-18.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-18.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 18 November 2024\nTime: 15:50\nDiscussion points:\n\nThoughts on what I want to do for testing\n\nCreate script to create benchmarking new version against old\n\nCan use to test speed of processing\nCan make sure the new version is faster than the old version (and worth the effort)\n\nCreate test files to check if different options change results or not\n\nIt’s okay if results change, but I need to know how so I can explain to users when this is deployed\n\n\nHomework 5 (class diagrams) started and almost done\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nMust complete a base level of testing to wrap up other elements of project\nFinish HW5 (class diagrams)"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 18 November 2024\nTime: 15:50\nDiscussion points:\n\nThoughts on what I want to do for testing\n\nCreate script to create benchmarking new version against old\n\nCan use to test speed of processing\nCan make sure the new version is faster than the old version (and worth the effort)\n\nCreate test files to check if different options change results or not\n\nIt’s okay if results change, but I need to know how so I can explain to users when this is deployed\n\n\nHomework 5 (class diagrams) started and almost done\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nMust complete a base level of testing to wrap up other elements of project\nFinish HW5 (class diagrams)",
+    "crumbs": [
+      "Meetings",
+      "2024-11-18"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 28 October 2024\nTime: 15:55\nDiscussion points:\n\nFinished implementation as I want it to exist for class\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nDo in-class assignment (IC4)\nStart looking into what testing will look like"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 28 October 2024\nTime: 15:55\nDiscussion points:\n\nFinished implementation as I want it to exist for class\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nDo in-class assignment (IC4)\nStart looking into what testing will look like",
+    "crumbs": [
+      "Meetings",
+      "2024-10-28"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 28 October 2024\nTime: 15:55\nDiscussion points:\n\nFinished implementation as I want it to exist for class\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nDo in-class assignment (IC4)\nStart looking into what testing will look like"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 28 October 2024\nTime: 15:55\nDiscussion points:\n\nFinished implementation as I want it to exist for class\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nDo in-class assignment (IC4)\nStart looking into what testing will look like",
+    "crumbs": [
+      "Meetings",
+      "2024-10-28"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 23 October 2024\nTime: 15:50\nDiscussion points:\n\nCRC, Class diagram, and Object diagram completed (IC3)\nContinued working on implementation\n\nHave correct files output now\nStarted comparing against previous implementation\n\nFound an off-by-one bug when looking at specific regions\n\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nResolve off-by-one bug for CpG coverage\nImplement reading regions via tabix"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 23 October 2024\nTime: 15:50\nDiscussion points:\n\nCRC, Class diagram, and Object diagram completed (IC3)\nContinued working on implementation\n\nHave correct files output now\nStarted comparing against previous implementation\n\nFound an off-by-one bug when looking at specific regions\n\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nResolve off-by-one bug for CpG coverage\nImplement reading regions via tabix",
+    "crumbs": [
+      "Meetings",
+      "2024-10-23"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 23 October 2024\nTime: 15:50\nDiscussion points:\n\nCRC, Class diagram, and Object diagram completed (IC3)\nContinued working on implementation\n\nHave correct files output now\nStarted comparing against previous implementation\n\nFound an off-by-one bug when looking at specific regions\n\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nResolve off-by-one bug for CpG coverage\nImplement reading regions via tabix"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 23 October 2024\nTime: 15:50\nDiscussion points:\n\nCRC, Class diagram, and Object diagram completed (IC3)\nContinued working on implementation\n\nHave correct files output now\nStarted comparing against previous implementation\n\nFound an off-by-one bug when looking at specific regions\n\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nResolve off-by-one bug for CpG coverage\nImplement reading regions via tabix",
+    "crumbs": [
+      "Meetings",
+      "2024-10-23"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 4 November 2024\nTime: 15:45\nDiscussion points:\n\nFinished in-class assignment (IC4)\n\nSequence diagram\nState diagram\n\nNeed to start testing now\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 4 November 2024\nTime: 15:45\nDiscussion points:\n\nFinished in-class assignment (IC4)\n\nSequence diagram\nState diagram\n\nNeed to start testing now\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise",
+    "crumbs": [
+      "Meetings",
+      "2024-11-04"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 4 November 2024\nTime: 15:45\nDiscussion points:\n\nFinished in-class assignment (IC4)\n\nSequence diagram\nState diagram\n\nNeed to start testing now\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 4 November 2024\nTime: 15:45\nDiscussion points:\n\nFinished in-class assignment (IC4)\n\nSequence diagram\nState diagram\n\nNeed to start testing now\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise",
+    "crumbs": [
+      "Meetings",
+      "2024-11-04"
+    ]
   },
   {
     "objectID": "artifacts/system_request.html",
@@ -134,28 +166,44 @@
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-11.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 11 November 2024\nTime: 13:55\nDiscussion points:\n\nNot much work since last week with implementation already finished\nHomework 5 (class diagrams) received\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing (repeat from last meeting)\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise\n\n\nDo HW5 (class diagrams)"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 11 November 2024\nTime: 13:55\nDiscussion points:\n\nNot much work since last week with implementation already finished\nHomework 5 (class diagrams) received\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing (repeat from last meeting)\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise\n\n\nDo HW5 (class diagrams)",
+    "crumbs": [
+      "Meetings",
+      "2024-11-11"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-11-11.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-11.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 11 November 2024\nTime: 13:55\nDiscussion points:\n\nNot much work since last week with implementation already finished\nHomework 5 (class diagrams) received\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing (repeat from last meeting)\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise\n\n\nDo HW5 (class diagrams)"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 11 November 2024\nTime: 13:55\nDiscussion points:\n\nNot much work since last week with implementation already finished\nHomework 5 (class diagrams) received\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nWork on some testing (repeat from last meeting)\n\nTesting will be a basic set of tests\n\nEnsure new implementation is faster than old version\nCheck for differences in output and understand why those arise\n\n\nDo HW5 (class diagrams)",
+    "crumbs": [
+      "Meetings",
+      "2024-11-11"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 14 October 2024\nTime: 15:40\nDiscussion points:\n\nRequirements finished (HW3)\nCRC created (IC3, in progress)\nClass diagram(s) to be created (IC3, in progress)\nObject diagram(s) to be created (IC3, in progress)\nImplementation started\n\nCLI implemented\nStarted file processing\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nContinue implementation\nCreate presentation for midterm"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 14 October 2024\nTime: 15:40\nDiscussion points:\n\nRequirements finished (HW3)\nCRC created (IC3, in progress)\nClass diagram(s) to be created (IC3, in progress)\nObject diagram(s) to be created (IC3, in progress)\nImplementation started\n\nCLI implemented\nStarted file processing\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nContinue implementation\nCreate presentation for midterm",
+    "crumbs": [
+      "Meetings",
+      "2024-10-14"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 14 October 2024\nTime: 15:40\nDiscussion points:\n\nRequirements finished (HW3)\nCRC created (IC3, in progress)\nClass diagram(s) to be created (IC3, in progress)\nObject diagram(s) to be created (IC3, in progress)\nImplementation started\n\nCLI implemented\nStarted file processing\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nContinue implementation\nCreate presentation for midterm"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 14 October 2024\nTime: 15:40\nDiscussion points:\n\nRequirements finished (HW3)\nCRC created (IC3, in progress)\nClass diagram(s) to be created (IC3, in progress)\nObject diagram(s) to be created (IC3, in progress)\nImplementation started\n\nCLI implemented\nStarted file processing\n\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nContinue implementation\nCreate presentation for midterm",
+    "crumbs": [
+      "Meetings",
+      "2024-10-14"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html",
@@ -184,14 +232,22 @@
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-25.html",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 25 November 2024\nTime: 15:10\nDiscussion points:\n\nStarted on testing\n\nBasic BASH script that runs old code and new code on an input BAM and then compares results\n\nLooking to see which flags affect outputs\nAllow for 0.5% difference in results (for floats) rather than standard float comparison to allow for differences in rounding between AWK and fprintf\n\nIf time, compare old, single-threaded new, and multi-threaded new across several input files sizes to check time speed up\n\nHW5 finished and turned in\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish up project\n\nPresentation\nMake sure all artifacts align across project\nComplete change management plan\nTraceability\nMake sure all artifacts are linked\nSpelling/grammar check\nUpdate all READMEs\nUpdate website with all links\nSubmit presentation and project\nSelf reflection"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 25 November 2024\nTime: 15:10\nDiscussion points:\n\nStarted on testing\n\nBasic BASH script that runs old code and new code on an input BAM and then compares results\n\nLooking to see which flags affect outputs\nAllow for 0.5% difference in results (for floats) rather than standard float comparison to allow for differences in rounding between AWK and fprintf\n\nIf time, compare old, single-threaded new, and multi-threaded new across several input files sizes to check time speed up\n\nHW5 finished and turned in\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish up project\n\nPresentation\nMake sure all artifacts align across project\nComplete change management plan\nTraceability\nMake sure all artifacts are linked\nSpelling/grammar check\nUpdate all READMEs\nUpdate website with all links\nSubmit presentation and project\nSelf reflection",
+    "crumbs": [
+      "Meetings",
+      "2024-11-25"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-11-25.html#meeting-minutes",
     "href": "meetings/GVSU-CIS641-PackingTheBits-2024-11-25.html#meeting-minutes",
     "title": "WGBS Genome Coverage",
     "section": "",
-    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 25 November 2024\nTime: 15:10\nDiscussion points:\n\nStarted on testing\n\nBasic BASH script that runs old code and new code on an input BAM and then compares results\n\nLooking to see which flags affect outputs\nAllow for 0.5% difference in results (for floats) rather than standard float comparison to allow for differences in rounding between AWK and fprintf\n\nIf time, compare old, single-threaded new, and multi-threaded new across several input files sizes to check time speed up\n\nHW5 finished and turned in\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish up project\n\nPresentation\nMake sure all artifacts align across project\nComplete change management plan\nTraceability\nMake sure all artifacts are linked\nSpelling/grammar check\nUpdate all READMEs\nUpdate website with all links\nSubmit presentation and project\nSelf reflection"
+    "text": "Team name: Packing the Bits\nMembers present: Jacob Morrison\nDate: 25 November 2024\nTime: 15:10\nDiscussion points:\n\nStarted on testing\n\nBasic BASH script that runs old code and new code on an input BAM and then compares results\n\nLooking to see which flags affect outputs\nAllow for 0.5% difference in results (for floats) rather than standard float comparison to allow for differences in rounding between AWK and fprintf\n\nIf time, compare old, single-threaded new, and multi-threaded new across several input files sizes to check time speed up\n\nHW5 finished and turned in\n\nGoals for next week (include responsibilities):\nAll responsibilities handled by Jacob Morrison\n\nFinish up project\n\nPresentation\nMake sure all artifacts align across project\nComplete change management plan\nTraceability\nMake sure all artifacts are linked\nSpelling/grammar check\nUpdate all READMEs\nUpdate website with all links\nSubmit presentation and project\nSelf reflection",
+    "crumbs": [
+      "Meetings",
+      "2024-11-25"
+    ]
   },
   {
     "objectID": "meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html",
@@ -231,7 +287,18 @@
     "href": "website/diagrams.html",
     "title": "Diagrams",
     "section": "",
-    "text": "Use Case Diagrams\n\n\n\nUse Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing\n\n\n\n\nActivity Diagrams\n\n\n\nActivity Diagram 1: Command Line Interface\n\n\n\n\n\nActivity Diagram 2: Command Line Interface\n\n\n\n\nCRC Card\n\n\n\nCRC Card: Command Line Interface\n\n\n\n\nClass Diagram\n\n\n\nClass Diagram: Command Line Interface\n\n\n\n\nObject Diagram\n\n\n\nObject Diagram: Command Line Interface",
+    "text": "Use Case Diagram 1: Command Line Interface\n\n\n\n\n\nUse Case Diagram 2: Processing",
+    "crumbs": [
+      "Artifacts",
+      "Diagrams (Use Case, Activity)"
+    ]
+  },
+  {
+    "objectID": "website/diagrams.html#class-descriptions-and-conditions",
+    "href": "website/diagrams.html#class-descriptions-and-conditions",
+    "title": "Diagrams",
+    "section": "Class Descriptions and Conditions",
+    "text": "Class Descriptions and Conditions\n\nC1. covg_conf_t\n\nDescription: Stores non-string command line arguments\ncovg_conf_init Pre/Post Conditions:\n\nPreconditions:\n\nDeclare covg_conf_t variable (initialize to NULL if pointer or without initialization if not a pointer)\n\nPostconditions:\n\nVariable that was passed in to function now has values initialized to default values\n\n\n\nC2: total_coverage_t\n\nDescription: Combines coverage fractions (used for calculating mean and standard deviation of coverage) for all output combinations into a single struct\ninit_total_coverage Pre/Post Conditions:\n\nPreconditions:\n\n\nDeclare a non-pointer variable of type total_coverage_t\n\n\nPostconditions:\n\n\nA total_coverage_t is initialized and set as the value for variable declared in precondition\n\n\nC3: maps_t\n\nDescription: Combines all hash maps of coverage (key) and number of bases at that coverage (value) for all output combinations into a single struct\ninit_maps Pre/Post Conditions:\n\nPreconditions:\n\nDeclare pointer of type maps_t\n\nPostconditions:\n\nmaps_t struct is created on heap and variable declared in preconditions is set to the memory address of the created struct\n\n\ndestroy_maps Pre/Post Conditions:\n\nPreconditions:\n\nmaps_t struct must be initialized with init_maps\nHashmaps in maps_t struct may or may not be updated prior to running this function\n\nPostconditions:\n\nMemory allocated by maps_t and the underlying hashmaps is freed and returned to the system for assigning to other objects\n\n\n\nC4 fraction_t\n\nDescription: Stores the numerator and denominator of a fraction as two separate integers within the struct\ninit_fraction Pre/Post Conditions:\n\nPreconditions:\n\nDeclare a non-pointer variable of type fraction_t\n\nPostconditions:\n\nA fraction_t is initialized and set as the value for variable declared in precondition\n\n\ndivide Pre/Post Conditions:\n\nPreconditions:\n\nA fraction_t must be initialized\nden attribute must be non-zero\n\nPostconditions:\n\nA double is returned\n\n\n\nC5: target_t\n\nDescription: Stores information about each chromosome as read from the input file\ncompare_targets Pre/Post Conditions:\n\nPreconditions:\n\nInitialize target_t pointer and fill out at least the name element (preferably all elements)\nInitialize another target_t pointer and fill out at least the name element (preferably all elements)\nUse as a function pointer input to qsort OR be sure to cast your inputs as void* variables due to qsort declaration requirements\n\nPostconditions:\n\nReturns string comparison of name elements in target_t\nReturns 0 if strings are equal\nReturns &gt;0 if first non-matching character of first string is greater than the corresponding character in the second string\nReturns &lt;0 if first non-matching character of first string is less than the corresponding character in the second string\n\n\n\nC6: output_names_t\n\n__Description:` Combines names of all output files into a single struct\ninit_output_names Pre/Post Conditions:\n\nPreconditions:\n\nDeclare a pointer of type output_names_t\nCreate character array pointer with prefix for input to function (can be NULL)\n\nPostconditions:\n\noutput_names_t struct is created on heap and variable declared in preconditions is set to the memory address of the created struct\nPrefix input is prepended (along with underscore (“_“)) if prefix is not NULL, otherwise nothing is prepended to default names\n\n\ndestroy_output_names Pre/Post Conditions:\n\nPreconditions:\n\noutput_names_t struct must be initialized with init_output_names\n\nPostconditions:\n\nMemory allocated by output_names_t and the underlying character array pointers is freed and returned to the system for assigning to other objects",
     "crumbs": [
       "Artifacts",
       "Diagrams (Use Case, Activity)"

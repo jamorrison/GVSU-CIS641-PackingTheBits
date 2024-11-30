@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.37">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-b5e3097ca6bab6260ed4ce2e73d47aae.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6f3d2c37092ee910ef86672a33196ab2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-fb9f640985f3cd49aa701b5e777833bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -166,8 +166,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#use-case-diagrams" id="toc-use-case-diagrams" class="nav-link active" data-scroll-target="#use-case-diagrams">Use Case Diagrams</a></li>
   <li><a href="#activity-diagrams" id="toc-activity-diagrams" class="nav-link" data-scroll-target="#activity-diagrams">Activity Diagrams</a></li>
   <li><a href="#crc-card" id="toc-crc-card" class="nav-link" data-scroll-target="#crc-card">CRC Card</a></li>
-  <li><a href="#class-diagram" id="toc-class-diagram" class="nav-link" data-scroll-target="#class-diagram">Class Diagram</a></li>
-  <li><a href="#object-diagram" id="toc-object-diagram" class="nav-link" data-scroll-target="#object-diagram">Object Diagram</a></li>
+  <li><a href="#class-diagrams" id="toc-class-diagrams" class="nav-link" data-scroll-target="#class-diagrams">Class Diagrams</a>
+  <ul class="collapse">
+  <li><a href="#class-descriptions-and-conditions" id="toc-class-descriptions-and-conditions" class="nav-link" data-scroll-target="#class-descriptions-and-conditions">Class Descriptions and Conditions</a></li>
+  </ul></li>
+  <li><a href="#object-diagrams" id="toc-object-diagrams" class="nav-link" data-scroll-target="#object-diagrams">Object Diagrams</a></li>
+  <li><a href="#sequence-diagram" id="toc-sequence-diagram" class="nav-link" data-scroll-target="#sequence-diagram">Sequence Diagram</a></li>
+  <li><a href="#state-diagram" id="toc-state-diagram" class="nav-link" data-scroll-target="#state-diagram">State Diagram</a></li>
+  <li><a href="#window-navigation-diagram" id="toc-window-navigation-diagram" class="nav-link" data-scroll-target="#window-navigation-diagram">Window Navigation Diagram</a></li>
   </ul>
 </nav>
     </div>
@@ -232,21 +238,177 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </section>
-<section id="class-diagram" class="level1">
-<h1>Class Diagram</h1>
+<section id="class-diagrams" class="level1">
+<h1>Class Diagrams</h1>
+<p><img src="../artifacts/class_diagram.png" class="img-fluid" alt="Class Diagram: Command Line Interface"> <img src="../artifacts/class_diagram_complete.jpg" class="img-fluid" alt="Class Diagram: Complete"></p>
+<section id="class-descriptions-and-conditions" class="level2">
+<h2 class="anchored" data-anchor-id="class-descriptions-and-conditions">Class Descriptions and Conditions</h2>
+<ul>
+<li>C1. <code>covg_conf_t</code>
+<ul>
+<li><strong>Description:</strong> Stores non-string command line arguments</li>
+<li><strong><code>covg_conf_init</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>Declare <code>covg_conf_t</code> variable (initialize to <code>NULL</code> if pointer or without initialization if not a pointer)</li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>Variable that was passed in to function now has values initialized to default values</li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li>C2: <code>total_coverage_t</code>
+<ul>
+<li><strong>Description:</strong> Combines coverage fractions (used for calculating mean and standard deviation of coverage) for all output combinations into a single struct</li>
+<li><strong><code>init_total_coverage</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em></li>
+</ul>
+<ol type="1">
+<li>Declare a non-pointer variable of type <code>total_coverage_t</code></li>
+</ol>
+<ul>
+<li><em>Postconditions:</em></li>
+</ul>
+<ol type="1">
+<li>A <code>total_coverage_t</code> is initialized and set as the value for variable declared in precondition</li>
+</ol></li>
+</ul></li>
+<li>C3: <code>maps_t</code>
+<ul>
+<li><strong>Description:</strong> Combines all hash maps of coverage (key) and number of bases at that coverage (value) for all output combinations into a single struct</li>
+<li><strong><code>init_maps</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>Declare pointer of type <code>maps_t</code></li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li><code>maps_t</code> struct is created on heap and variable declared in preconditions is set to the memory address of the created struct</li>
+</ol></li>
+</ul></li>
+<li><strong><code>destroy_maps</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li><code>maps_t</code> struct must be initialized with <code>init_maps</code></li>
+<li>Hashmaps in <code>maps_t</code> struct may or may not be updated prior to running this function</li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>Memory allocated by <code>maps_t</code> and the underlying hashmaps is freed and returned to the system for assigning to other objects</li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li>C4 <code>fraction_t</code>
+<ul>
+<li><strong>Description:</strong> Stores the numerator and denominator of a fraction as two separate integers within the struct</li>
+<li><strong><code>init_fraction</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>Declare a non-pointer variable of type <code>fraction_t</code></li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>A <code>fraction_t</code> is initialized and set as the value for variable declared in precondition</li>
+</ol></li>
+</ul></li>
+<li><strong><code>divide</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>A <code>fraction_t</code> must be initialized</li>
+<li><code>den</code> attribute must be non-zero</li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>A double is returned</li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li>C5: <code>target_t</code>
+<ul>
+<li><strong>Description:</strong> Stores information about each chromosome as read from the input file</li>
+<li><strong><code>compare_targets</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>Initialize <code>target_t</code> pointer and fill out at least the <code>name</code> element (preferably all elements)</li>
+<li>Initialize another <code>target_t</code> pointer and fill out at least the <code>name</code> element (preferably all elements)</li>
+<li>Use as a function pointer input to <code>qsort</code> OR be sure to cast your inputs as <code>void*</code> variables due to <code>qsort</code> declaration requirements</li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>Returns string comparison of <code>name</code> elements in <code>target_t</code></li>
+<li>Returns 0 if strings are equal</li>
+<li>Returns &gt;0 if first non-matching character of first string is greater than the corresponding character in the second string</li>
+<li>Returns &lt;0 if first non-matching character of first string is less than the corresponding character in the second string</li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li>C6: <code>output_names_t</code>
+<ul>
+<li>__Description:` Combines names of all output files into a single struct</li>
+<li><strong><code>init_output_names</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li>Declare a pointer of type <code>output_names_t</code></li>
+<li>Create character array pointer with prefix for input to function (can be <code>NULL</code>)</li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li><code>output_names_t</code> struct is created on heap and variable declared in preconditions is set to the memory address of the created struct</li>
+<li>Prefix input is prepended (along with underscore (“_“)) if prefix is not <code>NULL</code>, otherwise nothing is prepended to default names</li>
+</ol></li>
+</ul></li>
+<li><strong><code>destroy_output_names</code> Pre/Post Conditions:</strong>
+<ul>
+<li><em>Preconditions:</em>
+<ol type="1">
+<li><code>output_names_t</code> struct must be initialized with <code>init_output_names</code></li>
+</ol></li>
+<li><em>Postconditions:</em>
+<ol type="1">
+<li>Memory allocated by <code>output_names_t</code> and the underlying character array pointers is freed and returned to the system for assigning to other objects</li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="object-diagrams" class="level1">
+<h1>Object Diagrams</h1>
+<p><img src="../artifacts/object_diagram.png" class="img-fluid" alt="Object Diagram: Command Line Interface"> <img src="../artifacts/object_diagram_complete.jpg" class="img-fluid" alt="Object Diagram: Complete"></p>
+</section>
+<section id="sequence-diagram" class="level1">
+<h1>Sequence Diagram</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../artifacts/class_diagram.png" class="img-fluid figure-img"></p>
-<figcaption>Class Diagram: Command Line Interface</figcaption>
+<p><img src="../artifacts/sequence_diagram.jpg" class="img-fluid figure-img"></p>
+<figcaption>Sequence Diagram: Flow from User to Processing</figcaption>
 </figure>
 </div>
 </section>
-<section id="object-diagram" class="level1">
-<h1>Object Diagram</h1>
+<section id="state-diagram" class="level1">
+<h1>State Diagram</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../artifacts/object_diagram.png" class="img-fluid figure-img"></p>
-<figcaption>Object Diagram: Command Line Interface</figcaption>
+<p><img src="../artifacts/state_diagram.jpg" class="img-fluid figure-img"></p>
+<figcaption>State Diagram: Create and Fill Bit Array</figcaption>
+</figure>
+</div>
+</section>
+<section id="window-navigation-diagram" class="level1">
+<h1>Window Navigation Diagram</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../artifacts/window_nav_diagram.jpg" class="img-fluid figure-img"></p>
+<figcaption>Window Navigation Diagram: Command Line Interface</figcaption>
 </figure>
 </div>
 
