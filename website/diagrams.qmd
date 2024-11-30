@@ -21,7 +21,88 @@ title: Diagrams
 # Class Diagram
 
 ![Class Diagram: Command Line Interface](../artifacts/class_diagram.png)
+![Class Diagram: Complete](../artifacts/class_diagram_complete.jpg)
+
+## Class Descriptions and Conditions
+
+- C1. `covg_conf_t`
+  * __Description:__ Stores non-string command line arguments
+  * __`covg_conf_init` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. Declare `covg_conf_t` variable (initialize to `NULL` if pointer or without initialization if not a pointer)
+    * _Postconditions:_
+      1. Variable that was passed in to function now has values initialized to default values
+- C2: `total_coverage_t`
+  * __Description:__ Combines coverage fractions (used for calculating mean and standard deviation of coverage) for all
+    output combinations into a single struct
+  * __`init_total_coverage` Pre/Post Conditions:__
+    *  _Preconditions:_
+      1. Declare a non-pointer variable of type `total_coverage_t`
+    *  _Postconditions:_
+      1. A `total_coverage_t` is initialized and set as the value for variable declared in precondition
+- C3: `maps_t`
+  * __Description:__ Combines all hash maps of coverage (key) and number of bases at that coverage (value) for all
+    output combinations into a single struct
+  * __`init_maps` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. Declare pointer of type `maps_t`
+    * _Postconditions:_
+      1. `maps_t` struct is created on heap and variable declared in preconditions is set to the memory address of the
+         created struct
+  * __`destroy_maps` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. `maps_t` struct must be initialized with `init_maps`
+      2. Hashmaps in `maps_t` struct may or may not be updated prior to running this function
+    * _Postconditions:_
+      1. Memory allocated by `maps_t` and the underlying hashmaps is freed and returned to the system for assigning to
+         other objects
+- C4 `fraction_t`
+  * __Description:__ Stores the numerator and denominator of a fraction as two separate integers within the struct
+  * __`init_fraction` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. Declare a non-pointer variable of type `fraction_t`
+    * _Postconditions:_
+      1. A `fraction_t` is initialized and set as the value for variable declared in precondition
+  * __`divide` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. A `fraction_t` must be initialized
+      2. `den` attribute must be non-zero
+    * _Postconditions:_
+      1. A double is returned
+- C5: `target_t`
+  * __Description:__ Stores information about each chromosome as read from the input file
+  * __`compare_targets` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. Initialize `target_t` pointer and fill out at least the `name` element (preferably all elements)
+      2. Initialize another `target_t` pointer and fill out at least the `name` element (preferably all elements)
+      3. Use as a function pointer input to `qsort` OR be sure to cast your inputs as `void*` variables due to `qsort`
+         declaration requirements
+    * _Postconditions:_
+      1. Returns string comparison of `name` elements in `target_t`
+        1. Returns 0 if strings are equal
+        2. Returns >0 if first non-matching character of first string is greater than the corresponding character in the
+           second string
+        3. Returns <0 if first non-matching character of first string is less than the corresponding character in the
+           second string
+- C6: `output_names_t`
+  * __Description:` Combines names of all output files into a single struct
+  * __`init_output_names` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. Declare a pointer of type `output_names_t`
+      2. Create character array pointer with prefix for input to function (can be `NULL`)
+    * _Postconditions:_
+      1. `output_names_t` struct is created on heap and variable declared in preconditions is set to the memory address
+         of the created struct
+      2. Prefix input is prepended (along with underscore ("_")) if prefix is not `NULL`, otherwise nothing is prepended
+         to default names
+  * __`destroy_output_names` Pre/Post Conditions:__
+    * _Preconditions:_
+      1. `output_names_t` struct must be initialized with `init_output_names`
+    * _Postconditions:_
+      1. Memory allocated by `output_names_t` and the underlying character array pointers is freed and returned to the
+         system for assigning to other objects
 
 # Object Diagram
 
 ![Object Diagram: Command Line Interface](../artifacts/object_diagram.png)
+![Object Diagram: Complete](../artifacts/object_diagram_complete.jpg)
