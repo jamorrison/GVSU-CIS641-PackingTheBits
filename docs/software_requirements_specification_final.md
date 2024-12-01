@@ -11,7 +11,7 @@ quick reference.
 ## Functional Requirements
 ### Command Line Interface Requirements
 |  ID  | Requirement |
-|:----:|:-----------:|
+|:----:|:------------|
 | FR01 | The command line interface shall accept an optional integer for the number of CPU threads. |
 | FR02 | The command line interface shall accept an optional integer for the window step size. |
 | FR03 | The command line interface shall accept an optional string for a prefix to all output file names. |
@@ -29,7 +29,7 @@ quick reference.
 
 ### File Input Requirements
 |  ID  | Requirement |
-|:----:|:-----------:|
+|:----:|:------------|
 | FR15 | The program shall read Sequence Alignment Map (SAM) files. |
 | FR16 | The program shall read Binary Alignment Map (BAM) files. |
 | FR17 | The program shall accept one SAM or BAM file as the alignment file input. |
@@ -39,7 +39,7 @@ quick reference.
 
 ### File Output Requirements
 |  ID  | Requirement |
-|:----:|:-----------:|
+|:----:|:------------|
 | FR21    | The program shall have two output file types: a coverage distribution file (referred to as "covdist") and a coefficient of variation file (referred to as "cv"). |
 | FR22    | The cv file shall have a two line header. |
 | FR22.1  | The first line of the cv file shall say: "BISCUITqc Uniformity Table". |
@@ -81,7 +81,7 @@ quick reference.
 
 ### Parallel Processing Requirements
 |  ID  | Requirement |
-|:----:|:-----------:|
+|:----:|:------------|
 | FR29   | The program shall use POSIX threads for multithreaded processing. |
 | FR30   | The program shall split the chromosome into equal sized bins. |
 | FR30.1 | The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly. |
@@ -96,7 +96,7 @@ quick reference.
 
 ### SAM/BAM File Processing Requirements
 |  ID  | Requirement |
-|:----:|:-----------:|
+|:----:|:------------|
 | FR37 | The program shall ignore unmapped reads. |
 | FR38 | The program shall ignore reads that are not primary alignments. |
 | FR39 | The program shall ignore reads that fail platform/vendor quality checks. |
@@ -117,7 +117,7 @@ quick reference.
 ## Non-Functional Requirements
 ### Operating Requirements
 |  ID   | Requirement |
-|:-----:|:-----------:|
+|:-----:|:------------|
 | NFR01 | The program shall work on Linux systems. |
 | NFR02 | The program shall work on macOS systems. |
 | NFR03 | The program shall run from a terminal. |
@@ -127,7 +127,7 @@ quick reference.
 
 ### Performance Requirements
 |  ID   | Requirement |
-|:-----:|:-----------:|
+|:-----:|:------------|
 | NFR07 | The program shall read a genomic window from a block gzipped BED file in two (2) seconds or less. |
 | NFR08 | The program shall process at least one thousand (1000) reads per second. |
 | NFR09 | The program shall process at least one million (1,000,000) basepairs of data per second. |
@@ -136,7 +136,7 @@ quick reference.
 
 ### Usability Requirements
 |  ID   | Requirement |
-|:-----:|:-----------:|
+|:-----:|:------------|
 | NFR12 | The program shall use English comments. |
 | NFR13 | The program shall provide a help message for the user. |
 | NFR14 | The program shall provide error messages upon system failure. |
@@ -146,7 +146,7 @@ quick reference.
 
 ### Availability Requirements
 |  ID   | Requirement |
-|:-----:|:-----------:|
+|:-----:|:------------|
 | NFR18 | The program shall be available for no cost. |
 | NFR19 | The program shall be available to the public. |
 | NFR20 | The program shall be available on GitHub. |
@@ -155,7 +155,7 @@ quick reference.
 
 ### Maintainability Requirements
 |  ID   | Requirement |
-|:-----:|:-----------:|
+|:-----:|:------------|
 | NFR23 | The program shall use Git for version control. |
 | NFR24 | The program shall use semantic versioning. |
 | NFR25 | Issues shall be acknowledged within two (2) business days. |
