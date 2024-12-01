@@ -40,79 +40,79 @@ quick reference.
 ### File Output Requirements
 |  ID  | Requirement |
 |:----:|:------------|
-| FR21    | The program shall have two output file types: a coverage distribution file (referred to as "covdist") and a coefficient of variation file (referred to as "cv"). |
-| FR22    | The cv file shall have a two line header. |
-| FR22.1  | The first line of the cv file shall say: "BISCUITqc Uniformity Table". |
-| FR22.2  | The second line of the cv file shall say: "group mu sigma cv". |
-| FR22.3  | The words on the second line of the cv file shall be separated by tab characters. |
-| FR23    | All lines after the two line header in the cv file shall be tab separated. |
-| FR24    | All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR24.1-FR24.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation. |
-| FR24.1  | The group name for coverage across bases covered by all applicable reads shall be "all_base". |
-| FR24.2  | The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be "q40_base". |
-| FR24.3  | The group name for coverage across CpGs covered by all applicable reads shall be "all_cpg". |
-| FR24.4  | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) shall be "q40_cpg". |
-| FR24.5  | The group name for coverage across bases covered by all applicable reads and fall in the top GC windows shall be "all_base_topgc" when a top GC file is provided. |
-| FR24.6  | The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be "q40_base_topgc" when a top GC file is provided. |
-| FR24.7  | The group name for coverage across CpGs covered by all applicable reads and fall in the top GC windows shall be "all_cpg_topgc" when a top GC file is provided. |
-| FR24.8  | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be "q40_cpg_topgc" when a top GC file is provided. |
-| FR24.9  | The group name for coverage across bases covered by all applicable reads and fall in the bottom GC windows shall be "all_base_botgc" when a bottom GC file is provided. |
-| FR24.10 | The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_base_botgc" when a bottom GC file is provided. |
-| FR24.11 | The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be "all_cpg_botgc" when a bottom GC file is provided. |
-| FR24.12 | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_cpg_botgc" when a bottom GC file is provided. |
-| FR25    | There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR25.1-FR25.12). |
-| FR25.1  | One covdist file shall be for bases covered by all applicable reads and shall have the tag "All Bases". |
-| FR25.2  | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag "Q40 Bases". |
-| FR25.3  | One covdist file shall be for CpGs covered by all applicable reads and shall have the tag "All CpGs". |
-| FR25.4  | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag "Q40 CpGs". |
-| FR25.5  | One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall have the tag "All Top GC Bases" when a top GC file is provided. |
-| FR25.6  | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC Bases" when a top GC file is provided. |
-| FR25.7  | One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall have the tag "All Top GC CpGs" when a top GC file is provided. |
-| FR25.8  | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC CpGs" when a top GC file is provided. |
-| FR25.9  | One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and shall have the tag "All Bot GC Bases" when a bottom GC file is provided. |
-| FR25.10 | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC Bases" when a bottom GC file is provided. |
-| FR25.11 | One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag "All Bot GC CpGs" when a bottom GC file is provided. |
-| FR25.12 | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC CpGs" when a bottom GC file is provided. |
-| FR26    | Each covdist file shall have a two line header. |
-| FR26.1 | The first line of each covdist file shall say: "BISCUITqc Depth Distribution - TAG" where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR25.1-FR25.12 for the tags). |
-| FR26.2 | The second line of each covdist file shall say: "depth count". |
-| FR26.3 | The words on the second line of each covdist file shall be separated by tab characters. |
-| FR27 | All lines after the two line header in the covdist file shall be tab separated. |
-| FR28 | All lines after the two line header in the covdist file shall contain the coverage level in the first position of the line and the number of bases with that coverage level in the second position of the line. |
+| FR21 | The program shall have two output file types: a coverage distribution file (referred to as "covdist") and a coefficient of variation file (referred to as "cv"). |
+| FR22 | The cv file shall have a two line header. |
+| FR23 | The first line of the cv file shall say: "BISCUITqc Uniformity Table". |
+| FR24 | The second line of the cv file shall say: "group mu sigma cv". |
+| FR25 | The words on the second line of the cv file shall be separated by tab characters. |
+| FR26 | All lines after the two line header in the cv file shall be tab separated. |
+| FR27 | All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR24.1-FR24.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation. |
+| FR28 | The group name for coverage across bases covered by all applicable reads shall be "all_base". |
+| FR29 | The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be "q40_base". |
+| FR30 | The group name for coverage across CpGs covered by all applicable reads shall be "all_cpg". |
+| FR31 | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) shall be "q40_cpg". |
+| FR32 | The group name for coverage across bases covered by all applicable reads and fall in the top GC windows shall be "all_base_topgc" when a top GC file is provided. |
+| FR33 | The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be "q40_base_topgc" when a top GC file is provided. |
+| FR34 | The group name for coverage across CpGs covered by all applicable reads and fall in the top GC windows shall be "all_cpg_topgc" when a top GC file is provided. |
+| FR35 | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be "q40_cpg_topgc" when a top GC file is provided. |
+| FR36 | The group name for coverage across bases covered by all applicable reads and fall in the bottom GC windows shall be "all_base_botgc" when a bottom GC file is provided. |
+| FR37 | The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_base_botgc" when a bottom GC file is provided. |
+| FR38 | The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be "all_cpg_botgc" when a bottom GC file is provided. |
+| FR39 | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_cpg_botgc" when a bottom GC file is provided. |
+| FR40 | There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR25.1-FR25.12). |
+| FR41 | One covdist file shall be for bases covered by all applicable reads and shall have the tag "All Bases". |
+| FR42 | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag "Q40 Bases". |
+| FR43 | One covdist file shall be for CpGs covered by all applicable reads and shall have the tag "All CpGs". |
+| FR44 | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag "Q40 CpGs". |
+| FR45 | One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall have the tag "All Top GC Bases" when a top GC file is provided. |
+| FR46 | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC Bases" when a top GC file is provided. |
+| FR47 | One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall have the tag "All Top GC CpGs" when a top GC file is provided. |
+| FR48 | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag "Q40 Top GC CpGs" when a top GC file is provided. |
+| FR49 | One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and shall have the tag "All Bot GC Bases" when a bottom GC file is provided. |
+| FR50 | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC Bases" when a bottom GC file is provided. |
+| FR51 | One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag "All Bot GC CpGs" when a bottom GC file is provided. |
+| FR52 | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC CpGs" when a bottom GC file is provided. |
+| FR53 | Each covdist file shall have a two line header. |
+| FR54 | The first line of each covdist file shall say: "BISCUITqc Depth Distribution - TAG" where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR25.1-FR25.12 for the tags). |
+| FR55 | The second line of each covdist file shall say: "depth count". |
+| FR56 | The words on the second line of each covdist file shall be separated by tab characters. |
+| FR57 | All lines after the two line header in the covdist file shall be tab separated. |
+| FR58 | All lines after the two line header in the covdist file shall contain the coverage level in the first position of the line and the number of bases with that coverage level in the second position of the line. |
 
 ### Parallel Processing Requirements
 |  ID  | Requirement |
 |:----:|:------------|
-| FR29   | The program shall use POSIX threads for multithreaded processing. |
-| FR30   | The program shall split the chromosome into equal sized bins. |
-| FR30.1 | The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly. |
-| FR31   | A thread shall store its block identification number. |
-| FR32   | A thread shall store its bin start position. |
-| FR33   | A thread shall store its bin end position. |
-| FR34   | A thread shall store a bit array of positions in the bin that are covered by CpGs. |
-| FR35   | A thread shall store a bit array of positions in the bin that are covered by top GC windows. |
-| FR35.1 | The bit array shall be all zeroes (0s) if no top GC file is provided. |
-| FR36   | A thread shall store a bit array of positions in the bin that are covered by bottom GC windows. |
-| FR36.1 | The bit array shall be all zeroes (0s) if no bottom GC file is provided. |
+| FR59 | The program shall use POSIX threads for multithreaded processing. |
+| FR60 | The program shall split the chromosome into equal sized bins. |
+| FR61 | The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly. |
+| FR62 | A thread shall store its block identification number. |
+| FR63 | A thread shall store its bin start position. |
+| FR64 | A thread shall store its bin end position. |
+| FR65 | A thread shall store a bit array of positions in the bin that are covered by CpGs. |
+| FR66 | A thread shall store a bit array of positions in the bin that are covered by top GC windows. |
+| FR67 | The bit array shall be all zeroes (0s) if no top GC file is provided. |
+| FR68 | A thread shall store a bit array of positions in the bin that are covered by bottom GC windows. |
+| FR69 | The bit array shall be all zeroes (0s) if no bottom GC file is provided. |
 
 ### SAM/BAM File Processing Requirements
 |  ID  | Requirement |
 |:----:|:------------|
-| FR37 | The program shall ignore unmapped reads. |
-| FR38 | The program shall ignore reads that are not primary alignments. |
-| FR39 | The program shall ignore reads that fail platform/vendor quality checks. |
-| FR40 | The program shall ignore reads that are PCR or optical duplicates. |
-| FR41 | The program shall ignore reads that are supplementary alignments. |
-| FR42 | The program shall extract the CIGAR string from a mapped read alignment. |
-| FR43 | The program shall increment one base along the reference if the CIGAR operation is an alignment match. |
-| FR44 | The program shall not change the reference position if the CIGAR operation is an insertion. |
-| FR45 | The program shall increment one base along the reference if the CIGAR operation is a deletion. |
-| FR46 | The program shall increment one base along the reference if the CIGAR operation is a skipped region from the reference. |
-| FR47 | The program shall not change the reference position if the CIGAR operation is a soft clipped base. |
-| FR48 | The program shall not change the reference position if the CIGAR operation is a hard clipped base. |
-| FR49 | The program shall increment one base along the reference if the CIGAR operation is a sequence match. |
-| FR50 | The program shall increment one base along the reference if the CIGAR operation is a sequence mismatch. |
-| FR51 | The program shall count a base as covered if the CIGAR operation is an alignment match, a sequence match, or a sequence mismatch. |
-| FR52 | The program shall not count a base as covered if the CIGAR operation is an insertion, a deletion, a soft clipped base, a hard clipped base, or a skipped region from the reference. |
+| FR70 | The program shall ignore unmapped reads. |
+| FR71 | The program shall ignore reads that are not primary alignments. |
+| FR72 | The program shall ignore reads that fail platform/vendor quality checks. |
+| FR73 | The program shall ignore reads that are PCR or optical duplicates. |
+| FR74 | The program shall ignore reads that are supplementary alignments. |
+| FR75 | The program shall extract the CIGAR string from a mapped read alignment. |
+| FR76 | The program shall increment one base along the reference if the CIGAR operation is an alignment match. |
+| FR77 | The program shall not change the reference position if the CIGAR operation is an insertion. |
+| FR78 | The program shall increment one base along the reference if the CIGAR operation is a deletion. |
+| FR79 | The program shall increment one base along the reference if the CIGAR operation is a skipped region from the reference. |
+| FR80 | The program shall not change the reference position if the CIGAR operation is a soft clipped base. |
+| FR81 | The program shall not change the reference position if the CIGAR operation is a hard clipped base. |
+| FR82 | The program shall increment one base along the reference if the CIGAR operation is a sequence match. |
+| FR83 | The program shall increment one base along the reference if the CIGAR operation is a sequence mismatch. |
+| FR84 | The program shall count a base as covered if the CIGAR operation is an alignment match, a sequence match, or a sequence mismatch. |
+| FR85 | The program shall not count a base as covered if the CIGAR operation is an insertion, a deletion, a soft clipped base, a hard clipped base, or a skipped region from the reference. |
 
 ## Non-Functional Requirements
 ### Operating Requirements
@@ -183,10 +183,16 @@ quick reference.
 <Description of this section>
 
 ## Use Case Diagram Traceability
-| Artifact ID | Artifact Name | Requirement ID |
-| :-------------: | :----------: | :----------: |
-| UseCase1 | Move Player | FR5 |
-| … | … | … |
+|  Artifact ID  | Artifact Name | Requirement ID |
+|:--------------|:--------------|:---------------|
+| Command Line Interface | Set Threads       | FR01, FR08, FR11-FR12 |
+| Command Line Interface | Set Output Name   | FR03, FR10            |
+| Command Line Interface | Set Input         | FR04-FR07             |
+| Command Line Interface | Set CpG Locations | FR06                  |
+| Processing | Check Valid Region | FR60-FR61,NFR07       |
+| Processing | Store Coverage     | FR84-FR85             |
+| Processing | Find Locations     | FR65-FR69             |
+| Processing | Process Read       | FR70-FR85,NFR08-NFR09 |
 
 ## Class Diagram Traceability
 | Artifact Name | Requirement ID |
