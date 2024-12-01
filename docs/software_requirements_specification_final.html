@@ -128,9 +128,34 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#software-requirements" id="toc-software-requirements" class="nav-link" data-scroll-target="#software-requirements">Software Requirements</a>
+  <ul class="collapse">
+  <li><a href="#functional-requirements" id="toc-functional-requirements" class="nav-link" data-scroll-target="#functional-requirements">Functional Requirements</a>
+  <ul class="collapse">
+  <li><a href="#command-line-interface-requirements" id="toc-command-line-interface-requirements" class="nav-link" data-scroll-target="#command-line-interface-requirements">Command Line Interface Requirements</a></li>
+  <li><a href="#file-input-requirements" id="toc-file-input-requirements" class="nav-link" data-scroll-target="#file-input-requirements">File Input Requirements</a></li>
+  <li><a href="#file-output-requirements" id="toc-file-output-requirements" class="nav-link" data-scroll-target="#file-output-requirements">File Output Requirements</a></li>
+  <li><a href="#parallel-processing-requirements" id="toc-parallel-processing-requirements" class="nav-link" data-scroll-target="#parallel-processing-requirements">Parallel Processing Requirements</a></li>
+  <li><a href="#sambam-file-processing-requirements" id="toc-sambam-file-processing-requirements" class="nav-link" data-scroll-target="#sambam-file-processing-requirements">SAM/BAM File Processing Requirements</a></li>
+  </ul></li>
+  <li><a href="#non-functional-requirements" id="toc-non-functional-requirements" class="nav-link" data-scroll-target="#non-functional-requirements">Non-Functional Requirements</a>
+  <ul class="collapse">
+  <li><a href="#operating-requirements" id="toc-operating-requirements" class="nav-link" data-scroll-target="#operating-requirements">Operating Requirements</a></li>
+  <li><a href="#performance-requirements" id="toc-performance-requirements" class="nav-link" data-scroll-target="#performance-requirements">Performance Requirements</a></li>
+  <li><a href="#usability-requirements" id="toc-usability-requirements" class="nav-link" data-scroll-target="#usability-requirements">Usability Requirements</a></li>
+  <li><a href="#availability-requirements" id="toc-availability-requirements" class="nav-link" data-scroll-target="#availability-requirements">Availability Requirements</a></li>
+  <li><a href="#maintainability-requirements" id="toc-maintainability-requirements" class="nav-link" data-scroll-target="#maintainability-requirements">Maintainability Requirements</a></li>
+  </ul></li>
   <li><a href="#abbreviation-definitions" id="toc-abbreviation-definitions" class="nav-link" data-scroll-target="#abbreviation-definitions">Abbreviation Definitions</a></li>
-  <li><a href="#functional-requirements" id="toc-functional-requirements" class="nav-link" data-scroll-target="#functional-requirements">Functional Requirements</a></li>
-  <li><a href="#non-functional-requirements" id="toc-non-functional-requirements" class="nav-link" data-scroll-target="#non-functional-requirements">Non-Functional Requirements</a></li>
+  </ul></li>
+  <li><a href="#change-management-plan" id="toc-change-management-plan" class="nav-link" data-scroll-target="#change-management-plan">Change management plan</a></li>
+  <li><a href="#traceability-links" id="toc-traceability-links" class="nav-link" data-scroll-target="#traceability-links">Traceability links</a>
+  <ul class="collapse">
+  <li><a href="#use-case-diagram-traceability" id="toc-use-case-diagram-traceability" class="nav-link" data-scroll-target="#use-case-diagram-traceability">Use Case Diagram Traceability</a></li>
+  <li><a href="#class-diagram-traceability" id="toc-class-diagram-traceability" class="nav-link" data-scroll-target="#class-diagram-traceability">Class Diagram Traceability</a></li>
+  <li><a href="#activity-diagram-traceability" id="toc-activity-diagram-traceability" class="nav-link" data-scroll-target="#activity-diagram-traceability">Activity Diagram Traceability</a></li>
+  </ul></li>
+  <li><a href="#software-artifacts" id="toc-software-artifacts" class="nav-link" data-scroll-target="#software-artifacts">Software Artifacts</a></li>
   </ul>
 </nav>
     </div>
@@ -142,186 +167,737 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>This document servers as the software requirements specification for the GVSU CIS 641 full semester project. Both functional and non-functional requirements are described.</p>
+<p>This document serves as the culmination of the GVSU CIS 641 full semester project. It includes the final software requirement specification, a change management plan, and traceability between requirements and various sundry diagrams.</p>
 </section>
-<section id="abbreviation-definitions" class="level1">
-<h1>Abbreviation Definitions</h1>
-<ul>
-<li><strong>SAM file</strong>: Sequence Alignment Map file</li>
-<li><strong>BAM file</strong>: Binary Alignment Map file</li>
-<li><strong>BED file</strong>: Browser Extensible Data file</li>
-<li><strong>CIGAR string</strong>: Compact Idiosyncratic Gapped Alignment Report string</li>
-<li><strong>Top GC</strong>: Top ten (10) percent of windows in the genome for GC content.</li>
-<li><strong>Bottom GC</strong>: Bottom ten (10) percent of windows in the genome for GC content.</li>
-<li><strong>MAPQ</strong>: Mapping quality score</li>
-</ul>
+<section id="software-requirements" class="level1">
+<h1>Software Requirements</h1>
+<p>Functional and non-functional requirements are provided. Additionally, a brief table of definitions is provided for quick reference.</p>
+<section id="functional-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="functional-requirements">Functional Requirements</h2>
+<section id="command-line-interface-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="command-line-interface-requirements">Command Line Interface Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">FR01</td>
+<td style="text-align: center;">The command line interface shall accept an optional integer for the number of CPU threads.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR02</td>
+<td style="text-align: center;">The command line interface shall accept an optional integer for the window step size.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR03</td>
+<td style="text-align: center;">The command line interface shall accept an optional string for a prefix to all output file names.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR04</td>
+<td style="text-align: center;">The command line interface shall accept an optional file path for the genomic windows with the top ten (10) percent of GC content.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR05</td>
+<td style="text-align: center;">The command line interface shall accept an optional file path for the genomic windows with the bottom ten (10) percent of GC content.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR06</td>
+<td style="text-align: center;">The command line interface shall accept a required file path for the CpG genomic locations.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR07</td>
+<td style="text-align: center;">The command line interface shall accept a required file path for the input alignment file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR08</td>
+<td style="text-align: center;">The command line interface shall set a default value for the number of CPU threads when the corresponding command line option is not provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR09</td>
+<td style="text-align: center;">The command line interface shall set a default value for the window step size when the corresponding command line option is not provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR10</td>
+<td style="text-align: center;">The command line interface shall not prepend anything to the output file names when the prefix command line option is not provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR11</td>
+<td style="text-align: center;">The command line interface shall check the number of CPU threads are valid greater than zero (0).</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR12</td>
+<td style="text-align: center;">The command line interface shall set the number of CPU threads to the default value when the given value is less than or equal to zero (0).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR13</td>
+<td style="text-align: center;">The command line interface shall check the window step size is greater than zero (0).</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR14</td>
+<td style="text-align: center;">The command line interface shall set the window step size to the default value when the given value is less than or equal to zero (0).</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="functional-requirements" class="level1">
-<h1>Functional Requirements</h1>
-<ol type="1">
-<li>Command Line Interface Requirements
-<ol type="1">
-<li>The command line interface shall accept an optional integer for the number of CPU threads.</li>
-<li>The command line interface shall accept an optional integer for the window step size.</li>
-<li>The command line interface shall accept an optional string for a prefix to all output file names.</li>
-<li>The command line interface shall accept an optional file path for the genomic windows with the top ten (10) percent of GC content.</li>
-<li>The command line interface shall accept an optional file path for the genomic windows with the bottom ten (10) percent of GC content.</li>
-<li>The command line interface shall accept a required file path for the CpG genomic locations.</li>
-<li>The command line interface shall accept a required file path for the input alignment file.</li>
-<li>The command line interface shall set a default value for the number of CPU threads when the corresponding command line option is not provided.</li>
-<li>The command line interface shall set a default value for the window step size when the corresponding command line option is not provided.</li>
-<li>The command line interface shall not prepend anything to the output file names when the prefix command line option is not provided.</li>
-<li>The command line interface shall check the number of CPU threads are valid greater than zero (0).</li>
-<li>The command line interface shall set the number of CPU threads to the default value when the given value is less than or equal to zero (0).</li>
-<li>The command line interface shall check the window step size is greater than zero (0).</li>
-<li>The command line interface shall set the window step size to the default value when the given value is less than or equal to zero (0).</li>
-</ol></li>
-<li>File Input Requirements
-<ol type="1">
-<li>The program shall read Sequence Alignment Map (SAM) files.</li>
-<li>The program shall read Binary Alignment Map (BAM) files.</li>
-<li>The program shall accept one SAM or BAM file as the alignment file input.</li>
-<li>The program shall extract chromosome sizes from the input SAM or BAM files.</li>
-<li>The program shall read Browser Extensible Data (BED) files.</li>
-<li>The program shall require BED files to be block gzipped.</li>
-</ol></li>
-<li>File Output Requirements
-<ol type="1">
-<li>The program shall have two output file types: a coverage distribution file (referred to as “covdist”) and a coefficient of variation file (referred to as “cv”).</li>
-<li>The cv file shall have a two line header.
-<ol type="1">
-<li>The first line of the cv file shall say: “BISCUITqc Uniformity Table”.</li>
-<li>The second line of the cv file shall say: “group mu sigma cv”.</li>
-<li>The words on the second line of the cv file shall be separated by tab characters.</li>
-</ol></li>
-<li>All lines after the two line header in the cv file shall be tab separated.</li>
-<li>All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements 3.4.1-3.4.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation.
-<ol type="1">
-<li>The group name for coverage across bases covered by all applicable reads shall be “all_base”.</li>
-<li>The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be “q40_base”.</li>
-<li>The group name for coverage across CpGs covered by all applicable reads shall be “all_cpg”.</li>
-<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) shall be “q40_cpg”.</li>
-<li>The group name for coverage across bases covered by all applicable reads and fall in the top GC windows shall be “all_base_topgc” when a top GC file is provided.</li>
-<li>The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_base_topgc” when a top GC file is provided.</li>
-<li>The group name for coverage across CpGs covered by all applicable reads and fall in the top GC windows shall be “all_cpg_topgc” when a top GC file is provided.</li>
-<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_cpg_topgc” when a top GC file is provided.</li>
-<li>The group name for coverage across bases covered by all applicable reads and fall in the bottom GC windows shall be “all_base_botgc” when a bottom GC file is provided.</li>
-<li>The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_base_botgc” when a bottom GC file is provided.</li>
-<li>The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be “all_cpg_botgc” when a bottom GC file is provided.</li>
-<li>The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_cpg_botgc” when a bottom GC file is provided.</li>
-</ol></li>
-<li>There shall be one covdist file for each set of coverages found (listed in Functional Requirements 3.5.1-3.5.12).
-<ol type="1">
-<li>One covdist file shall be for bases covered by all applicable reads and shall have the tag “All Bases”.</li>
-<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag “Q40 Bases”.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads and shall have the tag “All CpGs”.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag “Q40 CpGs”.</li>
-<li>One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC Bases” when a top GC file is provided.</li>
-<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag “Q40 Top GC Bases” when a top GC file is provided.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC CpGs” when a top GC file is provided.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag “Q40 Top GC CpGs” when a top GC file is provided.</li>
-<li>One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC Bases” when a bottom GC file is provided.</li>
-<li>One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag “Q40 Bot GC Bases” when a bottom GC file is provided.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC CpGs” when a bottom GC file is provided.</li>
-<li>One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag “Q40 Bot GC CpGs” when a bottom GC file is provided.</li>
-</ol></li>
-<li>Each covdist file shall have a two line header.
-<ol type="1">
-<li>The first line of each covdist file shall say: “BISCUITqc Depth Distribution - TAG” where TAG is replaced by a tag unique to each covdist file (see Functional Requirements 3.5.1-3.5.12 for the tags).</li>
-<li>The second line of each covdist file shall say: “depth count”.</li>
-<li>The words on the second line of each covdist file shall be separated by tab characters.</li>
-</ol></li>
-<li>All lines after the two line header in the covdist file shall be tab separated.</li>
-<li>All lines after the two line header in the covdist file shall contain the coverage level in the first position of the line and the number of bases with that coverage level in the second position of the line.</li>
-</ol></li>
-<li>Parallel Processing Requirements
-<ol type="1">
-<li>The program shall use POSIX threads for multithreaded processing.</li>
-<li>The program shall split the chromosome into equal sized bins.
-<ol type="1">
-<li>The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly.</li>
-</ol></li>
-<li>A thread shall store its block identification number.</li>
-<li>A thread shall store its bin start position.</li>
-<li>A thread shall store its bin end position.</li>
-<li>A thread shall store a bit array of positions in the bin that are covered by CpGs.</li>
-<li>A thread shall store a bit array of positions in the bin that are covered by top GC windows.
-<ol type="1">
-<li>The bit array shall be all zeroes (0s) if no top GC file is provided.</li>
-</ol></li>
-<li>A thread shall store a bit array of positions in the bin that are covered by bottom GC windows.
-<ol type="1">
-<li>The bit array shall be all zeroes (0s) if no bottom GC file is provided.</li>
-</ol></li>
-</ol></li>
-<li>SAM/BAM File Processing Requirements
-<ol type="1">
-<li>The program shall ignore unmapped reads.</li>
-<li>The program shall ignore reads that are not primary alignments.</li>
-<li>The program shall ignore reads that fail platform/vendor quality checks.</li>
-<li>The program shall ignore reads that are PCR or optical duplicates.</li>
-<li>The program shall ignore reads that are supplementary alignments.</li>
-<li>The program shall extract the CIGAR string from a mapped read alignment.</li>
-<li>The program shall increment one base along the reference if the CIGAR operation is an alignment match.</li>
-<li>The program shall not change the reference position if the CIGAR operation is an insertion.</li>
-<li>The program shall increment one base along the reference if the CIGAR operation is a deletion.</li>
-<li>The program shall increment one base along the reference if the CIGAR operation is a skipped region from the reference.</li>
-<li>The program shall not change the reference position if the CIGAR operation is a soft clipped base.</li>
-<li>The program shall not change the reference position if the CIGAR operation is a hard clipped base.</li>
-<li>The program shall increment one base along the reference if the CIGAR operation is a sequence match.</li>
-<li>The program shall increment one base along the reference if the CIGAR operation is a sequence mismatch.</li>
-<li>The program shall count a base as covered if the CIGAR operation is an alignment match, a sequence match, or a sequence mismatch.</li>
-<li>The program shall not count a base as covered if the CIGAR operation is an insertion, a deletion, a soft clipped base, a hard clipped base, or a skipped region from the reference.</li>
-</ol></li>
-</ol>
+<section id="file-input-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="file-input-requirements">File Input Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">FR15</td>
+<td style="text-align: center;">The program shall read Sequence Alignment Map (SAM) files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR16</td>
+<td style="text-align: center;">The program shall read Binary Alignment Map (BAM) files.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR17</td>
+<td style="text-align: center;">The program shall accept one SAM or BAM file as the alignment file input.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR18</td>
+<td style="text-align: center;">The program shall extract chromosome sizes from the input SAM or BAM files.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR19</td>
+<td style="text-align: center;">The program shall read Browser Extensible Data (BED) files.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR20</td>
+<td style="text-align: center;">The program shall require BED files to be block gzipped.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="non-functional-requirements" class="level1">
-<h1>Non-Functional Requirements</h1>
-<ol type="1">
-<li>Operating Requirements
-<ol type="1">
-<li>The program shall work on Linux systems.</li>
-<li>The program shall work on macOS systems.</li>
-<li>The program shall run from a terminal.</li>
-<li>The program shall work through a command line interface.</li>
-<li>The program shall work on x86 CPU architectures.</li>
-<li>The program shall work on ARM CPU architectures.</li>
-</ol></li>
-<li>Performance Requirements
-<ol type="1">
-<li>The program shall read a genomic window from a block gzipped BED file in two (2) seconds or less.</li>
-<li>The program shall process at least one thousand (1000) reads per second.</li>
-<li>The program shall process at least one million (1,000,000) basepairs of data per second.</li>
-<li>The program shall use eight (8) gigabytes or less of random access memory.</li>
-<li>The program shall compile in fifteen (15) seconds or less.</li>
-</ol></li>
-<li>Usability Requirements
-<ol type="1">
-<li>The program shall use English comments.</li>
-<li>The program shall provide a help message for the user.</li>
-<li>The program shall provide error messages upon system failure.</li>
-<li>The program shall have a companion website describing usage.</li>
-<li>The program shall provide an example dataset.</li>
-<li>The program shall provide a tutorial for users.</li>
-</ol></li>
-<li>Availability Requirements
-<ol type="1">
-<li>The program shall be available for no cost.</li>
-<li>The program shall be available to the public.</li>
-<li>The program shall be available on GitHub.</li>
-<li>The program shall be available in pre-compiled binaries.</li>
-<li>The program shall be available through bioconda.</li>
-</ol></li>
-<li>Maintainability Requirements
-<ol type="1">
-<li>The program shall use Git for version control.</li>
-<li>The program shall use semantic versioning.</li>
-<li>Issues shall be acknowledged within two (2) business days.</li>
-<li>Pull requests shall be acknowledged within two (2) business days.</li>
-<li>Minor issues (e.g., bugs) shall be resolved within five (5) business days.</li>
-<li>Major issues (e.g., feature requests) shall be resolved within fifteen (15) business days.</li>
-</ol></li>
-</ol>
+<section id="file-output-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="file-output-requirements">File Output Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">FR21</td>
+<td style="text-align: center;">The program shall have two output file types: a coverage distribution file (referred to as “covdist”) and a coefficient of variation file (referred to as “cv”).</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR22</td>
+<td style="text-align: center;">The cv file shall have a two line header.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR22.1</td>
+<td style="text-align: center;">The first line of the cv file shall say: “BISCUITqc Uniformity Table”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR22.2</td>
+<td style="text-align: center;">The second line of the cv file shall say: “group mu sigma cv”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR22.3</td>
+<td style="text-align: center;">The words on the second line of the cv file shall be separated by tab characters.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR23</td>
+<td style="text-align: center;">All lines after the two line header in the cv file shall be tab separated.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24</td>
+<td style="text-align: center;">All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR24.1-FR24.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.1</td>
+<td style="text-align: center;">The group name for coverage across bases covered by all applicable reads shall be “all_base”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.2</td>
+<td style="text-align: center;">The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be “q40_base”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.3</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by all applicable reads shall be “all_cpg”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.4</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) shall be “q40_cpg”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.5</td>
+<td style="text-align: center;">The group name for coverage across bases covered by all applicable reads and fall in the top GC windows shall be “all_base_topgc” when a top GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.6</td>
+<td style="text-align: center;">The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_base_topgc” when a top GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.7</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by all applicable reads and fall in the top GC windows shall be “all_cpg_topgc” when a top GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.8</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows shall be “q40_cpg_topgc” when a top GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.9</td>
+<td style="text-align: center;">The group name for coverage across bases covered by all applicable reads and fall in the bottom GC windows shall be “all_base_botgc” when a bottom GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.10</td>
+<td style="text-align: center;">The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_base_botgc” when a bottom GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR24.11</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be “all_cpg_botgc” when a bottom GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR24.12</td>
+<td style="text-align: center;">The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be “q40_cpg_botgc” when a bottom GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25</td>
+<td style="text-align: center;">There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR25.1-FR25.12).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.1</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads and shall have the tag “All Bases”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.2</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag “Q40 Bases”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.3</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads and shall have the tag “All CpGs”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.4</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag “Q40 CpGs”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.5</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC Bases” when a top GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.6</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag “Q40 Top GC Bases” when a top GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.7</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads and fall in the top GC windows and shall have the tag “All Top GC CpGs” when a top GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.8</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the top GC windows and shall have the tag “Q40 Top GC CpGs” when a top GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.9</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC Bases” when a bottom GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.10</td>
+<td style="text-align: center;">One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag “Q40 Bot GC Bases” when a bottom GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR25.11</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag “All Bot GC CpGs” when a bottom GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR25.12</td>
+<td style="text-align: center;">One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag “Q40 Bot GC CpGs” when a bottom GC file is provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR26</td>
+<td style="text-align: center;">Each covdist file shall have a two line header.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR26.1</td>
+<td style="text-align: center;">The first line of each covdist file shall say: “BISCUITqc Depth Distribution - TAG” where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR25.1-FR25.12 for the tags).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR26.2</td>
+<td style="text-align: center;">The second line of each covdist file shall say: “depth count”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR26.3</td>
+<td style="text-align: center;">The words on the second line of each covdist file shall be separated by tab characters.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR27</td>
+<td style="text-align: center;">All lines after the two line header in the covdist file shall be tab separated.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR28</td>
+<td style="text-align: center;">All lines after the two line header in the covdist file shall contain the coverage level in the first position of the line and the number of bases with that coverage level in the second position of the line.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="parallel-processing-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="parallel-processing-requirements">Parallel Processing Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">FR29</td>
+<td style="text-align: center;">The program shall use POSIX threads for multithreaded processing.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR30</td>
+<td style="text-align: center;">The program shall split the chromosome into equal sized bins.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR30.1</td>
+<td style="text-align: center;">The program shall allow the last bin to be less than the bin size if the chromosome cannot be broken up evenly.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR31</td>
+<td style="text-align: center;">A thread shall store its block identification number.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR32</td>
+<td style="text-align: center;">A thread shall store its bin start position.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR33</td>
+<td style="text-align: center;">A thread shall store its bin end position.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR34</td>
+<td style="text-align: center;">A thread shall store a bit array of positions in the bin that are covered by CpGs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR35</td>
+<td style="text-align: center;">A thread shall store a bit array of positions in the bin that are covered by top GC windows.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR35.1</td>
+<td style="text-align: center;">The bit array shall be all zeroes (0s) if no top GC file is provided.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR36</td>
+<td style="text-align: center;">A thread shall store a bit array of positions in the bin that are covered by bottom GC windows.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR36.1</td>
+<td style="text-align: center;">The bit array shall be all zeroes (0s) if no bottom GC file is provided.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sambam-file-processing-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="sambam-file-processing-requirements">SAM/BAM File Processing Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">FR37</td>
+<td style="text-align: center;">The program shall ignore unmapped reads.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR38</td>
+<td style="text-align: center;">The program shall ignore reads that are not primary alignments.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR39</td>
+<td style="text-align: center;">The program shall ignore reads that fail platform/vendor quality checks.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR40</td>
+<td style="text-align: center;">The program shall ignore reads that are PCR or optical duplicates.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR41</td>
+<td style="text-align: center;">The program shall ignore reads that are supplementary alignments.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR42</td>
+<td style="text-align: center;">The program shall extract the CIGAR string from a mapped read alignment.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR43</td>
+<td style="text-align: center;">The program shall increment one base along the reference if the CIGAR operation is an alignment match.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR44</td>
+<td style="text-align: center;">The program shall not change the reference position if the CIGAR operation is an insertion.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR45</td>
+<td style="text-align: center;">The program shall increment one base along the reference if the CIGAR operation is a deletion.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR46</td>
+<td style="text-align: center;">The program shall increment one base along the reference if the CIGAR operation is a skipped region from the reference.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR47</td>
+<td style="text-align: center;">The program shall not change the reference position if the CIGAR operation is a soft clipped base.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR48</td>
+<td style="text-align: center;">The program shall not change the reference position if the CIGAR operation is a hard clipped base.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR49</td>
+<td style="text-align: center;">The program shall increment one base along the reference if the CIGAR operation is a sequence match.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR50</td>
+<td style="text-align: center;">The program shall increment one base along the reference if the CIGAR operation is a sequence mismatch.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FR51</td>
+<td style="text-align: center;">The program shall count a base as covered if the CIGAR operation is an alignment match, a sequence match, or a sequence mismatch.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FR52</td>
+<td style="text-align: center;">The program shall not count a base as covered if the CIGAR operation is an insertion, a deletion, a soft clipped base, a hard clipped base, or a skipped region from the reference.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="non-functional-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="non-functional-requirements">Non-Functional Requirements</h2>
+<section id="operating-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="operating-requirements">Operating Requirements</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NFR01</td>
+<td style="text-align: center;">The program shall work on Linux systems.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR02</td>
+<td style="text-align: center;">The program shall work on macOS systems.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR03</td>
+<td style="text-align: center;">The program shall run from a terminal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR04</td>
+<td style="text-align: center;">The program shall work through a command line interface.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR05</td>
+<td style="text-align: center;">The program shall work on x86 CPU architectures.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR06</td>
+<td style="text-align: center;">The program shall work on ARM CPU architectures.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="performance-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="performance-requirements">Performance Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NFR07</td>
+<td style="text-align: center;">The program shall read a genomic window from a block gzipped BED file in two (2) seconds or less.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR08</td>
+<td style="text-align: center;">The program shall process at least one thousand (1000) reads per second.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR09</td>
+<td style="text-align: center;">The program shall process at least one million (1,000,000) basepairs of data per second.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR10</td>
+<td style="text-align: center;">The program shall use eight (8) gigabytes or less of random access memory.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR11</td>
+<td style="text-align: center;">The program shall compile in fifteen (15) seconds or less.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="usability-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="usability-requirements">Usability Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NFR12</td>
+<td style="text-align: center;">The program shall use English comments.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR13</td>
+<td style="text-align: center;">The program shall provide a help message for the user.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR14</td>
+<td style="text-align: center;">The program shall provide error messages upon system failure.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR15</td>
+<td style="text-align: center;">The program shall have a companion website describing usage.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR16</td>
+<td style="text-align: center;">The program shall provide an example dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR17</td>
+<td style="text-align: center;">The program shall provide a tutorial for users.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="availability-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="availability-requirements">Availability Requirements</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NFR18</td>
+<td style="text-align: center;">The program shall be available for no cost.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR19</td>
+<td style="text-align: center;">The program shall be available to the public.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR20</td>
+<td style="text-align: center;">The program shall be available on GitHub.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR21</td>
+<td style="text-align: center;">The program shall be available in pre-compiled binaries.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR22</td>
+<td style="text-align: center;">The program shall be available through bioconda.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="maintainability-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="maintainability-requirements">Maintainability Requirements</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NFR23</td>
+<td style="text-align: center;">The program shall use Git for version control.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR24</td>
+<td style="text-align: center;">The program shall use semantic versioning.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR25</td>
+<td style="text-align: center;">Issues shall be acknowledged within two (2) business days.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR26</td>
+<td style="text-align: center;">Pull requests shall be acknowledged within two (2) business days.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NFR27</td>
+<td style="text-align: center;">Minor issues (e.g., bugs) shall be resolved within five (5) business days.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NFR28</td>
+<td style="text-align: center;">Major issues (e.g., feature requests) shall be resolved within fifteen (15) business days.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="abbreviation-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="abbreviation-definitions">Abbreviation Definitions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 55%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Abbreviation</th>
+<th style="text-align: left;">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>SAM</strong></td>
+<td style="text-align: left;">Sequence Alignment Map file</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>BAM</strong></td>
+<td style="text-align: left;">Binary Alignment Map file</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>BED</strong></td>
+<td style="text-align: left;">Browser Extensible Data file</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CIGAR</strong></td>
+<td style="text-align: left;">Compact Idiosyncratic Gapped Alignment Report string</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Top GC</strong></td>
+<td style="text-align: left;">Top ten (10) percent of windows in the genome for GC content</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Bottom GC</strong></td>
+<td style="text-align: left;">Bottom ten (10) percent of windows in the genome for GC content</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>MAPQ</strong></td>
+<td style="text-align: left;">Mapping quality score</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="change-management-plan" class="level1">
+<h1>Change management plan</h1>
+<p><description of="" what="" this="" section="" is=""></description></p>
+</section>
+<section id="traceability-links" class="level1">
+<h1>Traceability links</h1>
+<p><description of="" this="" section=""></description></p>
+<section id="use-case-diagram-traceability" class="level2">
+<h2 class="anchored" data-anchor-id="use-case-diagram-traceability">Use Case Diagram Traceability</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Artifact ID</th>
+<th style="text-align: center;">Artifact Name</th>
+<th style="text-align: center;">Requirement ID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">UseCase1</td>
+<td style="text-align: center;">Move Player</td>
+<td style="text-align: center;">FR5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="class-diagram-traceability" class="level2">
+<h2 class="anchored" data-anchor-id="class-diagram-traceability">Class Diagram Traceability</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Artifact Name</th>
+<th style="text-align: center;">Requirement ID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">classPlayer</td>
+<td style="text-align: center;">NFR3, FR5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="activity-diagram-traceability" class="level2">
+<h2 class="anchored" data-anchor-id="activity-diagram-traceability">Activity Diagram Traceability</h2>
+<p>&lt;In this case, it makes more sense (I think, feel free to disagree) to link to the file and to those requirements impacted&gt; | Artifact ID | Artifact Name | Requirement ID | | :————-: | :———-: | :———-: | | <filename> | Handle Player Input | FR1-5, NFR2 | | … | … | … |</filename></p>
+</section>
+</section>
+<section id="software-artifacts" class="level1">
+<h1>Software Artifacts</h1>
+<p><describe the="" purpose="" of="" this="" section=""> * <a href="to_some_file.pdf">I am a link</a></describe></p>
 
 
 </section>
