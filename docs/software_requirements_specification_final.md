@@ -185,20 +185,24 @@ quick reference.
 ## Use Case Diagram Traceability
 |  Artifact ID  | Artifact Name | Requirement ID |
 |:--------------|:--------------|:---------------|
-| Command Line Interface | Set Threads       | FR01, FR08, FR11-FR12 |
-| Command Line Interface | Set Output Name   | FR03, FR10            |
-| Command Line Interface | Set Input         | FR04-FR07             |
-| Command Line Interface | Set CpG Locations | FR06                  |
-| Processing | Check Valid Region | FR60-FR61,NFR07       |
-| Processing | Store Coverage     | FR84-FR85             |
-| Processing | Find Locations     | FR65-FR69             |
-| Processing | Process Read       | FR70-FR85,NFR08-NFR09 |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Threads       | FR01, FR08, FR11-FR12 |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Output Name   | FR03, FR10            |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Input         | FR04-FR07             |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set CpG Locations | FR06                  |
+| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Check Valid Region | FR60-FR61, NFR07       |
+| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Store Coverage     | FR84-FR85              |
+| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Find Locations     | FR65-FR69              |
+| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Process Read       | FR70-FR85, NFR08-NFR09 |
 
 ## Class Diagram Traceability
 | Artifact Name | Requirement ID |
-| :-------------: |:----------: |
-| classPlayer | NFR3, FR5 |
-| … | … | … |
+|:--------------|:---------------|
+| [total_coverage_t](../artifacts/class_diagram_complete.jpg) | FR84-FR85 |
+| [covg_conf_t](../artifacts/class_diagram_complete.jpg)      | FR01-FR02, FR08-FR09, FR11-FR14, FR59, NFR13 |
+| [fraction_t](../artifacts/class_diagram_complete.jpg)       | FR84-FR85 |
+| [maps_t](../artifacts/class_diagram_complete.jpg)           | FR84-FR85 |
+| [target_t](../artifacts/class_diagram_complete.jpg)         | FR15-FR18, FR60-FR61 |
+| [output_names_t](../artifacts/class_diagram_complete.jpg)   | FR21-FR58 |
 
 ## Activity Diagram Traceability
 <In this case, it makes more sense (I think, feel free to disagree) to link
