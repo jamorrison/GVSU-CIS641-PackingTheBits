@@ -155,7 +155,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#class-diagram-traceability" id="toc-class-diagram-traceability" class="nav-link" data-scroll-target="#class-diagram-traceability">Class Diagram Traceability</a></li>
   <li><a href="#activity-diagram-traceability" id="toc-activity-diagram-traceability" class="nav-link" data-scroll-target="#activity-diagram-traceability">Activity Diagram Traceability</a></li>
   </ul></li>
-  <li><a href="#software-artifacts" id="toc-software-artifacts" class="nav-link" data-scroll-target="#software-artifacts">Software Artifacts</a></li>
+  <li><a href="#software-artifacts" id="toc-software-artifacts" class="nav-link" data-scroll-target="#software-artifacts">Software Artifacts</a>
+  <ul class="collapse">
+  <li><a href="#artifacts" id="toc-artifacts" class="nav-link" data-scroll-target="#artifacts">Artifacts</a></li>
+  <li><a href="#docs" id="toc-docs" class="nav-link" data-scroll-target="#docs">Docs</a></li>
+  <li><a href="#meetings" id="toc-meetings" class="nav-link" data-scroll-target="#meetings">Meetings</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -189,58 +194,62 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: center;">FR00</td>
+<td style="text-align: left;">The command line interface shall have a method for reading and parsing command line inputs.</td>
+</tr>
+<tr class="even">
 <td style="text-align: center;">FR01</td>
 <td style="text-align: left;">The command line interface shall accept an optional integer for the number of CPU threads.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR02</td>
 <td style="text-align: left;">The command line interface shall accept an optional integer for the window step size.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR03</td>
 <td style="text-align: left;">The command line interface shall accept an optional string for a prefix to all output file names.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR04</td>
 <td style="text-align: left;">The command line interface shall accept an optional file path for the genomic windows with the top ten (10) percent of GC content.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR05</td>
 <td style="text-align: left;">The command line interface shall accept an optional file path for the genomic windows with the bottom ten (10) percent of GC content.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR06</td>
 <td style="text-align: left;">The command line interface shall accept a required file path for the CpG genomic locations.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR07</td>
 <td style="text-align: left;">The command line interface shall accept a required file path for the input alignment file.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR08</td>
 <td style="text-align: left;">The command line interface shall set a default value for the number of CPU threads when the corresponding command line option is not provided.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR09</td>
 <td style="text-align: left;">The command line interface shall set a default value for the window step size when the corresponding command line option is not provided.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR10</td>
 <td style="text-align: left;">The command line interface shall not prepend anything to the output file names when the prefix command line option is not provided.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR11</td>
 <td style="text-align: left;">The command line interface shall check the number of CPU threads are valid greater than zero (0).</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR12</td>
 <td style="text-align: left;">The command line interface shall set the number of CPU threads to the default value when the given value is less than or equal to zero (0).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">FR13</td>
 <td style="text-align: left;">The command line interface shall check the window step size is greater than zero (0).</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">FR14</td>
 <td style="text-align: left;">The command line interface shall set the window step size to the default value when the given value is less than or equal to zero (0).</td>
 </tr>
@@ -328,7 +337,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: center;">FR27</td>
-<td style="text-align: left;">All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR24.1-FR24.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation.</td>
+<td style="text-align: left;">All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR28-FR39 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">FR28</td>
@@ -380,7 +389,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: center;">FR40</td>
-<td style="text-align: left;">There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR25.1-FR25.12).</td>
+<td style="text-align: left;">There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR41-FR52).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">FR41</td>
@@ -436,7 +445,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: center;">FR54</td>
-<td style="text-align: left;">The first line of each covdist file shall say: “BISCUITqc Depth Distribution - TAG” where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR25.1-FR25.12 for the tags).</td>
+<td style="text-align: left;">The first line of each covdist file shall say: “BISCUITqc Depth Distribution - TAG” where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR41-FR52 for the tags).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">FR55</td>
@@ -844,7 +853,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="traceability-links" class="level1">
 <h1>Traceability links</h1>
-<p><description of="" this="" section=""></description></p>
+<p>Traceability between requirements and the use case, class, and activity diagrams (individual tables shown for each diagram).</p>
 <section id="use-case-diagram-traceability" class="level2">
 <h2 class="anchored" data-anchor-id="use-case-diagram-traceability">Use Case Diagram Traceability</h2>
 <table class="caption-top table">
@@ -857,44 +866,44 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Command Line Interface</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_cli.jpg">Command Line Interface</a></td>
 <td style="text-align: left;">Set Threads</td>
-<td style="text-align: left;">FR01, FR08, FR11-FR12</td>
+<td style="text-align: left;">FR00-FR01, FR08, FR11-FR12</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Command Line Interface</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_cli.jpg">Command Line Interface</a></td>
 <td style="text-align: left;">Set Output Name</td>
-<td style="text-align: left;">FR03, FR10</td>
+<td style="text-align: left;">FR00, FR03, FR10</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Command Line Interface</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_cli.jpg">Command Line Interface</a></td>
 <td style="text-align: left;">Set Input</td>
-<td style="text-align: left;">FR04-FR07</td>
+<td style="text-align: left;">FR00, FR04-FR07</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Command Line Interface</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_cli.jpg">Command Line Interface</a></td>
 <td style="text-align: left;">Set CpG Locations</td>
-<td style="text-align: left;">FR06</td>
+<td style="text-align: left;">FR00, FR06</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Processing</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Check Valid Region</td>
-<td style="text-align: left;">FR60-FR61,NFR07</td>
+<td style="text-align: left;">FR60-FR61, NFR07</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Processing</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Store Coverage</td>
 <td style="text-align: left;">FR84-FR85</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Processing</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Find Locations</td>
 <td style="text-align: left;">FR65-FR69</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Processing</td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Process Read</td>
-<td style="text-align: left;">FR70-FR85,NFR08-NFR09</td>
+<td style="text-align: left;">FR70-FR85, NFR08-NFR09</td>
 </tr>
 </tbody>
 </table>
@@ -904,32 +913,155 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: center;">Artifact Name</th>
-<th style="text-align: center;">Requirement ID</th>
+<th style="text-align: left;">Artifact Name</th>
+<th style="text-align: left;">Requirement ID</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">classPlayer</td>
-<td style="text-align: center;">NFR3, FR5</td>
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">total_coverage_t</a></td>
+<td style="text-align: left;">FR84-FR85</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">…</td>
-<td style="text-align: center;">…</td>
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">covg_conf_t</a></td>
+<td style="text-align: left;">FR00-FR02, FR08-FR09, FR11-FR14, FR59, NFR13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">fraction_t</a></td>
+<td style="text-align: left;">FR84-FR85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">maps_t</a></td>
+<td style="text-align: left;">FR84-FR85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">target_t</a></td>
+<td style="text-align: left;">FR15-FR18, FR60-FR61</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/class_diagram_complete.jpg">output_names_t</a></td>
+<td style="text-align: left;">FR21-FR58</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="activity-diagram-traceability" class="level2">
 <h2 class="anchored" data-anchor-id="activity-diagram-traceability">Activity Diagram Traceability</h2>
-<p>&lt;In this case, it makes more sense (I think, feel free to disagree) to link to the file and to those requirements impacted&gt; | Artifact ID | Artifact Name | Requirement ID | | :————-: | :———-: | :———-: | | <filename> | Handle Player Input | FR1-5, NFR2 | | … | … | … |</filename></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Artifact ID</th>
+<th style="text-align: left;">Artifact Name</th>
+<th style="text-align: left;">Requirement ID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
+<td style="text-align: left;">Read Next Argument</td>
+<td style="text-align: left;">FR00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
+<td style="text-align: left;">Set Threads</td>
+<td style="text-align: left;">FR00, FR08, FR11-FR12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
+<td style="text-align: left;">Set Output</td>
+<td style="text-align: left;">FR00, FR03, FR10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
+<td style="text-align: left;">Set Input</td>
+<td style="text-align: left;">FR00, FR04-FR07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
+<td style="text-align: left;">Set Locations</td>
+<td style="text-align: left;">FR00, FR06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Get Positions</td>
+<td style="text-align: left;">FR15-FR16, FR70-FR83</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Valid Region</td>
+<td style="text-align: left;">FR15-FR16, FR60-FR61, FR63-FR64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Read CIGAR String</td>
+<td style="text-align: left;">FR15-FR16, FR75-FR85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Is Known Operation</td>
+<td style="text-align: left;">FR15-FR16, FR75-FR85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Is Match</td>
+<td style="text-align: left;">FR15-FR16, FR75-FR85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;">Modify Coverage</td>
+<td style="text-align: left;">FR84-FR85</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="software-artifacts" class="level1">
 <h1>Software Artifacts</h1>
-<p><describe the="" purpose="" of="" this="" section=""> * <a href="to_some_file.pdf">I am a link</a></describe></p>
+<p>Links to all artificacts created during the semester. Sections included for <code>artifacts</code>, <code>docs</code>, and <code>meetings</code> directories.</p>
+<section id="artifacts" class="level2">
+<h2 class="anchored" data-anchor-id="artifacts">Artifacts</h2>
+<ul>
+<li><a href="../artifacts/system_request.html">System Resuest</a></li>
+<li><a href="../artifacts/use_case_diagram_1_cli.jpg">Use Case Diagram: Command Line Interface</a></li>
+<li><a href="../artifacts/use_case_diagram_2_processing.jpg">Use Case Diagram: Processing</a></li>
+<li><a href="../artifacts/activity_diagram_1_cli.jpg">Activity Diagram: Command Line Interface</a></li>
+<li><a href="../artifacts/activity_diagram_2_processing.jpg">Activity Diagram: Processing</a></li>
+<li><a href="../artifacts/crc_cli_v2.png">CRC Card: Command Line Interface</a></li>
+<li><a href="../artifacts/class_diagram.png">Class Diagram: Original</a></li>
+<li><a href="../artifacts/class_diagram_complete.jpg">Class Diagram: Complete</a></li>
+<li><a href="../artifacts/object_diagram.png">Object Diagram: Original</a></li>
+<li><a href="../artifacts/object_diagram_complete.jpg">Object Diagram: Complete</a></li>
+<li><a href="../artifacts/sequence_diagram.jpg">Sequence Diagram</a></li>
+<li><a href="../artifacts/state_diagram.jpg">State Diagram</a></li>
+<li><a href="../artifacts/window_nav_diagram.jpg">Window Navigation Diagram</a></li>
+</ul>
+</section>
+<section id="docs" class="level2">
+<h2 class="anchored" data-anchor-id="docs">Docs</h2>
+<ul>
+<li><a href="../docs/project-proposal.html">Project Proposal</a></li>
+<li><a href="../docs/software_requirements_specification.html">Original Software Requirements Specification</a></li>
+<li><a href="../docs/software_requirements_specification_final.html">Final Software Requirements Specification (this document)</a></li>
+<li><a href="../docs/midterm_presentation.pdf">Midterm Presentation</a></li>
+</ul>
+</section>
+<section id="meetings" class="level2">
+<h2 class="anchored" data-anchor-id="meetings">Meetings</h2>
+<ul>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-09-30.html">Meeting Minutes: 30 September 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-10-07.html">Meeting Minutes: 07 October 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-10-14.html">Meeting Minutes: 14 October 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-10-23.html">Meeting Minutes: 23 October 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-10-28.html">Meeting Minutes: 28 October 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-11-04.html">Meeting Minutes: 04 November 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-11-11.html">Meeting Minutes: 11 November 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-11-18.html">Meeting Minutes: 18 November 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-11-25.html">Meeting Minutes: 25 November 2024</a></li>
+<li><a href="../meetings/GVSU-CIS641-PackingTheBits-2024-12-02.html">Meeting Minutes: 02 December 2024</a></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
