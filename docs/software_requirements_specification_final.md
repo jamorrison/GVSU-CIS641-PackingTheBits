@@ -178,7 +178,27 @@ quick reference.
 
 
 # Change management plan
-<Description of what this section is>
+A change management plan for handling how the coverage utility is provided to users.
+
+## Training
+
+Training should be a fairly easy process as, for most users, this code will be an under-the-hood change to an existing
+script they are using. General users will need to be made aware of any differences they can expect relative to the
+previous version. This will be done through a detailed list in the release notes for the version in which this change is
+made and a description of changes between the old and new versions in the online documentation. For users who want to
+run this subcommand on its own, there will be a tutorial provided on the online documentation that walks them through
+how to use this new functionality.
+
+## Integration
+
+Integration with existing analysis pipelines should be minimally invasive. Assuming users have updated to the release of
+BISCUIT with the new coverage functionality, they will not have to change any existing commands. Should they wish to use
+additional options (such as multithreading), then they will only need to add the requisite command line options to their
+command invocation to access them.
+
+## Resolve Issues
+
+Issues shall be resolved based on requirements NFR25-NFR28. Issues will be opened and managed via GitHub.
 
 # Traceability links
 Traceability between requirements and the use case, class, and activity diagrams (individual tables shown for each
