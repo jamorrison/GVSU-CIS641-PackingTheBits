@@ -180,7 +180,8 @@ quick reference.
 <Description of what this section is>
 
 # Traceability links
-<Description of this section>
+Traceability between requirements and the use case, class, and activity diagrams (individual tables shown for each
+diagram).
 
 ## Use Case Diagram Traceability
 |  Artifact ID  | Artifact Name | Requirement ID |
@@ -205,12 +206,19 @@ quick reference.
 | [output_names_t](../artifacts/class_diagram_complete.jpg)   | FR21-FR58 |
 
 ## Activity Diagram Traceability
-<In this case, it makes more sense (I think, feel free to disagree) to link
-to the file and to those requirements impacted>
-| Artifact ID | Artifact Name | Requirement ID |
-| :-------------: | :----------: | :----------: |
-| <filename> | Handle Player Input | FR1-5, NFR2 |
-| … | … | … |
+|  Artifact ID  | Artifact Name | Requirement ID |
+|:--------------|:--------------|:---------------|
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Read Next Argument | TBD                   |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Threads        | FR01, FR08, FR11-FR12 |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR03, FR10            |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR04-FR07             |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR06                  |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Get Positions      | FR15-FR16, FR70-FR83            |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Valid Region       | FR15-FR16, FR60-FR61, FR63-FR64 |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Read CIGAR String  | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Is Known Operation | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Is Match           | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Modify Coverage    | FR84-FR85                       |
 
 # Software Artifacts
 <Describe the purpose of this section>
