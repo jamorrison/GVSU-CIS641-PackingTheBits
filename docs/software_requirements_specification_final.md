@@ -12,6 +12,7 @@ quick reference.
 ### Command Line Interface Requirements
 |  ID  | Requirement |
 |:----:|:------------|
+| FR00 | The command line interface shall have a method for reading and parsing command line inputs. |
 | FR01 | The command line interface shall accept an optional integer for the number of CPU threads. |
 | FR02 | The command line interface shall accept an optional integer for the window step size. |
 | FR03 | The command line interface shall accept an optional string for a prefix to all output file names. |
@@ -186,10 +187,10 @@ diagram).
 ## Use Case Diagram Traceability
 |  Artifact ID  | Artifact Name | Requirement ID |
 |:--------------|:--------------|:---------------|
-| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Threads       | FR01, FR08, FR11-FR12 |
-| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Output Name   | FR03, FR10            |
-| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Input         | FR04-FR07             |
-| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set CpG Locations | FR06                  |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Threads       | FR00-FR01, FR08, FR11-FR12 |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Output Name   | FR00, FR03, FR10            |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Input         | FR00, FR04-FR07             |
+| [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set CpG Locations | FR00, FR06                  |
 | [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Check Valid Region | FR60-FR61, NFR07       |
 | [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Store Coverage     | FR84-FR85              |
 | [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Find Locations     | FR65-FR69              |
@@ -199,7 +200,7 @@ diagram).
 | Artifact Name | Requirement ID |
 |:--------------|:---------------|
 | [total_coverage_t](../artifacts/class_diagram_complete.jpg) | FR84-FR85 |
-| [covg_conf_t](../artifacts/class_diagram_complete.jpg)      | FR01-FR02, FR08-FR09, FR11-FR14, FR59, NFR13 |
+| [covg_conf_t](../artifacts/class_diagram_complete.jpg)      | FR00-FR02, FR08-FR09, FR11-FR14, FR59, NFR13 |
 | [fraction_t](../artifacts/class_diagram_complete.jpg)       | FR84-FR85 |
 | [maps_t](../artifacts/class_diagram_complete.jpg)           | FR84-FR85 |
 | [target_t](../artifacts/class_diagram_complete.jpg)         | FR15-FR18, FR60-FR61 |
@@ -208,11 +209,11 @@ diagram).
 ## Activity Diagram Traceability
 |  Artifact ID  | Artifact Name | Requirement ID |
 |:--------------|:--------------|:---------------|
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Read Next Argument | TBD                   |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Threads        | FR01, FR08, FR11-FR12 |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR03, FR10            |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR04-FR07             |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR06                  |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Read Next Argument | FR00                   |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Threads        | FR00, FR08, FR11-FR12 |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR00, FR03, FR10            |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR00, FR04-FR07             |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR00, FR06                  |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Get Positions      | FR15-FR16, FR70-FR83            |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Valid Region       | FR15-FR16, FR60-FR61, FR63-FR64 |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Read CIGAR String  | FR15-FR16, FR75-FR85            |
@@ -221,5 +222,38 @@ diagram).
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Modify Coverage    | FR84-FR85                       |
 
 # Software Artifacts
-<Describe the purpose of this section>
-* [I am a link](to_some_file.pdf)
+Links to all artificacts created during the semester. Sections included for `artifacts`, `docs`, and `meetings`
+directories.
+
+## Artifacts
+- [System Resuest](../artifacts/system_request.md)
+- [Use Case Diagram: Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg)
+- [Use Case Diagram: Processing](../artifacts/use_case_diagram_2_processing.jpg)
+- [Activity Diagram: Command Line Interface](../artifacts/activity_diagram_1_cli.jpg)
+- [Activity Diagram: Processing](../artifacts/activity_diagram_2_processing.jpg)
+- [CRC Card: Command Line Interface](../artifacts/crc_cli_v2.png)
+- [Class Diagram: Original](../artifacts/class_diagram.png)
+- [Class Diagram: Complete](../artifacts/class_diagram_complete.jpg)
+- [Object Diagram: Original](../artifacts/object_diagram.png)
+- [Object Diagram: Complete](../artifacts/object_diagram_complete.jpg)
+- [Sequence Diagram](../artifacts/sequence_diagram.jpg)
+- [State Diagram](../artifacts/state_diagram.jpg)
+- [Window Navigation Diagram](../artifacts/window_nav_diagram.jpg)
+
+## Docs
+- [Project Proposal](../docs/project-proposal.md)
+- [Original Software Requirements Specification](../docs/software_requirements_specification.md)
+- [Final Software Requirements Specification (this document)](../docs/software_requirements_specification_final.md)
+- [Midterm Presentation](../docs/midterm_presentation.pdf)
+
+## Meetings
+- [Meeting Minutes: 30 September 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-09-30.md)
+- [Meeting Minutes: 07 October 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-10-07.md)
+- [Meeting Minutes: 14 October 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-10-14.md)
+- [Meeting Minutes: 23 October 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-10-23.md)
+- [Meeting Minutes: 28 October 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-10-28.md)
+- [Meeting Minutes: 04 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-04.md)
+- [Meeting Minutes: 11 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-11.md)
+- [Meeting Minutes: 18 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-18.md)
+- [Meeting Minutes: 25 November 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-11-25.md)
+- [Meeting Minutes: 02 December 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-12-02.md)
