@@ -43,3 +43,4 @@ completion.
   - [11 November 2024](meetings/GVSU-CIS641-PackingTheBits-2024-11-11.md)
   - [18 November 2024](meetings/GVSU-CIS641-PackingTheBits-2024-11-18.md)
   - [25 November 2024](meetings/GVSU-CIS641-PackingTheBits-2024-11-25.md)
+  - [02 December 2024](meetings/GVSU-CIS641-PackingTheBits-2024-12-02.md)
