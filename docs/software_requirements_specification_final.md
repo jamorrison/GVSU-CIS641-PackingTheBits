@@ -46,7 +46,7 @@ quick reference.
 | FR24 | The second line of the cv file shall say: "group mu sigma cv". |
 | FR25 | The words on the second line of the cv file shall be separated by tab characters. |
 | FR26 | All lines after the two line header in the cv file shall be tab separated. |
-| FR27 | All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR24.1-FR24.12 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation. |
+| FR27 | All lines after the two line header in the cv file shall contain (in the following order) a group name (see Functional Requirements FR28-FR39 for group names), the mean coverage, the coverage standard deviation, and the coverage coefficient of variation. |
 | FR28 | The group name for coverage across bases covered by all applicable reads shall be "all_base". |
 | FR29 | The group name for coverage across bases covered by reads with a mapping quality score (MAPQ) greater than or equal to forty (40) shall be "q40_base". |
 | FR30 | The group name for coverage across CpGs covered by all applicable reads shall be "all_cpg". |
@@ -59,7 +59,7 @@ quick reference.
 | FR37 | The group name for coverage across bases covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_base_botgc" when a bottom GC file is provided. |
 | FR38 | The group name for coverage across CpGs covered by all applicable reads and fall in the bottom GC windows shall be "all_cpg_botgc" when a bottom GC file is provided. |
 | FR39 | The group name for coverage across CpGs covered by reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows shall be "q40_cpg_botgc" when a bottom GC file is provided. |
-| FR40 | There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR25.1-FR25.12). |
+| FR40 | There shall be one covdist file for each set of coverages found (listed in Functional Requirements FR41-FR52). |
 | FR41 | One covdist file shall be for bases covered by all applicable reads and shall have the tag "All Bases". |
 | FR42 | One covdist file shall be for bases covered by all applicable reads with MAPQ greater than or equal to forty (40) and shall have the tag "Q40 Bases". |
 | FR43 | One covdist file shall be for CpGs covered by all applicable reads and shall have the tag "All CpGs". |
@@ -73,7 +73,7 @@ quick reference.
 | FR51 | One covdist file shall be for CpGs covered by all applicable reads and fall in the bottom GC windows and shall have the tag "All Bot GC CpGs" when a bottom GC file is provided. |
 | FR52 | One covdist file shall be for CpGs covered by all applicable reads with MAPQ greater than or equal to forty (40) and fall in the bottom GC windows and shall have the tag "Q40 Bot GC CpGs" when a bottom GC file is provided. |
 | FR53 | Each covdist file shall have a two line header. |
-| FR54 | The first line of each covdist file shall say: "BISCUITqc Depth Distribution - TAG" where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR25.1-FR25.12 for the tags). |
+| FR54 | The first line of each covdist file shall say: "BISCUITqc Depth Distribution - TAG" where TAG is replaced by a tag unique to each covdist file (see Functional Requirements FR41-FR52 for the tags). |
 | FR55 | The second line of each covdist file shall say: "depth count". |
 | FR56 | The words on the second line of each covdist file shall be separated by tab characters. |
 | FR57 | All lines after the two line header in the covdist file shall be tab separated. |
