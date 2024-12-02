@@ -148,7 +148,12 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#abbreviation-definitions" id="toc-abbreviation-definitions" class="nav-link" data-scroll-target="#abbreviation-definitions">Abbreviation Definitions</a></li>
   </ul></li>
-  <li><a href="#change-management-plan" id="toc-change-management-plan" class="nav-link" data-scroll-target="#change-management-plan">Change management plan</a></li>
+  <li><a href="#change-management-plan" id="toc-change-management-plan" class="nav-link" data-scroll-target="#change-management-plan">Change management plan</a>
+  <ul class="collapse">
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
+  <li><a href="#integration" id="toc-integration" class="nav-link" data-scroll-target="#integration">Integration</a></li>
+  <li><a href="#resolve-issues" id="toc-resolve-issues" class="nav-link" data-scroll-target="#resolve-issues">Resolve Issues</a></li>
+  </ul></li>
   <li><a href="#traceability-links" id="toc-traceability-links" class="nav-link" data-scroll-target="#traceability-links">Traceability links</a>
   <ul class="collapse">
   <li><a href="#use-case-diagram-traceability" id="toc-use-case-diagram-traceability" class="nav-link" data-scroll-target="#use-case-diagram-traceability">Use Case Diagram Traceability</a></li>
@@ -849,7 +854,19 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="change-management-plan" class="level1">
 <h1>Change management plan</h1>
-<p><description of="" what="" this="" section="" is=""></description></p>
+<p>A change management plan for handling how the coverage utility is provided to users.</p>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<p>Training should be a fairly easy process as, for most users, this code will be an under-the-hood change to an existing script they are using. General users will need to be made aware of any differences they can expect relative to the previous version. This will be done through a detailed list in the release notes for the version in which this change is made and a description of changes between the old and new versions in the online documentation. For users who want to run this subcommand on its own, there will be a tutorial provided on the online documentation that walks them through how to use this new functionality.</p>
+</section>
+<section id="integration" class="level2">
+<h2 class="anchored" data-anchor-id="integration">Integration</h2>
+<p>Integration with existing analysis pipelines should be minimally invasive. Assuming users have updated to the release of BISCUIT with the new coverage functionality, they will not have to change any existing commands. Should they wish to use additional options (such as multithreading), then they will only need to add the requisite command line options to their command invocation to access them.</p>
+</section>
+<section id="resolve-issues" class="level2">
+<h2 class="anchored" data-anchor-id="resolve-issues">Resolve Issues</h2>
+<p>Issues shall be resolved based on requirements NFR25-NFR28. Issues will be opened and managed via GitHub.</p>
+</section>
 </section>
 <section id="traceability-links" class="level1">
 <h1>Traceability links</h1>

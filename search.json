@@ -172,6 +172,27 @@
     "text": "Abbreviation Definitions\n\n\n\n\n\n\n\nAbbreviation\nDefinition\n\n\n\n\nSAM\nSequence Alignment Map file\n\n\nBAM\nBinary Alignment Map file\n\n\nBED\nBrowser Extensible Data file\n\n\nCIGAR\nCompact Idiosyncratic Gapped Alignment Report string\n\n\nTop GC\nTop ten (10) percent of windows in the genome for GC content\n\n\nBottom GC\nBottom ten (10) percent of windows in the genome for GC content\n\n\nMAPQ\nMapping quality score"
   },
   {
+    "objectID": "docs/software_requirements_specification_final.html#training",
+    "href": "docs/software_requirements_specification_final.html#training",
+    "title": "Overview",
+    "section": "Training",
+    "text": "Training\nTraining should be a fairly easy process as, for most users, this code will be an under-the-hood change to an existing script they are using. General users will need to be made aware of any differences they can expect relative to the previous version. This will be done through a detailed list in the release notes for the version in which this change is made and a description of changes between the old and new versions in the online documentation. For users who want to run this subcommand on its own, there will be a tutorial provided on the online documentation that walks them through how to use this new functionality."
+  },
+  {
+    "objectID": "docs/software_requirements_specification_final.html#integration",
+    "href": "docs/software_requirements_specification_final.html#integration",
+    "title": "Overview",
+    "section": "Integration",
+    "text": "Integration\nIntegration with existing analysis pipelines should be minimally invasive. Assuming users have updated to the release of BISCUIT with the new coverage functionality, they will not have to change any existing commands. Should they wish to use additional options (such as multithreading), then they will only need to add the requisite command line options to their command invocation to access them."
+  },
+  {
+    "objectID": "docs/software_requirements_specification_final.html#resolve-issues",
+    "href": "docs/software_requirements_specification_final.html#resolve-issues",
+    "title": "Overview",
+    "section": "Resolve Issues",
+    "text": "Resolve Issues\nIssues shall be resolved based on requirements NFR25-NFR28. Issues will be opened and managed via GitHub."
+  },
+  {
     "objectID": "docs/software_requirements_specification_final.html#use-case-diagram-traceability",
     "href": "docs/software_requirements_specification_final.html#use-case-diagram-traceability",
     "title": "Overview",
