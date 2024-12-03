@@ -1,1 +1,14 @@
-Placeholder for artifacts
+Items in folder:
+- **system_request.md:** Initial system proposal for project
+- **use_case_diagram_1_cli.jpg:** Command line interface use case diagram
+- **use_case_diagram_2_processing.jpg:** Processing use case diagram
+- **activity_diagram_1_cli.jpg:** Activity diagram for the command line interface
+- **activity_diagram_2_processing.jpg:** Activity diagram for processing
+- **crc_cli_v2.png:** CRC card for the command line interface
+- **class_diagram.png:** Initial class diagram
+- **class_diagram_complete.jpg:** Completed class diagram
+- **object_diagram.png:** Initial object diagram
+- **object_diagram_complete.jpg:** Completed object diagram
+- **sequence_diagram.jpg:** Sequence diagram for processing
+- **state_diagram.jpg:** State diagram for filling bit arrays
+- **window_nav_diagram.jpg:** Window navigation diagram for the command line interface
