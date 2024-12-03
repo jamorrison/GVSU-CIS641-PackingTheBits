@@ -48,9 +48,9 @@ website:
         - text: "(Final) Software Requirements Specification"
           href: docs/software_requirements_specification_final.md
         - text: "Midterm Presentation"
-          href: docs/midterm_presentation.qmd
+          href: website/midterm_presentation.qmd
         - text: "Final Presentation"
-          href: docs/final_presentation.qmd
+          href: website/final_presentation.qmd
     - title: "Meeting Minutes"
       style: "docked"
       background: "#E3E3E3"

@@ -33,6 +33,7 @@ completion.
   - [Software Requirements Specification](docs/software_requirements_specification.md)
   - [Software Requirements Specification (Final Version)](docs/software_requirements_specification_final.md)
   - [Midterm Presentation](website/midterm_presentation.qmd)
+  - [Final Presentation](website/final_presentation.qmd)
 - [Meeting Minutes](website/meetings.qmd)
   - [30 September 2024](meetings/GVSU-CIS641-PackingTheBits-2024-09-30.md)
   - [07 October 2024](meetings/GVSU-CIS641-PackingTheBits-2024-10-07.md)
