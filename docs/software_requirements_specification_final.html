@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Artifacts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/docs.html"> 
+    <a class="nav-link active" href="../website/docs.html" aria-current="page"> 
 <span class="menu-text">Documents</span></a>
   </li>  
   <li class="nav-item">
@@ -117,10 +117,64 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/software_requirements_specification_final.html">(Final) Software Requirements Specification</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../website/docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Documents</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/project-proposal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project Proposal</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/software_requirements_specification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software Requirements Specification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/software_requirements_specification_final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">(Final) Software Requirements Specification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/midterm_presentation.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm Presentation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/final_presentation.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final Presentation</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -177,7 +231,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level1">
 <h1>Overview</h1>
-<p>This document serves as the culmination of the GVSU CIS 641 full semester project. It includes the final software requirement specification, a change management plan, and traceability between requirements and various sundry diagrams.</p>
+<p>This document serves as the culmination of the GVSU CIS 641 full semester project. It includes the final software requirement specification, a change management plan, and traceability between requirements and various sundry artifacts.</p>
 </section>
 <section id="software-requirements" class="level1">
 <h1>Software Requirements</h1>
@@ -244,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: center;">FR11</td>
-<td style="text-align: left;">The command line interface shall check the number of CPU threads are valid greater than zero (0).</td>
+<td style="text-align: left;">The command line interface shall check the number of CPU threads are greater than zero (0).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">FR12</td>
@@ -865,7 +919,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resolve-issues" class="level2">
 <h2 class="anchored" data-anchor-id="resolve-issues">Resolve Issues</h2>
-<p>Issues shall be resolved based on requirements NFR25-NFR28. Issues will be opened and managed via GitHub.</p>
+<p>Issues shall be resolved in accordance with requirements NFR25-NFR28. Issues will be opened and managed via GitHub.</p>
 </section>
 </section>
 <section id="traceability-links" class="level1">
@@ -903,22 +957,22 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">FR00, FR06</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Check Valid Region</td>
 <td style="text-align: left;">FR60-FR61, NFR07</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Store Coverage</td>
 <td style="text-align: left;">FR84-FR85</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Find Locations</td>
 <td style="text-align: left;">FR65-FR69</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../artifacts/use_case_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/use_case_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Process Read</td>
 <td style="text-align: left;">FR70-FR85, NFR08-NFR09</td>
 </tr>
@@ -981,7 +1035,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
 <td style="text-align: left;">Set Threads</td>
-<td style="text-align: left;">FR00, FR08, FR11-FR12</td>
+<td style="text-align: left;">FR00-FR01, FR08, FR11-FR12</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="../artifacts/activity_diagram_1_cli.jpg">Command Line Interface</a></td>
@@ -999,32 +1053,32 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">FR00, FR06</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Get Positions</td>
 <td style="text-align: left;">FR15-FR16, FR70-FR83</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Valid Region</td>
 <td style="text-align: left;">FR15-FR16, FR60-FR61, FR63-FR64</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Read CIGAR String</td>
 <td style="text-align: left;">FR15-FR16, FR75-FR85</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Is Known Operation</td>
 <td style="text-align: left;">FR15-FR16, FR75-FR85</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Is Match</td>
 <td style="text-align: left;">FR15-FR16, FR75-FR85</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../artifacts/activity_diagram_1_processing.jpg">Processing</a></td>
+<td style="text-align: left;"><a href="../artifacts/activity_diagram_2_processing.jpg">Processing</a></td>
 <td style="text-align: left;">Modify Coverage</td>
 <td style="text-align: left;">FR84-FR85</td>
 </tr>
@@ -1060,6 +1114,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../docs/software_requirements_specification.html">Original Software Requirements Specification</a></li>
 <li><a href="../docs/software_requirements_specification_final.html">Final Software Requirements Specification (this document)</a></li>
 <li><a href="../docs/midterm_presentation.pdf">Midterm Presentation</a></li>
+<li><a href="../docs/final_presentation.pdf">Final Presentation</a></li>
 </ul>
 </section>
 <section id="meetings" class="level2">

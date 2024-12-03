@@ -225,7 +225,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../artifacts/activity_diagram_2_processing.jpg" class="img-fluid figure-img"></p>
-<figcaption>Activity Diagram 2: Command Line Interface</figcaption>
+<figcaption>Activity Diagram 2: Processing</figcaption>
 </figure>
 </div>
 </section>
@@ -275,17 +275,15 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Description:</strong> Combines coverage fractions (used for calculating mean and standard deviation of coverage) for all output combinations into a single struct</li>
 <li><strong><code>init_total_coverage</code> Pre/Post Conditions:</strong>
 <ul>
-<li><em>Preconditions:</em></li>
-</ul>
+<li><em>Preconditions:</em>
 <ol type="1">
 <li>Declare a non-pointer variable of type <code>total_coverage_t</code></li>
-</ol>
-<ul>
-<li><em>Postconditions:</em></li>
-</ul>
+</ol></li>
+<li><em>Postconditions:</em>
 <ol type="1">
 <li>A <code>total_coverage_t</code> is initialized and set as the value for variable declared in precondition</li>
 </ol></li>
+</ul></li>
 </ul></li>
 <li>C3: <code>maps_t</code>
 <ul>
@@ -310,11 +308,11 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 <li><em>Postconditions:</em>
 <ol type="1">
-<li>Memory allocated by <code>maps_t</code> and the underlying hashmaps is freed and returned to the system for assigning to other objects</li>
+<li>Memory allocated for <code>maps_t</code> and the underlying hashmaps is freed and returned to the system for assigning to other objects</li>
 </ol></li>
 </ul></li>
 </ul></li>
-<li>C4 <code>fraction_t</code>
+<li>C4: <code>fraction_t</code>
 <ul>
 <li><strong>Description:</strong> Stores the numerator and denominator of a fraction as two separate integers within the struct</li>
 <li><strong><code>init_fraction</code> Pre/Post Conditions:</strong>
@@ -363,7 +361,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li>C6: <code>output_names_t</code>
 <ul>
-<li>__Description:` Combines names of all output files into a single struct</li>
+<li><strong>Description:</strong> Combines names of all output files into a single struct</li>
 <li><strong><code>init_output_names</code> Pre/Post Conditions:</strong>
 <ul>
 <li><em>Preconditions:</em>
@@ -385,7 +383,7 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 <li><em>Postconditions:</em>
 <ol type="1">
-<li>Memory allocated by <code>output_names_t</code> and the underlying character array pointers is freed and returned to the system for assigning to other objects</li>
+<li>Memory allocated for <code>output_names_t</code> and the underlying character array pointers is freed and returned to the system for assigning to other objects</li>
 </ol></li>
 </ul></li>
 </ul></li>
