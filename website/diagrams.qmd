@@ -12,7 +12,7 @@ title: Diagrams
 
 ![Activity Diagram 1: Command Line Interface](../artifacts/activity_diagram_1_cli.jpg)
 
-![Activity Diagram 2: Command Line Interface](../artifacts/activity_diagram_2_processing.jpg)
+![Activity Diagram 2: Processing](../artifacts/activity_diagram_2_processing.jpg)
 
 # CRC Card
 
@@ -37,9 +37,9 @@ title: Diagrams
   * __Description:__ Combines coverage fractions (used for calculating mean and standard deviation of coverage) for all
     output combinations into a single struct
   * __`init_total_coverage` Pre/Post Conditions:__
-    *  _Preconditions:_
+    * _Preconditions:_
       1. Declare a non-pointer variable of type `total_coverage_t`
-    *  _Postconditions:_
+    * _Postconditions:_
       1. A `total_coverage_t` is initialized and set as the value for variable declared in precondition
 - C3: `maps_t`
   * __Description:__ Combines all hash maps of coverage (key) and number of bases at that coverage (value) for all
@@ -55,9 +55,9 @@ title: Diagrams
       1. `maps_t` struct must be initialized with `init_maps`
       2. Hashmaps in `maps_t` struct may or may not be updated prior to running this function
     * _Postconditions:_
-      1. Memory allocated by `maps_t` and the underlying hashmaps is freed and returned to the system for assigning to
+      1. Memory allocated for `maps_t` and the underlying hashmaps is freed and returned to the system for assigning to
          other objects
-- C4 `fraction_t`
+- C4: `fraction_t`
   * __Description:__ Stores the numerator and denominator of a fraction as two separate integers within the struct
   * __`init_fraction` Pre/Post Conditions:__
     * _Preconditions:_
@@ -86,7 +86,7 @@ title: Diagrams
         3. Returns <0 if first non-matching character of first string is less than the corresponding character in the
            second string
 - C6: `output_names_t`
-  * __Description:` Combines names of all output files into a single struct
+  * __Description:__ Combines names of all output files into a single struct
   * __`init_output_names` Pre/Post Conditions:__
     * _Preconditions:_
       1. Declare a pointer of type `output_names_t`
@@ -100,7 +100,7 @@ title: Diagrams
     * _Preconditions:_
       1. `output_names_t` struct must be initialized with `init_output_names`
     * _Postconditions:_
-      1. Memory allocated by `output_names_t` and the underlying character array pointers is freed and returned to the
+      1. Memory allocated for `output_names_t` and the underlying character array pointers is freed and returned to the
          system for assigning to other objects
 
 # Object Diagrams
