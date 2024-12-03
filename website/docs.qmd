@@ -8,3 +8,4 @@ title: Documents
 - [Software Requirements Specification](../docs/software_requirements_specification.md)
 - [Software Requirements Specification (Final Version)](../docs/software_requirements_specification_final.md)
 - [Midterm Presentation](midterm_presentation.qmd)
+- [Final Presentation](final_presentation.qmd)
