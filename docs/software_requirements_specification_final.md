@@ -211,10 +211,10 @@ diagram).
 | [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Output Name   | FR00, FR03, FR10            |
 | [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set Input         | FR00, FR04-FR07             |
 | [Command Line Interface](../artifacts/use_case_diagram_1_cli.jpg) | Set CpG Locations | FR00, FR06                  |
-| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Check Valid Region | FR60-FR61, NFR07       |
-| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Store Coverage     | FR84-FR85              |
-| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Find Locations     | FR65-FR69              |
-| [Processing](../artifacts/use_case_diagram_1_processing.jpg) | Process Read       | FR70-FR85, NFR08-NFR09 |
+| [Processing](../artifacts/use_case_diagram_2_processing.jpg) | Check Valid Region | FR60-FR61, NFR07       |
+| [Processing](../artifacts/use_case_diagram_2_processing.jpg) | Store Coverage     | FR84-FR85              |
+| [Processing](../artifacts/use_case_diagram_2_processing.jpg) | Find Locations     | FR65-FR69              |
+| [Processing](../artifacts/use_case_diagram_2_processing.jpg) | Process Read       | FR70-FR85, NFR08-NFR09 |
 
 ## Class Diagram Traceability
 | Artifact Name | Requirement ID |
@@ -234,12 +234,12 @@ diagram).
 | [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR00, FR03, FR10           |
 | [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR00, FR04-FR07            |
 | [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR00, FR06                 |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Get Positions      | FR15-FR16, FR70-FR83            |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Valid Region       | FR15-FR16, FR60-FR61, FR63-FR64 |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Read CIGAR String  | FR15-FR16, FR75-FR85            |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Is Known Operation | FR15-FR16, FR75-FR85            |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Is Match           | FR15-FR16, FR75-FR85            |
-| [Processing](../artifacts/activity_diagram_1_processing.jpg) | Modify Coverage    | FR84-FR85                       |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Get Positions      | FR15-FR16, FR70-FR83            |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Valid Region       | FR15-FR16, FR60-FR61, FR63-FR64 |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Read CIGAR String  | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Is Known Operation | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Is Match           | FR15-FR16, FR75-FR85            |
+| [Processing](../artifacts/activity_diagram_2_processing.jpg) | Modify Coverage    | FR84-FR85                       |
 
 # Software Artifacts
 Links to all artificacts created during the semester. Sections included for `artifacts`, `docs`, and `meetings`
