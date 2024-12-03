@@ -1,7 +1,7 @@
 # Overview
 
 This document serves as the culmination of the GVSU CIS 641 full semester project. It includes the final software
-requirement specification, a change management plan, and traceability between requirements and various sundry diagrams.
+requirement specification, a change management plan, and traceability between requirements and various sundry artifacts.
 
 # Software Requirements
 
@@ -23,7 +23,7 @@ quick reference.
 | FR08 | The command line interface shall set a default value for the number of CPU threads when the corresponding command line option is not provided. |
 | FR09 | The command line interface shall set a default value for the window step size when the corresponding command line option is not provided. |
 | FR10 | The command line interface shall not prepend anything to the output file names when the prefix command line option is not provided. |
-| FR11 | The command line interface shall check the number of CPU threads are valid greater than zero (0). |
+| FR11 | The command line interface shall check the number of CPU threads are greater than zero (0). |
 | FR12 | The command line interface shall set the number of CPU threads to the default value when the given value is less than or equal to zero (0). |
 | FR13 | The command line interface shall check the window step size is greater than zero (0). |
 | FR14 | The command line interface shall set the window step size to the default value when the given value is less than or equal to zero (0). |
@@ -198,7 +198,7 @@ command invocation to access them.
 
 ## Resolve Issues
 
-Issues shall be resolved based on requirements NFR25-NFR28. Issues will be opened and managed via GitHub.
+Issues shall be resolved in accordance with requirements NFR25-NFR28. Issues will be opened and managed via GitHub.
 
 # Traceability links
 Traceability between requirements and the use case, class, and activity diagrams (individual tables shown for each
@@ -229,11 +229,11 @@ diagram).
 ## Activity Diagram Traceability
 |  Artifact ID  | Artifact Name | Requirement ID |
 |:--------------|:--------------|:---------------|
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Read Next Argument | FR00                   |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Threads        | FR00, FR08, FR11-FR12 |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR00, FR03, FR10            |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR00, FR04-FR07             |
-| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR00, FR06                  |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Read Next Argument | FR00                       |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Threads        | FR00-FR01, FR08, FR11-FR12 |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Output         | FR00, FR03, FR10           |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Input          | FR00, FR04-FR07            |
+| [Command Line Interface](../artifacts/activity_diagram_1_cli.jpg) | Set Locations      | FR00, FR06                 |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Get Positions      | FR15-FR16, FR70-FR83            |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Valid Region       | FR15-FR16, FR60-FR61, FR63-FR64 |
 | [Processing](../artifacts/activity_diagram_1_processing.jpg) | Read CIGAR String  | FR15-FR16, FR75-FR85            |
@@ -265,6 +265,7 @@ directories.
 - [Original Software Requirements Specification](../docs/software_requirements_specification.md)
 - [Final Software Requirements Specification (this document)](../docs/software_requirements_specification_final.md)
 - [Midterm Presentation](../docs/midterm_presentation.pdf)
+- [Final Presentation](../docs/final_presentation.pdf)
 
 ## Meetings
 - [Meeting Minutes: 30 September 2024](../meetings/GVSU-CIS641-PackingTheBits-2024-09-30.md)
