@@ -72,6 +72,7 @@ make install
 ### Usage and Option Descriptions
 
 ```
+coverage -h
 
 Usage: coverage [options] <cpgs.bed.gz> <in.bam>
 
@@ -104,9 +105,9 @@ or via the command line:
 ```
 wget https://github.com/jamorrison/GVSU-CIS641-PackingTheBits/releases/download/v0.1.0/bed_files.tar.gz
 ```
-The example BAM file is available in the `tests/` directory. All examples will be written as if the BED files and BAM
-file are in the same directory, so please adjust paths as needed. Additionally, it will be assumed that `coverage` is in
-your `PATH`.
+The example BAM file is available in the `tests/test_files` directory. All examples will be written as if the BED files
+and BAM file are in the same directory, so please adjust paths as needed. Additionally, it will be assumed that
+`coverage` is in your `PATH`.
 
 #### Example 1: Basic usage
 
