@@ -1,1 +1,1 @@
-Placeholder for software tests
+Software tests and examples for `coverage` utility
