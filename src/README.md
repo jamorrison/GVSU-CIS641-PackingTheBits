@@ -1,1 +1,1 @@
-Placeholder for source code
+Source code for `coverage` utility.
